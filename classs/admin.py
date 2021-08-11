@@ -10,3 +10,8 @@ class ClassAdmin(admin.ModelAdmin):
 @admin.register(models.basket)
 class BasketAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.registration)
+class RegiAdmin(admin.ModelAdmin):
+    pass

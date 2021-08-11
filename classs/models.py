@@ -17,3 +17,9 @@ class basket(Class):
 
     available = models.PositiveIntegerField(default=0)
     left = models.PositiveIntegerField(default=0)
+
+
+class registration(Class):
+    """Registration Model Definition"""
+
+    regi_list = models.TextField(("수강신청 과목 리스트"))
