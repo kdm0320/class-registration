@@ -2,6 +2,6 @@ from django.contrib import admin
 from . import models
 
 
-@admin.register(models.Clas)
+@admin.register(models.Class)
 class ClassAdmin(admin.ModelAdmin):
     pass

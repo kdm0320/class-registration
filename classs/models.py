@@ -3,7 +3,7 @@ from django.db.models.fields import CharField
 from core import models as core_models
 
 
-class Clas(core_models.ClassInfoModel):
+class Class(core_models.ClassInfoModel):
     """Class Model Definition"""
 
     department = CharField(max_length=20)

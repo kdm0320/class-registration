@@ -21,8 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-KEY = os.environ.get("DJANGO_SECRET_KEY")
+KEY = os.environ.get("DJANGO_KEY")
 SECRET_KEY = KEY
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -45,8 +46,7 @@ DJANGO_APPS = [
 PROJECT_APPS = [
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
-    "baskets.apps.BasketsConfig",
-    "classes.apps.ClassesConfig",
+    "classs.apps.ClasssConfig",
     "noticeBoards.apps.NoticeboardsConfig",
     "registrations.apps.RegistrationsConfig",
 ]
@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "Asia/Seoul"
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
