@@ -47,7 +47,6 @@ PROJECT_APPS = [
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
     "classs.apps.ClasssConfig",
-    "noticeBoards.apps.NoticeboardsConfig",
     "registrations.apps.RegistrationsConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
