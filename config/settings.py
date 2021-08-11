@@ -44,9 +44,12 @@ DJANGO_APPS = [
 
 
 PROJECT_APPS = [
-    "core.apps.CoreConfig",
     "users.apps.UsersConfig",
     "classs.apps.ClasssConfig",
+    "core.apps.CoreConfig",
+    "baskets.apps.BasketsConfig",
+    "registrations.apps.RegistrationsConfig",
+    "noticeBoards.apps.NoticeboardsConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 

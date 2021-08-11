@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class User(AbstractUser):
@@ -18,10 +18,12 @@ class User(AbstractUser):
         (GRADE_FOURTH, "4"),
     )
     number = models.PositiveIntegerField(
-        default=0, validators=[MaxValueValidator(99999999)]
+        ("학번"),
+        default=20140000,
+        validators=[MinValueValidator(20140000), MaxValueValidator(99999999)],
     )
-    major = models.CharField(null=True, max_length=15)
-    grade = models.CharField(choices=GRADE_CHOICES, max_length=2, null=True)
-    basket_subjects = models.TextField(null=True)
-    registed_subjects = models.TextField(null=True)
-    time_table = models.TextField(null=True)
+    major = models.CharField(("전공"), null=True, max_length=15)
+    grade = models.CharField(("학년"), choices=GRADE_CHOICES, max_length=2, null=True)
+    basket_subjects = models.TextField(("장바구니 과목들"), null=True, blank=True)
+    registed_subjects = models.TextField(("수강신청 과목들"), null=True, blank=True)
+    time_table = models.TextField(("시간표"), null=True, blank=True)
