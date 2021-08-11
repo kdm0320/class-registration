@@ -7,3 +7,13 @@ class Class(core_models.ClassInfoModel):
     """Class Model Definition"""
 
     department = CharField(max_length=20)
+
+    def __str__(self):
+        return self.subject_name
+
+
+class basket(Class):
+    """Basket Model Definition"""
+
+    available = models.PositiveIntegerField(default=0)
+    left = models.PositiveIntegerField(default=0)
