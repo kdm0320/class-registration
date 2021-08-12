@@ -28,6 +28,7 @@ class CustomUserAdmin(UserAdmin):
         "major",
         "grade",
         "email",
+        "get_baskets",
     )
     list_filter = ("major", "grade")
 
