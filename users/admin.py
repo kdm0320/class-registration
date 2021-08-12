@@ -30,3 +30,5 @@ class CustomUserAdmin(UserAdmin):
         "email",
     )
     list_filter = ("major", "grade")
+
+    filter_horizontal = ("basket_subjects",)

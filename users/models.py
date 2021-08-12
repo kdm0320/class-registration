@@ -24,6 +24,6 @@ class User(AbstractUser):
     )
     major = models.CharField(("전공"), null=True, max_length=15)
     grade = models.CharField(("학년"), choices=GRADE_CHOICES, max_length=2, null=True)
-    basket_subjects = models.TextField(("장바구니 과목들"), null=True, blank=True)
-    registed_subjects = models.TextField(("수강신청 과목들"), null=True, blank=True)
+    basket_subjects = models.ManyToManyField("classs.Class", verbose_name=("장바구니 과목들"))
+    registed_subjects = models.ManyToManyField("users.User", verbose_name=("수강신청 과목들"))
     time_table = models.TextField(("시간표"), null=True, blank=True)
