@@ -39,7 +39,7 @@
           <!-- 학기정보 -->
           <span> 2021학년도 2학기 </span>
         </div>
-        <div id="personal-data">
+        <div class="personal-data">
           <span>
             <!-- 이름 -->
             김동민
@@ -64,7 +64,7 @@
             <i class="fas fa-sort-down"></i>
           </div>
         </div>
-        <div id="time-data">
+        <div class="time-data">
           <div>
             <!--시계 이미지 -->
             <i class="far fa-clock"></i>
@@ -81,59 +81,51 @@
           <button>로그아웃</button>
         </div>
       </header>
-      <div id="content">
+      <div class="content">
         <div>
           <button>수강신청 안내</button>
           <button>수강신청내역(취소)</button>
         </div>
         <!-- 이곳에 각 탭에 해당하는 기능이 구현되어야 함-->
-        <div>
-          <!--페이지에 따라 버튼이 있을수도 있음.-->
-          <div>
+        <div class="button_bottom_content">
+          <div class="button_bottom_icon">
             <!-- 아이콘 한개 -->
           </div>
-          <span> 수강신청 내역 </span>
-          <div>
-            <span>
-              [
-              <span> 신청과목수 : </span>
-              <span>
-                <!--db 데이터 로드해야함-->
-              </span>
-              <span> 신청학점 : </span>
-              <span>
-                <!--db 데이터 로드해야함-->
-              </span>
-              ]
+          <p class="button_bottom_text">
+            <span class="button_bottom_text_title"> 수강신청 내역 </span>
+            <span>[ 신청과목수 : </span>
+            <span class="buttom_bottom_text_classNum">
+              <!--db 데이터 로드해야함-->
+              4
             </span>
-          </div>
+            <span> 신청학점 : </span>
+            <span class="button_bottom_text_credit">
+              <!--db 데이터 로드해야함-->
+              4
+            </span>
+            <span> ] </span>
+          </p>
         </div>
-        <div id="target">
+        <div class="target">
           <!-- 수강신청 테이블을 버튼 이벤트로 인해 로드할 수 있어야 함-->
-          <table>
+          <table id="enrol_class">
             <caption>
               <!--테이블 하단에 표시할 내용-->
-              <div>
-                <div>
-                  <span>
-                    ※ 삭제전 성적우수장학금수혜를 위한 기본학점을 다시한번
-                    확인하시기 바랍니다.
-                  </span>
-                </div>
-                <div>
-                  <span>[성적우수장학금 수혜를 위한 기본 수강신청 학점]</span>
-                </div>
-                <div>
-                  <span>
-                    16학점이상 수강신청(단 졸업직전학기의 경우는 12학점 이상
-                    수강신청.입학성정우수 장학의 경우는 입학년도별/학과별로 다를
-                    수 있으므로 별도장학공지 참조.)
-                  </span>
-                </div>
-              </div>
-              <div>
+              <p>
+                <span>
+                  ※ 삭제전 성적우수장학금수혜를 위한 기본학점을 다시한번
+                  확인하시기 바랍니다.
+                </span>
+                <span>[성적우수장학금 수혜를 위한 기본 수강신청 학점]</span>
+                <span>
+                  16학점이상 수강신청(단 졸업직전학기의 경우는 12학점 이상
+                  수강신청.입학성정우수 장학의 경우는 입학년도별/학과별로 다를
+                  수 있으므로 별도장학공지 참조.)
+                </span>
+              </p>
+              <span>
                 ※ 수강신청 마감을 하면 현재 신청된 과목의 삭제가 불가능합니다.
-              </div>
+              </span>
             </caption>
             <thead>
               <tr>
