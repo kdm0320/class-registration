@@ -10,3 +10,7 @@ header {
 #time-data {
   display: flex;
 }
+.content_basket_list,
+.content_basket_schedule {
+  display: none;
+}
