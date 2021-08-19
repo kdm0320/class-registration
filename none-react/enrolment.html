@@ -19,7 +19,7 @@
     <!-- 각 탭의 항목을 누르면 메인 안의 div의 내용이 바뀜.-->
     <ul>
       <div><a href="#">수강신청</a></div>
-      <div><a href="#">장바구니</a></div>
+      <div><a href="basket.html">장바구니</a></div>
       <div><a href="#">시간표 조회</a></div>
       <div><a href="#">개인 시간표</a></div>
       <div><a href="#">게시판</a></div>
@@ -85,33 +85,41 @@
     </header>
     <div class="content">
       <div class="content_index">
-        <button>수강신청 안내</button>
-        <button>수강신청내역(취소)</button>
+        <button class="content_index_info">수강신청 안내</button>
+        <button class="content_index_info_cancle_list">수강신청내역(취소)</button>
       </div>
-      <!-- 이곳에 각 탭에 해당하는 기능이 구현되어야 함-->
-      <div class="button_bottom_content">
-        <div class="button_bottom_left_content">
-          <div class="button_bottom_left_icon">
-            <!-- 아이콘 한개 -->
-          </div>
-          <p class="button_bottom_left_text">
-            <span class="button_bottom_left_text_title"> 수강신청 내역 </span>
-            <span>[ 신청과목수 : </span>
-            <span class="button_bottom_left_text_classNum">
-              <!--db 데이터 로드해야함-->
-              4
-            </span>
-            <span> 신청학점 : </span>
-            <span class="button_bottom_left_text_credit">
-              <!--db 데이터 로드해야함-->
-              4
-            </span>
-            <span> ] </span>
-          </p>
-        </div>
+      <div class="content_enrol_info">
+        <h2>수강신청 안내 페이지 입니다.</h2>
+        <p>
+          <span>
+            수강신청은 알아서 잘 해야 합니다.
+          </span>
+        </p>
       </div>
-      <div class="target">
+      <div class="content_enrol_cancleList">
+        <!-- 이곳에 각 탭에 해당하는 기능이 구현되어야 함-->
         <!-- 수강신청 테이블을 버튼 이벤트로 인해 로드할 수 있어야 함-->
+        <div class="button_bottom_content">
+          <div class="button_bottom_left_content">
+            <div class="button_bottom_left_icon">
+              <!-- 아이콘 한개 -->
+            </div>
+            <p class="button_bottom_left_text">
+              <span class="button_bottom_left_text_title"> 수강신청 내역 </span>
+              <span>[ 신청과목수 : </span>
+              <span class="button_bottom_left_text_classNum">
+                <!--db 데이터 로드해야함-->
+                4
+              </span>
+              <span> 신청학점 : </span>
+              <span class="button_bottom_left_text_credit">
+                <!--db 데이터 로드해야함-->
+                4
+              </span>
+              <span> ] </span>
+            </p>
+          </div>
+        </div>
         <table id="enrol_class">
           <caption>
             <!--테이블 하단에 표시할 내용-->
@@ -134,9 +142,8 @@
           <thead>
             <tr>
               <th>캠퍼스</th>
-              <th>과목번호-분반</th>
+              <th>과목번호</th>
               <th>과목명</th>
-              <th>폐강</th>
               <th>이수구분</th>
               <th>교양영역</th>
               <th>재수강</th>
@@ -159,13 +166,13 @@
             <td>9</td>
             <td>10</td>
             <td>11</td>
-            <td>12</td>
           </tbody>
         </table>
       </div>
     </div>
   </main>
   <script src="https://kit.fontawesome.com/87360ab54c.js" crossorigin="anonymous"></script>
+  <script src="JS/enril.js"></script>
 </body>
 
 </html>
