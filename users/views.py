@@ -56,7 +56,6 @@ def basket(request):
 
 def user_schedule(request):
     template_name = "users/userSchedule.html"
-
     try:
         return render(
             request, template_name, {"is_login": request.session["_auth_user_id"]}
