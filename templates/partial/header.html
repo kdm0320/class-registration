@@ -1,0 +1,59 @@
+<header>
+    <!-- 클릭 이벤트로 인해 nav를 감출 수 있어야 함-->
+    <!-- 사용자 정보를 알려주어야 함.-->
+    <div>
+        <!-- 메뉴 감추기 버튼 -->
+        <i class="fas fa-bars"></i>
+    </div>
+    <div>
+        <!-- 학교 이미지 -->
+        <i class="fas fa-graduation-cap"></i>
+    </div>
+    <div>
+        <!-- 학기정보 -->
+        <span> 2021학년도 2학기 </span>
+    </div>
+    <div class="personal-data">
+        <span>
+        <!-- 이름 -->
+        김동민
+        </span>
+        <span>
+        <!-- 학번 -->
+        20142679
+        </span>
+        <span>
+        학년(가진급학년)
+        <!-- 학년 -->
+        </span>
+        <span> 4(4) </span>
+        <span>
+        <!-- 학점 -->
+        제한학점
+        </span>
+        <span>23</span>
+        <span> (기본:22/이월:1) </span>
+        <div>
+        <!-- 상세정보 -->
+        <i class="fas fa-sort-down"></i>
+        </div>
+    </div>
+    <div class="time-data">
+        <div>
+        <!--시계 이미지 -->
+        <i class="far fa-clock"></i>
+        </div>
+        <span>
+        <!-- 시간 정보 -->
+        11:50
+        </span>
+    </div>
+    <div>
+        <button>연장하기</button>
+    </div>
+    <form action="{% url 'users:logout' %}">
+    <div>
+        <button>로그아웃</button>
+    </div>
+    </form>
+</header>

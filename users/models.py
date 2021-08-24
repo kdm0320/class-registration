@@ -1,3 +1,4 @@
+from os import name
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -17,6 +18,7 @@ class User(AbstractUser):
         (GRADE_THIRD, "3"),
         (GRADE_FOURTH, "4"),
     )
+
     number = models.PositiveIntegerField(
         ("학번"),
         default=20140000,
