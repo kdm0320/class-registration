@@ -11,10 +11,10 @@ class notice(models.Model):
         (TYPE_FIRST, "공지"),
         (TYPE_SECOND, "문의"),
     )
+    title = models.CharField(("제목"), max_length=50)
     type = models.CharField(
         ("종류"), choices=TYPE_CHOCIES, max_length=10, default="--선택--"
     )
-    title = models.CharField(("제목"), max_length=50)
     content = models.TextField(("내용"), default="")
     department = models.CharField(("소속"), max_length=10, default="")
     writer = models.CharField(

@@ -4,6 +4,7 @@
 {% block title %}Notice Board{% endblock title %}
 
 {% block content %}
+  {{notices}}<!--JSON 객체 -->
     <main>
     {% include "partial/header.html" %}
       <div class="content">
@@ -65,7 +66,9 @@
           </div>
           <div class="content_bottom">
             <div class="content_bottom_regbutton">
+              <form action="{% url '' %}">
               <button class="modal_open_btn">등록</button>
+              </form>
             </div>
             <div class="contet_bottom_interface">
               <button>&lt;&lt;</button>
