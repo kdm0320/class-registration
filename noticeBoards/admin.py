@@ -4,4 +4,11 @@ from . import models
 
 @admin.register(models.notice)
 class NoticeAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "type",
+        "title",
+        "department",
+        "writer",
+        "created",
+        "post_hit",
+    )
