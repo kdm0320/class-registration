@@ -2,8 +2,8 @@ from django.db import models
 
 
 class ClassInfoModel(models.Model):
-    MAJOR = "majaor"
-    ELECTIVES = "electives"
+    MAJOR = "전공"
+    ELECTIVES = "교양"
     CLASS_CHOICES = ((MAJOR, "전공"), (ELECTIVES, "교양"))
 
     CREDIT1 = "1"
@@ -18,12 +18,13 @@ class ClassInfoModel(models.Model):
     GRADE_SECOND = "2"
     GRADE_THIRD = "3"
     GRADE_FOURTH = "4"
-
+    GRADE_FIFTH = "공통"
     GRADE_CHOICES = (
         (GRADE_FIRST, "1"),
         (GRADE_SECOND, "2"),
         (GRADE_THIRD, "3"),
         (GRADE_FOURTH, "4"),
+        (GRADE_FIFTH, "공통"),
     )
     grade = models.CharField(
         ("학년"), choices=GRADE_CHOICES, max_length=2, default="--선택--"
