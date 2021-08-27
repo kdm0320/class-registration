@@ -1,10 +1,7 @@
-from django.http import response
 from django.shortcuts import redirect, render
 from django.urls.base import reverse
-from django.views import View
 from django.views.generic import FormView
 from . import forms
-from . import models
 from django.contrib.auth import authenticate, login, logout
 
 
@@ -22,6 +19,8 @@ class LoginView(FormView):
             if user is not None:
                 login(request, user)
                 return redirect(reverse("users:enrollment"))
+            else:
+                return redirect(reverse("users:enrollment"))
 
         return render(request, "index.html", {"form": form})
 
@@ -36,29 +35,14 @@ ERROR_PAGE = "core:error"
 
 def enrollment(request):
     template_name = "users/enrolment.html"
-    try:
-        return render(
-            request, template_name, {"is_login": request.session["_auth_user_id"]}
-        )
-    except KeyError:
-        return redirect(reverse(ERROR_PAGE))
+    return render(request, template_name)
 
 
 def basket(request):
     template_name = "users/basket.html"
-    try:
-        return render(
-            request, template_name, {"is_login": request.session["_auth_user_id"]}
-        )
-    except KeyError:
-        return redirect(reverse(ERROR_PAGE))
+    return render(request, template_name)
 
 
 def user_schedule(request):
     template_name = "users/userSchedule.html"
-    try:
-        return render(
-            request, template_name, {"is_login": request.session["_auth_user_id"]}
-        )
-    except KeyError:
-        return redirect(reverse(ERROR_PAGE))
+    return render(request, template_name)
