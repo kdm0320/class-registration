@@ -10,6 +10,25 @@
     <!-- nav 부분 inclued 해아함-->
     <main>
       <!--header 부분 include 해야함.(최상단 학번, 학년, 학과 정보 )-->
+
+      <form name="selected" action="#" method="GET">
+        <select id="subject" name="subject">
+          <option value="">--선택--</option>
+          <option value="business">경영경제대학</option>
+          <option value="engineering">공과대학</option>
+          <option value="software">소프트웨어대학</option>
+        </select>
+        <select id="college" name="college">
+          <!--subject 값에 따라 뭐가 오는지 제어해야함.-->
+          <option value="">--선택--</option>
+        </select>
+        <input id="schedule_button" type="submit" value="조회" />
+      </form>
+
+      <div>
+        <table></table>
+      </div>
     </main>
+    <script src="./JS/viewSchedule.js"></script>
   </body>
 </html>
