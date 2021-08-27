@@ -19,10 +19,7 @@ class LoginView(FormView):
             if user is not None:
                 login(request, user)
                 return redirect(reverse("users:enrollment"))
-            else:
-                return redirect(reverse("users:enrollment"))
-
-        return render(request, "index.html", {"form": form})
+            return render(request, "index.html", {"form": form})
 
 
 def log_out(request):
