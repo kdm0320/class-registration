@@ -3,6 +3,7 @@ from django.urls.base import reverse
 from django.views.generic import FormView
 from . import forms
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 class LoginView(FormView):
@@ -22,24 +23,25 @@ class LoginView(FormView):
             return render(request, "index.html", {"form": form})
 
 
+@login_required(login_url="/login/")
 def log_out(request):
     logout(request)
     return redirect(reverse("core:index"))
 
 
-ERROR_PAGE = "core:error"
-
-
+@login_required(login_url="/login/")
 def enrollment(request):
     template_name = "users/enrolment.html"
     return render(request, template_name)
 
 
+@login_required(login_url="/login/")
 def basket(request):
     template_name = "users/basket.html"
     return render(request, template_name)
 
 
+@login_required(login_url="/login/")
 def user_schedule(request):
     template_name = "users/userSchedule.html"
     return render(request, template_name)
