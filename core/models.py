@@ -2,6 +2,7 @@ from django.db import models
 
 
 class ClassInfoModel(models.Model):
+    DEFAULT = "--선택--"
     MAJOR = "전공"
     ELECTIVES = "교양"
     CLASS_CHOICES = ((MAJOR, "전공"), (ELECTIVES, "교양"))
@@ -26,17 +27,28 @@ class ClassInfoModel(models.Model):
         (GRADE_FOURTH, "4"),
         (GRADE_FIFTH, "공통"),
     )
+    UNI_1 = "경영경제대학"
+    UNI_2 = "공과대학"
+    UNI_3 = "소프트웨어대학"
+    UNI_CHOICES = (
+        (UNI_1, "경영경제대학"),
+        (UNI_2, "공과대학"),
+        (UNI_3, "소프트웨어대학"),
+    )
+    universe = models.CharField(
+        ("대학"), choices=UNI_CHOICES, max_length=10, default=DEFAULT
+    )
     grade = models.CharField(
-        ("학년"), choices=GRADE_CHOICES, max_length=2, default="--선택--"
+        ("학년"), choices=GRADE_CHOICES, max_length=2, default=DEFAULT
     )
     check_major = models.CharField(
-        ("이수구분"), choices=CLASS_CHOICES, max_length=10, default="--선택--"
+        ("이수구분"), choices=CLASS_CHOICES, max_length=10, default=DEFAULT
     )
     subject_number = models.CharField(("과목번호"), max_length=20, blank=True)
     subject_name = models.CharField(("과목명"), max_length=30, blank=True)
     credit = models.CharField(("학점"), choices=CREDIT_CHOICES, max_length=2, blank=True)
     professor = models.CharField(("담당교수"), max_length=5, blank=True)
-    is_closed = models.BooleanField(("폐강"), default=False)
+    time = models.CharField(("강의시간"), max_length=8, blank=True)
 
     class Meta:
         abstract = True
