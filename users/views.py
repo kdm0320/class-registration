@@ -1,11 +1,9 @@
-from django.http import response
 from django.shortcuts import redirect, render
 from django.urls.base import reverse
-from django.views import View
 from django.views.generic import FormView
 from . import forms
-from . import models
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 class LoginView(FormView):
@@ -22,43 +20,28 @@ class LoginView(FormView):
             if user is not None:
                 login(request, user)
                 return redirect(reverse("users:enrollment"))
+            return render(request, "index.html", {"form": form})
 
-        return render(request, "index.html", {"form": form})
 
-
+@login_required(login_url="/login/")
 def log_out(request):
     logout(request)
     return redirect(reverse("core:index"))
 
 
-ERROR_PAGE = "core:error"
-
-
+@login_required(login_url="/login/")
 def enrollment(request):
     template_name = "users/enrolment.html"
-    try:
-        return render(
-            request, template_name, {"is_login": request.session["_auth_user_id"]}
-        )
-    except KeyError:
-        return redirect(reverse(ERROR_PAGE))
+    return render(request, template_name)
 
 
+@login_required(login_url="/login/")
 def basket(request):
     template_name = "users/basket.html"
-    try:
-        return render(
-            request, template_name, {"is_login": request.session["_auth_user_id"]}
-        )
-    except KeyError:
-        return redirect(reverse(ERROR_PAGE))
+    return render(request, template_name)
 
 
+@login_required(login_url="/login/")
 def user_schedule(request):
     template_name = "users/userSchedule.html"
-    try:
-        return render(
-            request, template_name, {"is_login": request.session["_auth_user_id"]}
-        )
-    except KeyError:
-        return redirect(reverse(ERROR_PAGE))
+    return render(request, template_name)

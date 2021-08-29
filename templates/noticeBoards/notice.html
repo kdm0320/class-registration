@@ -4,8 +4,7 @@
 {% block title %}Notice Board{% endblock title %}
 
 {% block content %}
-  {{notices}}<!--JSON 객체 -->
-    <main>
+  <main>
     {% include "partial/header.html" %}
       <div class="content">
         <div class="content_title">
@@ -66,7 +65,7 @@
           </div>
           <div class="content_bottom">
             <div class="content_bottom_regbutton">
-              <form action="{% url '' %}">
+              <form action="#">
               <button class="modal_open_btn">등록</button>
               </form>
             </div>
@@ -98,5 +97,8 @@
       src="https://kit.fontawesome.com/87360ab54c.js"
       crossorigin="anonymous"
     ></script>
-    <script src="{% static 'JS/notice.js' %}"></script>
-{% endblock %}
+    <script src="{% static 'JS/notice.js' %}">
+      let data = {{notice}};<!--백단데이터 방식1-->
+      let data1 = JSON.parse("{{ notice|escapejs }}");<!--방식2-->
+    </script>
+{% endblock content %}

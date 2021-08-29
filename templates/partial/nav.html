@@ -3,8 +3,8 @@
     <ul>
     <div><a href="{% url 'users:enrollment' %}">수강신청</a></div>
     <div><a href="{% url 'users:basket' %}">장바구니</a></div>
-    <div><a href="#">시간표 조회</a></div>
+    <div><a href="{% url 'classes:class' %}">시간표 조회</a></div>
     <div><a href="#">개인 시간표</a></div>
-    <div><a href="{% url 'notice:board' %}">게시판</a></div>
+    <div><a href="{% url 'notices:board' %}">게시판</a></div>
     </ul>
 </nav>
