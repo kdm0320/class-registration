@@ -98,5 +98,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="{% static 'JS/notice.js' %}">
+      let data = {{notice}};<!--백단데이터 방식1-->
+      let data1 = JSON.parse("{{ notice|escapejs }}");<!--방식2-->
     </script>
 {% endblock content %}
