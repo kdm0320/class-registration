@@ -8,7 +8,7 @@
    <main>
       <!--header 부분 include 해야함.(최상단 학번, 학년, 학과 정보 )-->
 
-      <form name="selected" action="#" method="GET">
+      <form name="selected" action="{% url 'classes:lookup' %}" method="GET">
         <select id="subject" name="subject">
           <option value="">--선택--</option>
           <option value="business">경영경제대학</option>
@@ -53,5 +53,7 @@
         </table>
       </div>
     </main>
-  <script src="{% static 'JS/viewSchedule.js' %}"></script>
+  <script src="{% static 'JS/viewSchedule.js' %}">
+    {{class_data}}
+  </script>
 {% endblock content %}
