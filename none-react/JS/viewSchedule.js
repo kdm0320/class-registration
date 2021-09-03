@@ -10,7 +10,7 @@ function selectedOption(e) {
   let loop;
 
   if (this.value == "business") loop = business;
-  else if (this.value == "engineering") loop = engineering;
+  else if (this.value == "createdIctEngineering") loop = engineering;
   else if (this.value == "software") loop = software;
 
   target.options.length = 1;

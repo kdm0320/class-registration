@@ -1,0 +1,10 @@
+<nav>
+    <!-- 각 탭의 항목을 누르면 메인 안의 div의 내용이 바뀜.-->
+    <ul>
+    <div><a href="{% url 'users:enrollment' %}">수강신청</a></div>
+    <div><a href="{% url 'users:basket' %}">장바구니</a></div>
+    <div><a href="{% url 'classes:class' %}">시간표 조회</a></div>
+    <div><a href="#">개인 시간표</a></div>
+    <div><a href="{% url 'notices:board' %}">게시판</a></div>
+    </ul>
+</nav>

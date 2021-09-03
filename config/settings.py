@@ -49,7 +49,11 @@ PROJECT_APPS = [
     "registrations.apps.RegistrationsConfig",
     "noticeBoards.apps.NoticeboardsConfig",
 ]
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
+
+THRID_PARTY_APPS = [
+    "import_export",
+]
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THRID_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
