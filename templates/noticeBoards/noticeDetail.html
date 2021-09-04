@@ -1,8 +1,9 @@
-{% extends 'base.html' %} {% load static %} {% block title %} NoticeBoard
-{%endblock title %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %} NoticeDetail
+{%endblock title %}
+
+{% block content %}
 <main>
   {% include "partial/header.html" %}
-  {{notices}}
   <div class="content">
     <div class="content_title">
       <span>▶ 수강신청게시판 (Course Registration Board)</span>
@@ -41,7 +42,7 @@
       </div>
       <div class="content_bottom">
         <div class="content_bottom_regbutton">
-            <button class="modal_open_btn">등록</button>
+          <button class="modal_open_btn">등록</button>
         </div>
         <div class="contet_bottom_interface">
           <button>&lt;&lt;</button>
@@ -63,37 +64,14 @@
 <section class="modal">
   <div class="modal_content">
     <h2>등록 창 입니다.</h2>
-    <form id="modal_views" action="{% url 'notices:board' %}" method="POST">
+    <form id="modal_views" action="{% url 'notices:regist' %}" method="POST">
     {% csrf_token %}
-
       <div>
-        <h3>제목 :</h3>
-        <input type="text" required name="title" id="modal_title" minlength="3" />
+      {{form.as_p}}
+      <button type="submit">등록</button>
       </div>
-      <div>
-        <h3>종류 :</h3>
-        <select name="type" required id="modal_type">
-          <option value="modice">공지</option>
-          <option value="modalquery">문의</option>
-        </select>
-      </div>
-      <div>
-        <h3>내용 :</h3>
-        <textarea required name="content" id="modal_content" rows="5" cols="33"></textarea>
-      </div>
-      <div>
-        <h3>소속 :</h3>
-        <input type="text" required name="department" id="modal_department" minlength="2"/>
-      </div>
-      <div>
-        <h3>작성자 :</h3>
-        <input type="text" required name="writer" id="modal_writer" minlength="2"/>
-      </div>
-      <div>
-        <input type="submit" value="등록" />
-      </div>
-    </form>
     <button class="modal_close_btn">모달 창 닫기</button>
+    </form>
   </div>
   <div class="modal_layer"></div>
 </section>
@@ -103,16 +81,7 @@
 ></script>
 {% if notices %}
     {{ notices| json_script:'jsonData'}}
-    <script type = "text/javascript"> 
-            let placeData = JSON.parse(document.getElementById('jsonData').textContent);
-            console.log(placeData)
-        </script>
 {% endif %}
-<script
->
-</script> 
-<script src="{% static 'JS/showtablenotice.js' %}"> 
-  
-</script>
+<script src="{% static 'JS/showtablenotice.js' %}"> </script>
 <script src="{% static 'JS/notice.js' %}"></script>
 {% endblock content %}

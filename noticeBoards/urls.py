@@ -5,4 +5,5 @@ app_name = "notices"
 
 urlpatterns = [
     path("", board_views.home, name="board"),
+    path("", board_views.notice_detail, name="detail"),
 ]

@@ -6,6 +6,8 @@
 {% block content %}
 {% include "partial/header.html" %}
    <main>
+    {{class_data}}
+
       <!--header 부분 include 해야함.(최상단 학번, 학년, 학과 정보 )-->
 
       <form name="selected" action="{% url 'classes:lookup' %}" method="GET">
