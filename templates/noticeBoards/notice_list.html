@@ -35,9 +35,11 @@
             </tr>
           </thead>
           <tbody class="target_table_body">
-          {% for notice in object_list %}
+          {% for notice in notices %}
             <th>{{notice.type}}</th>
-            <th>{{notice.title}}</th>
+            <th>
+            <a href="{% url 'notices:detail' notice.pk %}">{{notice.title}}</a>
+            </th>
             <th>{{notice.department}}</th>
             <th>{{notice.writer}}</th>
             <th>{{notice.created|date:'Y-m-d'}}</th>

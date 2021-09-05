@@ -11,6 +11,7 @@ class noticeView(ListView):
     model = notice
     paginate_by = 3
     ordering = "created"
+    context_object_name = "notices"
 
     def post(self, request):
         notice.objects.create(
@@ -22,6 +23,10 @@ class noticeView(ListView):
         )
 
         return redirect("notices:board")
+
+
+def notice_detail(request, pk):
+    return render(request, "noticeBoards/noticeDetail.html")
 
 
 # def home(request):
@@ -49,7 +54,3 @@ class noticeView(ListView):
 #         )
 #     except EmptyPage:
 #         return redirect("notices:board")
-
-
-def notice_detail(request):
-    return render(request, "noticeBoards/noticeDetail.html")

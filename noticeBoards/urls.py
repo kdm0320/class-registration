@@ -5,5 +5,5 @@ app_name = "notices"
 
 urlpatterns = [
     path("", board_views.noticeView.as_view(), name="board"),
-    path("", board_views.notice_detail, name="detail"),
+    path("notce/<int:pk>/", board_views.notice_detail, name="detail"),
 ]
