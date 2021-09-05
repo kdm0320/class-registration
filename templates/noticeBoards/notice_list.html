@@ -34,19 +34,23 @@
               
             </tr>
           </thead>
-          <tbody class="target_table_body">
+
           {% for notice in notices %}
-            <th>{{notice.type}}</th>
-            <th>
+            <tbody class="target_table_body">
+            <tr>
+            <td>{{notice.type}}</td>
+            <td>
             <a href="{% url 'notices:detail' notice.pk %}">{{notice.title}}</a>
-            </th>
-            <th>{{notice.department}}</th>
-            <th>{{notice.writer}}</th>
-            <th>{{notice.created|date:'Y-m-d'}}</th>
-            <th>{{notice.post_hit}}</th>
+            </td>
+            <td>{{notice.department}}</td>
+            <td>{{notice.writer}}</td>
+            <td>{{notice.created|date:'Y-m-d'}}</td>
+            <td>{{notice.post_hit}}</td>
+            </tr>
           </tbody>
+
           {% endfor %}
-   
+
         </table>
       </div>
       <div class="content_bottom">
@@ -98,11 +102,11 @@
         <textarea required name="content" id="modal_content" rows="5" cols="33"></textarea>
       </div>
       <div>
-        <h3>소속 :</h3>
+        <h3>소속 :</h3><!--입력창이 아닌 유저의 소속({{user.major}})을 보여주고 서버로 "{{user.major}}" 를 넘겨줄것-->
         <input type="text" required name="department" id="modal_department" minlength="2"/>
       </div>
       <div>
-        <h3>작성자 :</h3>
+        <h3>작성자 :</h3><!--입력창이 아닌 유저의 이름({{user.last_name}}{{user.first_name}})을 보여주고 서버로 "{{user.last_name}}{{user.first_name}}"" 를 넘겨줄것-->
         <input type="text" required name="writer" id="modal_writer" minlength="2"/>
       </div>
       <div>
