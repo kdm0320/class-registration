@@ -35,7 +35,7 @@
             </tr>
           </thead>
           <tbody class="target_table_body">
-          {% for notice in notices.object_list %}
+          {% for notice in object_list %}
             <th>{{notice.type}}</th>
             <th>{{notice.title}}</th>
             <th>{{notice.department}}</th>
@@ -52,22 +52,22 @@
             <button class="modal_open_btn">등록</button>
         </div>
         <div class="contet_bottom_interface">
-          {% if noitces.has_previous %}
+          {% if page_obj.has_previous %}
             <button type="button" onclick="location.href='/notice';">&lt;&lt;</button>
-            <button type="button" onclick="location.href='?page={{notices.number|add:-1}}';">&lt;</button>
+            <button type="button" onclick="location.href='?page={{page_obj.previous_page_number}}';">&lt;</button>
           {% endif %}
           <p>
-            <span>Page {{notices.number}}</span>
+            <span>Page {{page_obj.number}}</span>
             <span>of </span>
-            <span>{{notices.paginator.num_pages}}</span>
+            <span>{{page_obj.paginator.num_pages}}</span>
           </p>
-          <div>
-          {% for page in notices.paginator.page_range %}
+          <p>
+          {% for page in page_obj.paginator.page_range %}
             <a href="?page={{page}}">{{page}}</a>
           {% endfor %}
-          </div>
-          {% if notices.has_next  %}
-            <button type="button" onclick="location.href='?page={{notices.number|add:1}}';">&gt;</button>
+          </p>
+          {% if page_obj.has_next  %}
+            <button type="button" onclick="location.href='?page={{page_obj.next_page_number}}';">&gt;</button>
             <button type="button" onclick="location.href='?page={{last_page}}';">&gt;&gt;</button>
           {% endif %}
         </div>
