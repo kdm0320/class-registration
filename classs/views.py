@@ -2,7 +2,6 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render
 from . import models
-from django.core import serializers
 
 
 def class_to_dictionary(data):

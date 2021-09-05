@@ -2,7 +2,6 @@
 {%endblock title %} {% block content %}
 <main>
   {% include "partial/header.html" %}
-  {{notices}}
   <div class="content">
     <div class="content_title">
       <span>▶ 수강신청게시판 (Course Registration Board)</span>
@@ -25,18 +24,27 @@
         <table>
           <thead>
             <tr>
-              <th class="hidden">번호</th>
-              <th>종류</th>
-              <th>제목</th>
-              <th>소속</th>
-              <th>작성자</th>
-              <th>작성일</th>
-              <th>조회수</th>
+            <th class="hidden">번호</th>
+            <th>종류</th>
+            <th>제목</th>
+            <th>소속</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+              
             </tr>
           </thead>
           <tbody class="target_table_body">
-            <!--필요한 게시글 마다 tr로 등록.-->
+          {% for notice in notices %}
+            <th>{{notice.type}}</th>
+            <th>{{notice.title}}</th>
+            <th>{{notice.department}}</th>
+            <th>{{notice.writer}}</th>
+            <th>{{notice.created|date:'Y-m-d'}}</th>
+            <th>{{notice.post_hit}}</th>
           </tbody>
+          {% endfor %}
+
         </table>
       </div>
       <div class="content_bottom">
@@ -44,17 +52,19 @@
             <button class="modal_open_btn">등록</button>
         </div>
         <div class="contet_bottom_interface">
-          <button>&lt;&lt;</button>
-          <button>&lt;</button>
+          {% if page is not 1 %}
+            <button type="button" onclick="location.href='/notice';">&lt;&lt;</button>
+            <button type="button" onclick="location.href='?page={{page|add:-1}}';">&lt;</button>
+          {% endif %}
           <p>
-            <span>page</span>
-            <input type="number" value="0" />
+            <span>Page {{page}}</span>
             <span>of </span>
-            <!--최대 페이지는 서버로부터 받아야 함-->
-            <span>1</span>
+            <span>{{page_count}}</span>
           </p>
-          <button>&gt;</button>
-          <button>&gt;&gt;</button>
+          {% if not page == page_count  %}
+            <button type="button" onclick="location.href='?page={{page|add:1}}';">&gt;</button>
+            <button type="button" onclick="location.href='?page={{last_page}}';">&gt;&gt;</button>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -65,7 +75,6 @@
     <h2>등록 창 입니다.</h2>
     <form id="modal_views" action="{% url 'notices:board' %}" method="POST">
     {% csrf_token %}
-
       <div>
         <h3>제목 :</h3>
         <input type="text" required name="title" id="modal_title" minlength="3" />
@@ -101,18 +110,6 @@
   src="https://kit.fontawesome.com/87360ab54c.js"
   crossorigin="anonymous"
 ></script>
-{% if notices %}
-    {{ notices| json_script:'jsonData'}}
-    <script type = "text/javascript"> 
-            let placeData = JSON.parse(document.getElementById('jsonData').textContent);
-            console.log(placeData)
-        </script>
-{% endif %}
-<script
->
-</script> 
-<script src="{% static 'JS/showtablenotice.js' %}"> 
-  
-</script>
+
 <script src="{% static 'JS/notice.js' %}"></script>
 {% endblock content %}
