@@ -35,7 +35,7 @@
             </tr>
           </thead>
           <tbody class="target_table_body">
-          {% for notice in notices %}
+          {% for notice in notices.object_list %}
             <th>{{notice.type}}</th>
             <th>{{notice.title}}</th>
             <th>{{notice.department}}</th>
@@ -44,7 +44,7 @@
             <th>{{notice.post_hit}}</th>
           </tbody>
           {% endfor %}
-
+   
         </table>
       </div>
       <div class="content_bottom">
@@ -52,17 +52,22 @@
             <button class="modal_open_btn">등록</button>
         </div>
         <div class="contet_bottom_interface">
-          {% if page is not 1 %}
+          {% if noitces.has_previous %}
             <button type="button" onclick="location.href='/notice';">&lt;&lt;</button>
-            <button type="button" onclick="location.href='?page={{page|add:-1}}';">&lt;</button>
+            <button type="button" onclick="location.href='?page={{notices.number|add:-1}}';">&lt;</button>
           {% endif %}
           <p>
-            <span>Page {{page}}</span>
+            <span>Page {{notices.number}}</span>
             <span>of </span>
-            <span>{{page_count}}</span>
+            <span>{{notices.paginator.num_pages}}</span>
           </p>
-          {% if not page == page_count  %}
-            <button type="button" onclick="location.href='?page={{page|add:1}}';">&gt;</button>
+          <div>
+          {% for page in notices.paginator.page_range %}
+            <a href="?page={{page}}">{{page}}</a>
+          {% endfor %}
+          </div>
+          {% if notices.has_next  %}
+            <button type="button" onclick="location.href='?page={{notices.number|add:1}}';">&gt;</button>
             <button type="button" onclick="location.href='?page={{last_page}}';">&gt;&gt;</button>
           {% endif %}
         </div>
@@ -82,8 +87,8 @@
       <div>
         <h3>종류 :</h3>
         <select name="type" required id="modal_type">
-          <option value="modice">공지</option>
-          <option value="modalquery">문의</option>
+          <option value="공지">공지</option>
+          <option value="문의">문의</option>
         </select>
       </div>
       <div>
