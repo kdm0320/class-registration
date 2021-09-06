@@ -4,6 +4,7 @@ from . import views as board_views
 app_name = "notices"
 
 urlpatterns = [
-    path("", board_views.noticeView.as_view(), name="board"),
+    path("", board_views.NoticeView.as_view(), name="board"),
+    path("myboard/", board_views.NoticeDetailView.as_view(), name="find"),
     path("notce/<int:pk>/", board_views.notice_detail, name="detail"),
 ]

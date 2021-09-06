@@ -5,13 +5,39 @@ from django.views.generic import ListView
 # from django.contrib.auth.decorators import login_required
 
 
-class noticeView(ListView):
+class NoticeView(ListView):
     """noticeView Definition"""
 
     model = notice
     paginate_by = 3
     ordering = "created"
     context_object_name = "notices"
+
+    def post(self, request):
+        notice.objects.create(
+            title=request.POST["title"],
+            type=request.POST["type"],
+            content=request.POST["content"],
+            department=request.POST["department"],
+            writer=request.POST["writer"],
+        )
+
+        return redirect("notices:board")
+
+
+class NoticeDetailView(ListView):
+    """NoticeDetailView Definition"""
+
+    template_name = "noticeBoards/my_notice_list.html"
+    model = notice
+    paginate_by = 3
+    ordering = "created"
+    context_object_name = "notices"
+
+    def get_queryset(self, **kwargs):
+        user = self.request.user.last_name + self.request.user.first_name
+        user_notice = notice.objects.filter(writer=user)
+        return user_notice
 
     def post(self, request):
         notice.objects.create(
@@ -50,5 +76,19 @@ class noticeView(ListView):
 #     )
 
 
+def find_user_notice(request):
+    template_name = "noticeBoards/notice_list.html"
+    notce_page = "A"
+    return render(
+        request,
+        template_name,
+        {
+            "are": notce_page,
+        },
+    )
+
+
 def notice_detail(request, pk):
-    return render(request, "noticeBoards/noticeDetail.html")
+    template_name = "noticeBoards/noticeDetail.html"
+
+    return render(request, template_name)
