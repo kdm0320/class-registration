@@ -1,0 +1,53 @@
+  
+{% extends 'base.html' %} {% load static %} {% block title %} NoticeDetail
+{%endblock title %}
+{% block content %}
+<main>
+  {% include "partial/header.html" %}
+  <section>
+      <table id="show_notice_data">
+          <tr>
+            <td colspan="3">제목</td>
+            <td colspan="5">테스트용 입니다.</td>
+
+            <td>작성일</td>
+            <td>2021.09.03</td>
+          </tr>
+          <tr>
+            <td colspan="3">종류</td>
+            <td colspan="5">공지</td>
+
+            <td>조회수</td>
+            <td>999</td>
+          </tr>
+          <tr>
+            <td colspan="3">작성자</td>
+            <td colspan="5">김찬수</td>
+
+            <td>소속</td>
+            <td>전자공학과</td>
+          </tr>
+          <!-- 게시글 내용 -->
+          <tr>
+            <td colspan="16" rowspan="5" id="notice_data_main_content">
+            게시글 내용 어쩌구 저쩌구
+            이러쿵 저러쿵
+            세줄째 내용
+            </td>
+          </tr>
+      </table>
+  </section>
+  <section>
+  <!-- 삭제 저장 수정 등등의 버튼들 -->
+    <form action="#" method="get">
+      <button type="submit">삭제</button>
+    </form>
+    <form action="#" method="get">
+      <button type="submit">수정</button>
+    </form>
+    <form action="#" method="get">
+      <button type="submit">저장</button>
+    </form>
+  </section>
+</main>
+{% endblock content %}
