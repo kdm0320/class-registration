@@ -38,6 +38,7 @@
           </tbody>
         </table>
       </div>
+      <button>강의데이터</button>
       <div class="content_bottom">
         <div class="content_bottom_regbutton">
           <form action="#">
@@ -61,10 +62,12 @@
     </div>
   </div>
 </main>
-<section class="modal">
+<div id="example1" style="display: block;, height: 2000px; width: 3000px;"></div>
+ <section class="modal"> 
   <div class="modal_content">
     <h2>등록 창 입니다.</h2>
-    <form id="modal_views" action="#" method="GET">
+    <form id="modal_views" action="#" method="POST">
+    {% csrf_token %}
       <div>
         <h3>제목 :</h3>
         <input type="text" required name="title" id="modal_title" minlength="3" />
@@ -100,6 +103,9 @@
   src="https://kit.fontawesome.com/87360ab54c.js"
   crossorigin="anonymous"
 ></script>
+<script type="text/javascript" src="{% static 'JS/pdfobj/pdfobject.js' %}"></script>
+<script>
+  PDFObject.embed("{% static 'pdf/noname_1.pdf' %}","#example1");
 </script>
 {% if notices %}
     {{ notices| json_script:'jsonData'}}

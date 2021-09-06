@@ -1,4 +1,4 @@
-let trRows = document.querySelectorAll(".notice_content_table_row");
+//let trRows = document.querySelectorAll(".notice_content_table_row");
 const modalOn = document.querySelector(".modal_open_btn");
 const modalOff = document.querySelector(".modal_close_btn");
 const modals = document.querySelector(".modal");
@@ -12,7 +12,7 @@ function setTrRow(targetRows) {
 function onLinked() {
   const regData = this.querySelector(".hidden").innerText;
   // pk 값에 따른 링크 생성을 위해 해당 값을 읽음.
-  console.log("클릭하셨습니다.")
+  //console.log("클릭하셨습니다.")
   //window.location.replace(`notice.html?regData=${regData}`);
   // 새로 html 파일 만들면 연결 시켜야 함.
 }
@@ -30,5 +30,5 @@ modals.addEventListener("click", event => {
     modals.style.display = "none";
   }
 })
-setTrRow(trRows);
+//setTrRow(trRows);
 

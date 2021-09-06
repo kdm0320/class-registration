@@ -20,9 +20,6 @@ header {
 caption {
   caption-side: bottom;
 }
-tr {
-  cursor: pointer;
-}
 .hidden {
   display: none;
 }

@@ -20,7 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-SECRET_KEY = 'django-insecure-$kin7atr6h(8(b@biikxbyt4i-rygfu3*l$t#*x!fz!rda(+g6'
+
+SECRET_KEY ="django-insecure-$kin7atr6h(8(b@biikxbyt4i-rygfu3*l$t#*x!fz!rda(+g6"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -143,5 +144,3 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
 
-SESSION_COOKIE_AGE = 1200
-SESSION_SAVE_EVERY_REQUEST = False

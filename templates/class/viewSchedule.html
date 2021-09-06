@@ -35,6 +35,7 @@
               <td>학점</td>
               <td>담당교수</td>
               <td>강의시간</td>
+              <td></td>
             </tr>
           </thead>
           <tbody>
@@ -52,15 +53,11 @@
           </tbody>
         </table>
       </div>
+      {% if class_data %}
+        {{ class_data| json_script:'classData'}}
+      {% endif %}
+  
     </main>
-    <!--<p class="hiddenJson">{{class_data}}</p>-->
-    {% if notices %}
-    {{ notices| json_script:'jsonData'}}
-    name is : 
-        <script type = "text/javascript"> 
-            var placeData = JSON.parse(document.getElementById('jsonData').textContent);
-        </script>
-
-    {% endif %}
   <script src="{% static 'JS/viewSchedule.js' %}"></script>
+  <script src="{% static 'JS/showTableSchedule.js' %}"></script>
 {% endblock content %}

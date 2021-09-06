@@ -20,6 +20,8 @@ function inputData(data, tr, pk) {
 // 여러 게시글이 있다면 해당 json 도 비슷하게 올 것. 이때 어떻게 slpit 하는지 잘 생각해야함.
 //let placeData = JSON.parse(document.getElementById('jsonData').textContent).split("[")[1].split("]")[0];
 let placeData = JSON.parse(document.getElementById('jsonData').textContent).split("[")[1].split("]")[0].split(",");
+//let testData = JSON.parse(document.getElementById('jsonData').textContent)
+console.log(placeData)
 
 let count = 0;
 let index = placeData.length
