@@ -20,9 +20,6 @@ header {
 caption {
   caption-side: bottom;
 }
-tr {
-  /* cursor: pointer; */
-}
 .hidden {
   display: none;
 }
@@ -64,4 +61,15 @@ tr {
   background: rgba(0, 0, 0, 0.5);
   z-index: -1;
 }
-
+#show_notice_data{
+  width: 800px;
+  height: 600px;
+  text-align: center;
+}
+#show_notice_data tr td{
+  border:rgba(0, 0, 0, 0.5) 1px solid;
+}
+#notice_data_main_content{
+  width: 800px;
+  height: 300px;
+}

@@ -6,8 +6,6 @@
 {% block content %}
 {% include "partial/header.html" %}
    <main>
-    {{class_data}}
-
       <!--header 부분 include 해야함.(최상단 학번, 학년, 학과 정보 )-->
 
       <form name="selected" action="{% url 'classes:lookup' %}" method="GET">
@@ -37,6 +35,7 @@
               <td>학점</td>
               <td>담당교수</td>
               <td>강의시간</td>
+              <td></td>
             </tr>
           </thead>
           <tbody>
@@ -54,8 +53,11 @@
           </tbody>
         </table>
       </div>
+      {% if class_data %}
+        {{ class_data| json_script:'classData'}}
+      {% endif %}
+  
     </main>
-  <script src="{% static 'JS/viewSchedule.js' %}">
-    {{class_data}}
-  </script>
+  <script src="{% static 'JS/viewSchedule.js' %}"></script>
+  <script src="{% static 'JS/showTableSchedule.js' %}"></script>
 {% endblock content %}

@@ -1,7 +1,51 @@
 {% extends 'base.html' %} {% load static %} {% block title %} NoticeDetail
 {%endblock title %}
-
 {% block content %}
+<main>
   {% include "partial/header.html" %}
-  
+    
+  <section>
+      <table id="show_notice_data">
+          <tr>
+            <td colspan="3">제목</td>
+            <td colspan="5">{{target.title}}</td>
+
+            <td>작성일</td>
+            <td>{{target.updated|date:'Y.m.d'}}</td>
+          </tr>
+          <tr>
+            <td colspan="3">종류</td>
+            <td colspan="5">{{target.type}}</td>
+
+            <td>조회수</td>
+            <td>{{target.post_hit}}</td>
+          </tr>
+          <tr>
+            <td colspan="3">작성자</td>
+            <td colspan="5">{{target.writer}}</td>
+
+            <td>소속</td>
+            <td>{{target.department}}</td>
+          </tr>
+          <!-- 게시글 내용 -->
+          <tr>
+            <td colspan="16" rowspan="5" id="notice_data_main_content">
+            {{target.content}}
+            </td>
+          </tr>
+      </table>
+  </section>
+  <section>
+  <!-- 삭제 저장 수정 등등의 버튼들 -->
+    <form action="#" method="get">
+      <button type="submit">삭제</button>
+    </form>
+    <form action="#" method="get">
+      <button type="submit">수정</button>
+    </form>
+    <form action="#" method="get">
+      <button type="submit">저장</button>
+    </form>
+  </section>
+</main>
 {% endblock content %}

@@ -1,3 +1,4 @@
+from django.http.response import Http404
 from noticeBoards.models import notice
 from django.shortcuts import redirect, render
 from django.views.generic import ListView
@@ -25,7 +26,7 @@ class NoticeView(ListView):
         return redirect("notices:board")
 
 
-class NoticeDetailView(ListView):
+class MyNoticeView(ListView):
     """NoticeDetailView Definition"""
 
     template_name = "noticeBoards/my_notice_list.html"
@@ -76,19 +77,10 @@ class NoticeDetailView(ListView):
 #     )
 
 
-def find_user_notice(request):
-    template_name = "noticeBoards/notice_list.html"
-    notce_page = "A"
-    return render(
-        request,
-        template_name,
-        {
-            "are": notce_page,
-        },
-    )
-
-
 def notice_detail(request, pk):
     template_name = "noticeBoards/noticeDetail.html"
-
-    return render(request, template_name)
+    try:
+        target_notice = notice.objects.get(pk=pk)
+        return render(request, template_name, {"target": target_notice})
+    except notice.DoesNotExist:
+        raise Http404()
