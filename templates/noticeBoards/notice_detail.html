@@ -8,29 +8,29 @@
       <table id="show_notice_data">
           <tr>
             <td colspan="3">제목</td>
-            <td colspan="5">{{target.title}}</td>
+            <td colspan="5">{{notice.title}}</td>
 
             <td>작성일</td>
-            <td>{{target.updated|date:'Y.m.d'}}</td>
+            <td>{{notice.updated|date:'Y.m.d'}}</td>
           </tr>
           <tr>
             <td colspan="3">종류</td>
-            <td colspan="5">{{target.type}}</td>
+            <td colspan="5">{{notice.type}}</td>
 
             <td>조회수</td>
-            <td>{{target.post_hit}}</td>
+            <td>{{notice.post_hit}}</td>
           </tr>
           <tr>
             <td colspan="3">작성자</td>
-            <td colspan="5">{{target.writer}}</td>
+            <td colspan="5">{{notice.writer}}</td>
 
             <td>소속</td>
-            <td>{{target.department}}</td>
+            <td>{{notice.department}}</td>
           </tr>
           <!-- 게시글 내용 -->
           <tr>
             <td colspan="16" rowspan="5" id="notice_data_main_content">
-            {{target.content}}
+            {{notice.content}}
             </td>
           </tr>
       </table>

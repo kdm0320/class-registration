@@ -1,7 +1,8 @@
 from django.http.response import Http404
+from noticeBoards import models
 from noticeBoards.models import notice
 from django.shortcuts import redirect, render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 # from django.contrib.auth.decorators import login_required
 
@@ -77,10 +78,17 @@ class MyNoticeView(ListView):
 #     )
 
 
-def notice_detail(request, pk):
-    template_name = "noticeBoards/noticeDetail.html"
-    try:
-        target_notice = notice.objects.get(pk=pk)
-        return render(request, template_name, {"target": target_notice})
-    except notice.DoesNotExist:
-        raise Http404()
+class NoticeDetail(DetailView):
+
+    """NoticeDetail Definition"""
+
+    model = notice
+
+
+# def notice_detail(request, pk):
+#     template_name = "noticeBoards/noticeDetail.html"
+#     try:
+#         target_notice = notice.objects.get(pk=pk)
+#         return render(request, template_name, {"notice": target_notice})
+#     except notice.DoesNotExist:
+#         raise Http404()
