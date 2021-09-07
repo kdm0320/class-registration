@@ -5,7 +5,6 @@
   <div class="content">
     <div class="content_title">
       <span>▶ 수강신청게시판 (Course Registration Board)</span>
-      {{are}}
     </div>
       <div class="content_interface_left">
         <form id="content_interface_left_searchmynotice" action="{% url 'notices:find' %}" method="get">
@@ -15,13 +14,15 @@
           <button type="submit">전체조회</button>
         </form>
       </div>
-    <form id="content_interface_right" action="#" method="get">
+    {% block search %}
+    <form id="content_interface_right" action="{% url 'notices:search' %}" method="get">
       <div class="content_interface_right_box">
         <span>제목</span>
-        <input type="text" name="searchWords" value="searchWords"/>
+        <input value="{{title}}" id="search" name="search" placeholder="검색"/>
         <button type="submit">조회</button>
       </div>
     </form>
+    {% endblock search %}
     <div class="content_main">
       <div class="content_center">
         <table>
@@ -36,6 +37,7 @@
               <th>조회수</th>  
             </tr>
           </thead>
+          {% block list %}
           {% for notice in notices %}
             <tbody class="target_table_body">
               <tr>
@@ -77,6 +79,8 @@
           {% endif %}
         </div>
       </div>
+      {% endblock list %}
+
     </div>
   </div>
 </main>

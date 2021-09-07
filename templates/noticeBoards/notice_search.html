@@ -1,8 +1,18 @@
 {% extends 'noticeBoards/notice_list.html' %} 
+
+{% block search %}
+    <form id="content_interface_right" action="{% url 'notices:search' %}" method="get">
+      <div class="content_interface_right_box">
+        <span>제목</span>
+        <input id="search" name="search" placeholder="검색" >
+        <button type="submit">조회</button>
+      </div>
+    </form>
+{% endblock search %}
 {% block list %}
-      {% for notice in notices %}
-        <tbody class="target_table_body">
-          <tr>
+    {% for notice in page_obj %}
+        <tbody class="page_obj_table_body">
+            <tr>
             <td>{{notice.type}}</td>
             <td>
             <a href="{% url 'notices:detail' notice.pk %}">{{notice.title}}</a>
@@ -11,34 +21,38 @@
             <td>{{notice.writer}}</td>
             <td>{{notice.created|date:'Y-m-d'}}</td>
             <td>{{notice.post_hit}}</td>
-          </tr>
+            </tr>
         </tbody>
-      {% endfor %}
+    {% endfor %}
     </table>
-  </div>
-  <div class="content_bottom">
+    </div>
+    <div class="content_bottom">
     <div class="content_bottom_regbutton">
         <button class="modal_open_btn">등록</button>
     </div>
     <div class="contet_bottom_interface">
-      {% if page_obj.has_previous %}
+        {% if page_obj.has_previous %}
         <button type="button" onclick="location.href='{% url 'notices:board' %}';">&lt;&lt;</button>
         <button type="button" onclick="location.href='?page={{page_obj.previous_page_number}}';">&lt;</button>
-      {% endif %}
-      <p>
+        {% endif %}
+        <p>
         <span>Page {{page_obj.number}}</span>
         <span>of </span>
         <span>{{page_obj.paginator.num_pages}}</span>
-      </p>
-      <p>
-      {% for page in page_obj.paginator.page_range %}
-        <a href="?page={{page}}">{{page}}</a>
-      {% endfor %}
-      </p>
-      {% if page_obj.has_next  %}
+        </p>
+        <p>
+        {% for page in page_obj.paginator.page_range %}
+        
+        {% if not page_obj.paginator.page_range %}
+            <a href="?page={{page}}">{{page}}</a>
+        {% endif %}
+        {% endfor %}
+        </p>
+        {% if page_obj.has_next  %}
         <button type="button" onclick="location.href='?page={{page_obj.next_page_number}}';">&gt;</button>
         <button type="button" onclick="location.href='?page={{page_obj.paginator.num_pages}}';">&gt;&gt;</button>
-      {% endif %}
+        {% endif %}
     </div>
-  </div>
+    </div>
 {% endblock list %}
+  

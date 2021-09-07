@@ -3,12 +3,13 @@ from noticeBoards import models
 from noticeBoards.models import notice
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
+from django.core.paginator import Paginator
 
 # from django.contrib.auth.decorators import login_required
 
 
 class NoticeView(ListView):
-    """noticeView Definition"""
+    """NoticeView Definition"""
 
     model = notice
     paginate_by = 3
@@ -28,7 +29,7 @@ class NoticeView(ListView):
 
 
 class MyNoticeView(ListView):
-    """NoticeDetailView Definition"""
+    """MyNoticeView Definition"""
 
     template_name = "noticeBoards/my_notice_list.html"
     model = notice
@@ -86,9 +87,43 @@ class NoticeDetail(DetailView):
 
 
 # def notice_detail(request, pk):
-#     template_name = "noticeBoards/noticeDetail.html"
+#     template_name = "noticeBoards/notice_detail.html"
 #     try:
 #         target_notice = notice.objects.get(pk=pk)
 #         return render(request, template_name, {"notice": target_notice})
 #     except notice.DoesNotExist:
 #         raise Http404()
+
+
+class SeachView(ListView):
+    template_name = "noticeBoards/notice_search.html"
+    model = notice
+    paginate_by = 3
+    ordering = "created"
+    context_object_name = "target"
+    title_list = ""
+
+    def get_queryset(self, **kwargs):
+        title = self.request.GET.get("search")
+        if title is not None:
+            self.title_list = title
+            filter_args = {"title__startswith": title}
+            target_notices = notice.objects.filter(**filter_args)
+            return target_notices
+        else:
+            filter_args = {"title__startswith": self.title_list}
+            target_notices = notice.objects.filter(**filter_args)
+            return target_notices
+
+
+def search(request):
+    template_name = "noticeBoards/notice_search.html"
+    title = request.GET.get("search", "제목을 입력하세요")
+    filter_args = {"title__startswith": title}
+    target_notices = notice.objects.filter(**filter_args)
+    page = request.GET.get("page", 1)
+    paginator = Paginator(target_notices, 3, orphans=1)
+    notice_page = paginator.get_page(page)
+    return render(
+        request, template_name, {"target": notice_page, "search_title": title}
+    )

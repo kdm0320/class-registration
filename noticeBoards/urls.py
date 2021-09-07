@@ -6,5 +6,6 @@ app_name = "notices"
 urlpatterns = [
     path("", board_views.NoticeView.as_view(), name="board"),
     path("myboard/", board_views.MyNoticeView.as_view(), name="find"),
-    path("notce/<int:pk>/", board_views.NoticeDetail.as_view(), name="detail"),
+    path("notice/<int:pk>/", board_views.NoticeDetail.as_view(), name="detail"),
+    path("search/", board_views.SeachView.as_view(), name="search"),
 ]
