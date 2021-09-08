@@ -42,7 +42,7 @@
         </p>
         <p>
         {% for page in page_obj.paginator.page_range %}
-        <a href="?page={{page}}">{{page}}</a>
+            <a href="?page={{page}}">{{page}}</a>
         {% endfor %}
         </p>
         {% if page_obj.has_next  %}
