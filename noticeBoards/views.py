@@ -144,3 +144,10 @@ title_list = ""
 #         return render(
 #             request, template_name, {"target": notice_page, "search_title": title}
 #         )
+
+
+def delete(request, pk):
+    target = notice.objects.get(pk=pk)
+    prev_page = request.POST.get("prev_page")
+    target.delete()
+    return redirect(prev_page)

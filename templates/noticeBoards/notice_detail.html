@@ -40,8 +40,9 @@
       <button id="fixing_button" type="button">수정</button>
       <div id="notice_detail_fixed_button_interface">
         <button id="cancle_button" type="button">수정취소</button>
-        <form action="#" method="get">
-          <button type="submit">삭제</button>
+        <form action="{% url 'notices:delete' notice.pk %}" method="POST">
+        {% csrf_token %}
+          <button type="submit"  name="prev_page" value="{{request.META.HTTP_REFERER}}">삭제</button>
         </form>
         <form action="#" method="get">
           <button type="submit">저장</button>

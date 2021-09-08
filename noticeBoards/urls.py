@@ -8,4 +8,5 @@ urlpatterns = [
     path("myboard/", board_views.MyNoticeView.as_view(), name="find"),
     path("notice/<int:pk>/", board_views.notice_detail, name="detail"),
     path("search/", board_views.SeachView.as_view(), name="search"),
+    path("delete/<int:pk>/", board_views.delete, name="delete"),
 ]
