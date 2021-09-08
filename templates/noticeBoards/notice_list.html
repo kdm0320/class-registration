@@ -7,20 +7,22 @@
       <span>▶ 수강신청게시판 (Course Registration Board)</span>
     </div>
       <div class="content_interface_left">
-        <form id="content_interface_left_searchmynotice" action="#" method="get">
-          <button type="submit" name="mynotice" value="{{user.last_name}}{{user.first_name}}">내글조회</button>
+        <form id="content_interface_left_searchmynotice" action="{% url 'notices:find' %}" method="get">
+          <button type="submit" >내글조회</button>
         </form>
         <form id="content_interface_left_searchallnotice" action="{% url 'notices:board' %}" method="get">
           <button type="submit">전체조회</button>
         </form>
       </div>
-    <form id="content_interface_right" action="#" method="get">
+    {% block search %}
+    <form id="content_interface_right" action="{% url 'notices:search' %}" method="get">
       <div class="content_interface_right_box">
         <span>제목</span>
-        <input type="text" name="searchWords" />
+        <input value="{{title}}" id="search" name="search" placeholder="검색"/>
         <button type="submit">조회</button>
       </div>
     </form>
+    {% endblock search %}
     <div class="content_main">
       <div class="content_center">
         <table>
@@ -35,6 +37,7 @@
               <th>조회수</th>  
             </tr>
           </thead>
+          {% block list %}
           {% for notice in notices %}
             <tbody class="target_table_body">
               <tr>
@@ -76,6 +79,8 @@
           {% endif %}
         </div>
       </div>
+      {% endblock list %}
+
     </div>
   </div>
 </main>
@@ -100,15 +105,15 @@
         <textarea required name="content" id="modal_content" rows="5" cols="33"></textarea>
       </div>
       <div>
-        <h3>소속 :</h3><!--입력창이 아닌 유저의 소속({{user.major}})을 보여주고 서버로 "{{user.major}}" 를 넘겨줄것-->
+        <h3>소속 :</h3>
         {{user.major}}
-        <input type="hidden" value="{{user.major}}" required name="department" id="modal_department" minlength="2" readonly/>
+        <input type="hidden" required name="department" id="modal_department" minlength="2" readonly/>
       </div>
       <div>
-        <h3>작성자 :</h3><!--입력창이 아닌 유저의 이름({{user.last_name}}{{user.first_name}})을 보여주고 서버로 "{{user.last_name}}{{user.first_name}}"" 를 넘겨줄것-->
+        <h3>작성자 :</h3>
         {{user.last_name}}
         {{user.first_name}}
-        <input type="hidden" value="{{user.last_name}}{{user.first_name}}"required name="writer" id="modal_writer" minlength="2" readonly/>
+        <input type="hidden" required name="writer" id="modal_writer" minlength="2" readonly/>
       </div>
       <div>
         <input type="submit" value="등록" />
