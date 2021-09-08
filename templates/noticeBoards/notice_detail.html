@@ -1,9 +1,9 @@
-{% extends 'base.html' %} {% load static %} {% block title %} NoticeDetail
+{% extends 'base.html' %} {% load static %} 
+{% block title %} NoticeDetail
 {%endblock title %}
 {% block content %}
 <main>
   {% include "partial/header.html" %}
-    
   <section>
       <table id="show_notice_data">
           <tr>
@@ -16,9 +16,8 @@
           <tr>
             <td colspan="3">종류</td>
             <td colspan="5">{{notice.type}}</td>
-
             <td>조회수</td>
-            <td>{{notice.post_hit}}</td>
+            <td> {{notice.post_hit}}</td>
           </tr>
           <tr>
             <td colspan="3">작성자</td>

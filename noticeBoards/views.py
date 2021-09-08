@@ -2,8 +2,9 @@
 # from noticeBoards import models
 # from django.core.paginator import Paginator
 # from django.contrib.auth.decorators import login_required
+from django.http.response import Http404
 from noticeBoards.models import notice
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
 
 
@@ -49,7 +50,6 @@ class MyNoticeView(ListView):
             department=request.POST["department"],
             writer=request.POST["writer"],
         )
-
         return redirect("notices:board")
 
 
@@ -83,15 +83,19 @@ class NoticeDetail(DetailView):
     """NoticeDetail Definition"""
 
     model = notice
+    context_object_name = "notice"
 
 
-# def notice_detail(request, pk):
-#     template_name = "noticeBoards/notice_detail.html"
-#     try:
-#         target_notice = notice.objects.get(pk=pk)
-#         return render(request, template_name, {"notice": target_notice})
-#     except notice.DoesNotExist:
-#         raise Http404()
+def notice_detail(request, pk):
+    template_name = "noticeBoards/notice_detail.html"
+    try:
+        target_notice = notice.objects.get(pk=pk)
+        target_notice.post_hit += 1
+        target_notice.save()
+        print(target_notice.post_hit)
+        return render(request, template_name, {"notice": target_notice})
+    except notice.DoesNotExist:
+        raise Http404()
 
 
 class SeachView(ListView):
