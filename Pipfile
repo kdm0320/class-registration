@@ -8,6 +8,7 @@ django = "*"
 black = "*"
 django-import-export = "*"
 requests = "*"
+django-hitcount = "*"
 
 [dev-packages]
 black = "*"
