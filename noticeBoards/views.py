@@ -1,11 +1,11 @@
+# from django.http.response import Http404
+# from noticeBoards import models
+# from django.core.paginator import Paginator
+# from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
-from noticeBoards import models
 from noticeBoards.models import notice
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
-from django.core.paginator import Paginator
-
-# from django.contrib.auth.decorators import login_required
 
 
 class NoticeView(ListView):
@@ -50,7 +50,6 @@ class MyNoticeView(ListView):
             department=request.POST["department"],
             writer=request.POST["writer"],
         )
-
         return redirect("notices:board")
 
 
@@ -84,46 +83,71 @@ class NoticeDetail(DetailView):
     """NoticeDetail Definition"""
 
     model = notice
+    context_object_name = "notice"
 
 
-# def notice_detail(request, pk):
-#     template_name = "noticeBoards/notice_detail.html"
-#     try:
-#         target_notice = notice.objects.get(pk=pk)
-#         return render(request, template_name, {"notice": target_notice})
-#     except notice.DoesNotExist:
-#         raise Http404()
+def notice_detail(request, pk):
+    template_name = "noticeBoards/notice_detail.html"
+    try:
+        target_notice = notice.objects.get(pk=pk)
+        target_notice.post_hit += 1
+        target_notice.save()
+        print(target_notice.post_hit)
+        return render(request, template_name, {"notice": target_notice})
+    except notice.DoesNotExist:
+        raise Http404()
 
 
 class SeachView(ListView):
     template_name = "noticeBoards/notice_search.html"
-    model = notice
     paginate_by = 3
     ordering = "created"
     context_object_name = "target"
-    title_list = ""
 
     def get_queryset(self, **kwargs):
         title = self.request.GET.get("search")
         if title is not None:
-            self.title_list = title
+            global title_list
+            title_list = title
             filter_args = {"title__startswith": title}
             target_notices = notice.objects.filter(**filter_args)
             return target_notices
         else:
-            filter_args = {"title__startswith": self.title_list}
+            filter_args = {"title__startswith": title_list}
             target_notices = notice.objects.filter(**filter_args)
             return target_notices
 
 
-def search(request):
-    template_name = "noticeBoards/notice_search.html"
-    title = request.GET.get("search", "제목을 입력하세요")
-    filter_args = {"title__startswith": title}
-    target_notices = notice.objects.filter(**filter_args)
-    page = request.GET.get("page", 1)
-    paginator = Paginator(target_notices, 3, orphans=1)
-    notice_page = paginator.get_page(page)
-    return render(
-        request, template_name, {"target": notice_page, "search_title": title}
-    )
+title_list = ""
+
+
+# def search(request):
+#     template_name = "noticeBoards/notice_search.html"
+#     title = request.GET.get("search")
+#     page = request.GET.get("page", 1)
+#     title_list = title
+#     if title is not None:
+#         title_list = title
+#         print(title_list)
+#         filter_args = {"title__startswith": title}
+#         target_notices = notice.objects.filter(**filter_args)
+#         paginator = Paginator(target_notices, 3)
+#         notice_page = paginator.get_page(page)
+#         return render(
+#             request, template_name, {"target": notice_page, "search_title": title}
+#         )
+#     else:
+#         filter_args = {"title__startswith": title_list}
+#         target_notices = notice.objects.filter(**filter_args)
+#         paginator = Paginator(target_notices, 3)
+#         notice_page = paginator.get_page(page)
+#         return render(
+#             request, template_name, {"target": notice_page, "search_title": title}
+#         )
+
+
+def delete(request, pk):
+    target = notice.objects.get(pk=pk)
+    prev_page = request.POST.get("prev_page")
+    target.delete()
+    return redirect(prev_page)

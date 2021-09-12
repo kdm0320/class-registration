@@ -1,16 +1,6 @@
 {% extends 'noticeBoards/notice_list.html' %} 
-
-{% block search %}
-    <form id="content_interface_right" action="{% url 'notices:search' %}" method="get">
-      <div class="content_interface_right_box">
-        <span>제목</span>
-        <input id="search" name="search" placeholder="검색" >
-        <button type="submit">조회</button>
-      </div>
-    </form>
-{% endblock search %}
 {% block list %}
-    {% for notice in page_obj %}
+    {% for notice in target %}
         <tbody class="page_obj_table_body">
             <tr>
             <td>{{notice.type}}</td>
@@ -32,7 +22,7 @@
     </div>
     <div class="contet_bottom_interface">
         {% if page_obj.has_previous %}
-        <button type="button" onclick="location.href='{% url 'notices:board' %}';">&lt;&lt;</button>
+        <button type="button" onclick="location.href='?page=1';">&lt;&lt;</button>
         <button type="button" onclick="location.href='?page={{page_obj.previous_page_number}}';">&lt;</button>
         {% endif %}
         <p>
@@ -42,7 +32,7 @@
         </p>
         <p>
         {% for page in page_obj.paginator.page_range %}
-        <a href="?page={{page}}">{{page}}</a>
+            <a href="?page={{page}}">{{page}}</a>
         {% endfor %}
         </p>
         {% if page_obj.has_next  %}

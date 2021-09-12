@@ -22,7 +22,7 @@
     </div>
     <div class="contet_bottom_interface">
       {% if page_obj.has_previous %}
-        <button type="button" onclick="location.href='{% url 'notices:board' %}';">&lt;&lt;</button>
+        <button type="button" onclick="location.href='?page=1';">&lt;&lt;</button>
         <button type="button" onclick="location.href='?page={{page_obj.previous_page_number}}';">&lt;</button>
       {% endif %}
       <p>

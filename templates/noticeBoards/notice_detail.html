@@ -1,61 +1,84 @@
-  
-{% extends 'base.html' %} {% load static %} {% block title %} NoticeDetail
+{% extends 'base.html' %} {% load static %}
+{% block title %} NoticeDetail
 {%endblock title %}
 {% block content %}
 <main>
   {% include "partial/header.html" %}
+  <section class="detail_main_content">
+    <div id="detail_titleparent" class="detail_divs">
+      <div>제목</div>
+      <div class="detail_title">{{notice.title}}</div>
+      <div>작성일</div>
+      <div>{{notice.updated|date:'Y.m.d'}}</div>
+    </div>
+    <div class="detail_divs">
+      <div>종류</div>
+      <div>{{notice.type}}</div>
+      <div>조회수</div>
+      <div> {{notice.post_hit}}</div>
+    </div>
+    <div class="detail_divs">
+      <div>작성자</div>
+      <div id="detail_writer">{{notice.writer}}</div>
+      <div>소속</div>
+      <div>{{notice.department}}</div>
+    </div>
+    <!-- 게시글 내용 -->
+    <div id="detail_contentparent">
+      <div class="detail_content">
+        {{notice.content}}
+      </div>
+    </div>
+  </section>
   <section>
-      <table id="show_notice_data">
-          <tr>
-            <td colspan="3">제목</td>
-            <td colspan="5">테스트용 입니다.</td>
-
-            <td>작성일</td>
-            <td>2021.09.03</td>
-          </tr>
-          <tr>
-            <td colspan="3">종류</td>
-            <td colspan="5">공지</td>
-
-            <td>조회수</td>
-            <td>999</td>
-          </tr>
-          <tr>
-            <td colspan="3">작성자</td>
-            <td id="detail_writer" colspan="5">김찬수</td>
-
-            <td>소속</td>
-            <td>전자공학과</td>
-          </tr>
-          <!-- 게시글 내용 -->
-          <tr>
-            <td colspan="16" rowspan="5" id="notice_data_main_content">
-            게시글 내용 어쩌구 저쩌구
-            이러쿵 저러쿵
-            세줄째 내용
-            </td>
-          </tr>
-      </table>
-  </section>
-  </section>
-    <div id = "only_showed_notice_master">
-    <!-- 삭제 저장 수정 등등의 버튼들 -->
+    <div id="only_showed_notice_master">
+      <!-- 삭제 저장 수정 등등의 버튼들 -->
       <button id="fixing_button" type="button">수정</button>
       <div id="notice_detail_fixed_button_interface">
-        <button id="cancle_button" type="button">수정취소</button>
-        <form action="#" method="get">
-          <button type="submit">삭제</button>
-        </form>
-        <form action="#" method="get">
+        <form id="detail_views" action="#" method="GET">
+
+          <section class="detail_main_content">
+            <div id="detail_titleparent" class="detail_divs">
+              <div>제목</div>
+              <div class="detail_title">
+                <input id="detail_title_data" value="{{notice.title}}" />
+              </div>
+              <div>작성일</div>
+              <div>{{notice.updated|date:'Y.m.d'}}</div>
+            </div>
+            <div class="detail_divs">
+              <div>종류</div>
+              <div>{{notice.type}}</div>
+              <div>조회수</div>
+              <div> {{notice.post_hit}}</div>
+            </div>
+            <div class="detail_divs">
+              <div>작성자</div>
+              <div id="detail_writer">{{notice.writer}}</div>
+              <div>소속</div>
+              <div>{{notice.department}}</div>
+            </div>
+            <!-- 게시글 내용 -->
+            <div id="detail_contentparent">
+              <div class="detail_content">
+                <textarea id="detail_area_data" rows="5" cols="33">
+                {{notice.content}}
+                </textarea>
+              </div>
+            </div>
+          </section>
           <button type="submit">저장</button>
+        </form>
+        <button id="cancle_button" type="button">수정취소</button>
+        <form action="{% url 'notices:delete' notice.pk %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" name="prev_page" value="{{request.META.HTTP_REFERER}}">삭제</button>
         </form>
       </div>
     </div>
-    <form action="#" method = "get">
-      <button type="submit">메뉴로 가기</button>
-    </form>
+    <button type="button" onClick="window.history.back();return false;">메뉴로 가기</button>
     <!--테스트용 태그. 접속한 사용자가 아래 h2태그 안에 들어갈때 동작하게 해둠.-->
-    <h2 id="target_data">김찬수</h2>
+    <h2 id="target_data">{{user.last_name}}{{user.first_name}}</h2>
   </section>
 </main>
 <script src="{% static 'JS/noticeDetail.js' %}"></script>
