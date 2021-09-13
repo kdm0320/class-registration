@@ -3,6 +3,7 @@
 {%endblock title %}
 {% block content %}
 <main>
+  {{current_url}}
   {% include "partial/header.html" %}
    <section class="detail_main_content">
     <div id="detail_titleparent" class="detail_divs">
@@ -35,7 +36,7 @@
     <!-- 삭제 저장 수정 등등의 버튼들 -->
       <button id="fixing_button" type="button">수정</button>
       <div id="notice_detail_fixed_button_interface">
-        <form id="detail_views" action="{% url 'notices:save' notice.pk %}" method="POST">
+        <form id="detail_views" action="{% url 'notices:save' notice.pk %}?next={{request.get_full_path}}" method="POST">
           {% csrf_token %}
           <section class="detail_main_content">
             <div id="detail_titleparent" class="detail_divs">
@@ -72,7 +73,7 @@
         <button id="cancle_button" type="button">수정취소</button>
         <form action="{% url 'notices:delete' notice.pk %}" method="POST">
           {% csrf_token %}
-          <button type="submit" name="prev_page" value="{{request.META.HTTP_REFERER}}">삭제</button>
+          <button type="submit" >삭제</button>
         </form>
       </div>
     </div>

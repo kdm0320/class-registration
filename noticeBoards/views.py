@@ -1,4 +1,3 @@
-from noticeBoards import models
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
@@ -10,10 +9,22 @@ from django.views.generic import ListView, View
 class NoticeView(ListView):
     """NoticeView Definition"""
 
-    model = notice
-    paginate_by = 3
-    ordering = "created"
-    context_object_name = "notices"
+    def get(self, request):
+        template_name = "noticeBoards/notice_list.html"
+        page = request.GET.get("page", 1)
+        datas = notice.objects.all().order_by("created")
+        paginator = Paginator(datas, 3, orphans=1)
+        notice_page = paginator.get_page(page)
+        global current_url
+        current_url = request.get_full_path()
+
+        return render(
+            request,
+            template_name,
+            {
+                "notices": notice_page,
+            },
+        )
 
     def post(self, request):
         notice_writer = request.user.last_name + request.user.first_name
@@ -27,6 +38,9 @@ class NoticeView(ListView):
         )
 
         return redirect("notices:board")
+
+
+current_url = ""
 
 
 class MyNoticeView(ListView):
@@ -147,13 +161,14 @@ title_list = ""
 
 def save(request, pk):
     target = notice.objects.get(pk=pk).pk
-    print(f"현재페이지:{target}")
-    return redirect("notices:board")
+    print("데이터 전송 테스트")
+    print(request.POST)
+    current_url = request.GET.get("next")
+    return redirect(current_url)
 
 
 def delete(request, pk):
     target = notice.objects.get(pk=pk)
 
-    prev_page = request.POST.get("prev_page")
     target.delete()
-    return redirect(prev_page)
+    return redirect(current_url)

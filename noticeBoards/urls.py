@@ -9,4 +9,5 @@ urlpatterns = [
     path("notice/<int:pk>/", board_views.notice_detail, name="detail"),
     path("search/", board_views.SeachView.as_view(), name="search"),
     path("delete/<int:pk>/", board_views.delete, name="delete"),
+    path("save/<int:pk>/", board_views.save, name="save"),
 ]

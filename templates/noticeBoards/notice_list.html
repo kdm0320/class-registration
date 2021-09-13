@@ -60,23 +60,23 @@
             <button class="modal_open_btn">등록</button>
         </div>
         <div class="contet_bottom_interface">
-          {% if page_obj.has_previous %}
+          {% if notices.has_previous %}
             <button type="button" onclick="location.href='{% url 'notices:board' %}';">&lt;&lt;</button>
-            <button type="button" onclick="location.href='?page={{page_obj.previous_page_number}}';">&lt;</button>
+            <button type="button" onclick="location.href='?page={{notices.previous_page_number}}';">&lt;</button>
           {% endif %}
           <p>
-            <span>Page {{page_obj.number}}</span>
+            <span>Page {{notices.number}}</span>
             <span>of </span>
-            <span>{{page_obj.paginator.num_pages}}</span>
+            <span>{{notices.paginator.num_pages}}</span>
           </p>
           <p>
-          {% for page in page_obj.paginator.page_range %}
+          {% for page in notices.paginator.page_range %}
             <a href="?page={{page}}">{{page}}</a>
           {% endfor %}
           </p>
-          {% if page_obj.has_next  %}
-            <button type="button" onclick="location.href='?page={{page_obj.next_page_number}}';">&gt;</button>
-            <button type="button" onclick="location.href='?page={{page_obj.paginator.num_pages}}';">&gt;&gt;</button>
+          {% if notices.has_next  %}
+            <button type="button" onclick="location.href='?page={{notices.next_page_number}}';">&gt;</button>
+            <button type="button" onclick="location.href='?page={{notices.paginator.num_pages}}';">&gt;&gt;</button>
           {% endif %}
         </div>
       </div>
