@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fd0adab0009e93d13be7ab4d0493d42f2a01c02776cd3df0fbb2443fa67be209"
+            "sha256": "79fe06bd0c487165bccb2cff24fb860922376f5160c7253165d930fc245c31e0"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -110,6 +110,14 @@
             "index": "pypi",
             "version": "==2.5.0"
         },
+        "django-redis": {
+            "hashes": [
+                "sha256:048f665bbe27f8ff2edebae6aa9c534ab137f1e8fa7234147ef470df3f3aa9b8",
+                "sha256:97739ca9de3f964c51412d1d7d8aecdfd86737bb197fce6e1ff12620c63c97ee"
+            ],
+            "index": "pypi",
+            "version": "==5.0.0"
+        },
         "et-xmlfile": {
             "hashes": [
                 "sha256:8eb9e2bc2f8c97e37a2dc85a09ecdcdec9d8a396530a6d5a33b30b9a92da0c5c",
@@ -168,6 +176,14 @@
             "markers": "python_version >= '3.6'",
             "version": "==2.3.0"
         },
+        "python-memcached": {
+            "hashes": [
+                "sha256:4dac64916871bd3550263323fc2ce18e1e439080a2d5670c594cf3118d99b594",
+                "sha256:a2e28637be13ee0bf1a8b6843e7490f9456fd3f2a4cb60471733c7b5d5557e4f"
+            ],
+            "index": "pypi",
+            "version": "==1.59"
+        },
         "pytz": {
             "hashes": [
                 "sha256:83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da",
@@ -208,6 +224,14 @@
                 "sha256:fe69978f3f768926cfa37b867e3843918e012cf83f680806599ddce33c2c68b0"
             ],
             "version": "==5.4.1"
+        },
+        "redis": {
+            "hashes": [
+                "sha256:0e7e0cfca8660dea8b7d5cd8c4f6c5e29e11f31158c0b0ae91a397f00e5a05a2",
+                "sha256:432b788c4530cfe16d8d943a09d40ca6c16149727e4afe8c2c9d5580c59d9f24"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
+            "version": "==3.5.3"
         },
         "regex": {
             "hashes": [
@@ -262,6 +286,14 @@
             ],
             "index": "pypi",
             "version": "==2.26.0"
+        },
+        "six": {
+            "hashes": [
+                "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
+                "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==1.16.0"
         },
         "sqlparse": {
             "hashes": [

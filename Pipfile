@@ -9,6 +9,8 @@ black = "*"
 django-import-export = "*"
 requests = "*"
 django-hitcount = "*"
+django-redis = "*"
+python-memcached = "*"
 
 [dev-packages]
 black = "*"
