@@ -51,7 +51,6 @@ class MyNoticeView(ListView):
     def get_queryset(self, **kwargs):
         user = f"{self.request.user.last_name}{self.request.user.first_name}"
         user_notice = notice.objects.filter(writer=user)
-        print(user)
         return user_notice
 
     def post(self, request):
