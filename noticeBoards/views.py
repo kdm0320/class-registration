@@ -15,8 +15,7 @@ class NoticeView(ListView):
         datas = notice.objects.all().order_by("created")
         paginator = Paginator(datas, 3, orphans=1)
         notice_page = paginator.get_page(page)
-        global current_url
-        current_url = request.get_full_path()
+        self.request.session["current_url"] = request.get_full_path()
 
         return render(
             request,
@@ -38,9 +37,6 @@ class NoticeView(ListView):
         )
 
         return redirect("notices:board")
-
-
-current_url = ""
 
 
 class MyNoticeView(ListView):
@@ -121,18 +117,15 @@ class SeachView(ListView):
     def get_queryset(self, **kwargs):
         title = self.request.GET.get("search")
         if title is not None:
-            global title_list
-            title_list = title
+            self.request.session["search_word"] = title
+            print(self.request.session["search_word"])
             filter_args = {"title__startswith": title}
             target_notices = notice.objects.filter(**filter_args)
             return target_notices
         else:
-            filter_args = {"title__startswith": title_list}
+            filter_args = {"title__startswith": self.request.session["search_word"]}
             target_notices = notice.objects.filter(**filter_args)
             return target_notices
-
-
-title_list = ""
 
 
 # def search(request):
@@ -169,6 +162,5 @@ def save(request, pk):
 
 def delete(request, pk):
     target = notice.objects.get(pk=pk)
-
     target.delete()
-    return redirect(current_url)
+    return redirect(request.session["current_url"])
