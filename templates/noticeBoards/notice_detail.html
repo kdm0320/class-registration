@@ -1,10 +1,11 @@
-{% extends 'base.html' %} {% load static %}
+{% extends 'base.html' %} {% load static %} 
 {% block title %} NoticeDetail
 {%endblock title %}
 {% block content %}
 <main>
+  {{current_url}}
   {% include "partial/header.html" %}
-  <section class="detail_main_content">
+   <section class="detail_main_content">
     <div id="detail_titleparent" class="detail_divs">
       <div>제목</div>
       <div class="detail_title">{{notice.title}}</div>
@@ -31,12 +32,12 @@
     </div>
   </section>
   <section>
-    <div id="only_showed_notice_master">
-      <!-- 삭제 저장 수정 등등의 버튼들 -->
+   <div id = "only_showed_notice_master">
+    <!-- 삭제 저장 수정 등등의 버튼들 -->
       <button id="fixing_button" type="button">수정</button>
       <div id="notice_detail_fixed_button_interface">
-        <form id="detail_views" action="#" method="GET">
-
+        <form id="detail_views" action="{% url 'notices:save' notice.pk %}?next={{request.get_full_path}}" method="POST">
+          {% csrf_token %}
           <section class="detail_main_content">
             <div id="detail_titleparent" class="detail_divs">
               <div>제목</div>
@@ -72,11 +73,11 @@
         <button id="cancle_button" type="button">수정취소</button>
         <form action="{% url 'notices:delete' notice.pk %}" method="POST">
           {% csrf_token %}
-          <button type="submit" name="prev_page" value="{{request.META.HTTP_REFERER}}">삭제</button>
+          <button type="submit" >삭제</button>
         </form>
       </div>
     </div>
-    <button type="button" onClick="window.history.back();return false;">메뉴로 가기</button>
+    <button onClick="window.history.back();return false;">메뉴로 가기</button>
     <!--테스트용 태그. 접속한 사용자가 아래 h2태그 안에 들어갈때 동작하게 해둠.-->
     <h2 id="target_data">{{user.last_name}}{{user.first_name}}</h2>
   </section>

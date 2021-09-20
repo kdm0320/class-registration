@@ -1,28 +1,39 @@
-# from django.http.response import Http404
-# from noticeBoards import models
-# from django.core.paginator import Paginator
-# from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
 from noticeBoards.models import notice
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, View
 
 
 class NoticeView(ListView):
     """NoticeView Definition"""
 
-    model = notice
-    paginate_by = 3
-    ordering = "created"
-    context_object_name = "notices"
+    def get(self, request):
+        template_name = "noticeBoards/notice_list.html"
+        page = request.GET.get("page", 1)
+        datas = notice.objects.all().order_by("created")
+        paginator = Paginator(datas, 3, orphans=1)
+        notice_page = paginator.get_page(page)
+        self.request.session["current_url"] = request.get_full_path()
+
+        return render(
+            request,
+            template_name,
+            {
+                "notices": notice_page,
+            },
+        )
 
     def post(self, request):
+        notice_writer = request.user.last_name + request.user.first_name
+        writer_deaprtment = request.user.major
         notice.objects.create(
             title=request.POST["title"],
             type=request.POST["type"],
             content=request.POST["content"],
-            department=request.POST["department"],
-            writer=request.POST["writer"],
+            department=writer_deaprtment,
+            writer=notice_writer,
         )
 
         return redirect("notices:board")
@@ -38,7 +49,7 @@ class MyNoticeView(ListView):
     context_object_name = "notices"
 
     def get_queryset(self, **kwargs):
-        user = self.request.user.last_name + self.request.user.first_name
+        user = f"{self.request.user.last_name}{self.request.user.first_name}"
         user_notice = notice.objects.filter(writer=user)
         return user_notice
 
@@ -78,12 +89,12 @@ class MyNoticeView(ListView):
 #     )
 
 
-class NoticeDetail(DetailView):
+# class NoticeDetail(DetailView):
 
-    """NoticeDetail Definition"""
+#     """NoticeDetail Definition"""
 
-    model = notice
-    context_object_name = "notice"
+#     model = notice
+#     context_object_name = "notice"
 
 
 def notice_detail(request, pk):
@@ -92,7 +103,6 @@ def notice_detail(request, pk):
         target_notice = notice.objects.get(pk=pk)
         target_notice.post_hit += 1
         target_notice.save()
-        print(target_notice.post_hit)
         return render(request, template_name, {"notice": target_notice})
     except notice.DoesNotExist:
         raise Http404()
@@ -107,28 +117,24 @@ class SeachView(ListView):
     def get_queryset(self, **kwargs):
         title = self.request.GET.get("search")
         if title is not None:
-            global title_list
-            title_list = title
+            self.request.session["search_word"] = title
+            print(self.request.session["search_word"])
             filter_args = {"title__startswith": title}
             target_notices = notice.objects.filter(**filter_args)
             return target_notices
         else:
-            filter_args = {"title__startswith": title_list}
+            filter_args = {"title__startswith": self.request.session["search_word"]}
             target_notices = notice.objects.filter(**filter_args)
             return target_notices
-
-
-title_list = ""
 
 
 # def search(request):
 #     template_name = "noticeBoards/notice_search.html"
 #     title = request.GET.get("search")
 #     page = request.GET.get("page", 1)
-#     title_list = title
 #     if title is not None:
+#         global title_list
 #         title_list = title
-#         print(title_list)
 #         filter_args = {"title__startswith": title}
 #         target_notices = notice.objects.filter(**filter_args)
 #         paginator = Paginator(target_notices, 3)
@@ -146,8 +152,15 @@ title_list = ""
 #         )
 
 
+def save(request, pk):
+    target = notice.objects.get(pk=pk).pk
+    print("데이터 전송 테스트")
+    print(request.POST)
+    current_url = request.GET.get("next")
+    return redirect(current_url)
+
+
 def delete(request, pk):
     target = notice.objects.get(pk=pk)
-    prev_page = request.POST.get("prev_page")
     target.delete()
-    return redirect(prev_page)
+    return redirect(request.session["current_url"])
