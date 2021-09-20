@@ -118,7 +118,6 @@ class SeachView(ListView):
         title = self.request.GET.get("search")
         if title is not None:
             self.request.session["search_word"] = title
-            print(self.request.session["search_word"])
             filter_args = {"title__startswith": title}
             target_notices = notice.objects.filter(**filter_args)
             return target_notices
@@ -153,10 +152,13 @@ class SeachView(ListView):
 
 
 def save(request, pk):
-    target = notice.objects.get(pk=pk).pk
-    print("데이터 전송 테스트")
-    print(request.POST)
+    target = notice.objects.get(pk=pk)
+    target.title = request.POST.get("detail_title_data")
+    target.content = request.POST.get("detail_area_data")
+    target.save()
+
     current_url = request.GET.get("next")
+    print(current_url)
     return redirect(current_url)
 
 
