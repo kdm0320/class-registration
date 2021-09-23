@@ -25,3 +25,4 @@ function selectedOption(e) {
 
 const subject = document.querySelector("#subject");
 subject.onchange = selectedOption;
+

@@ -66,7 +66,7 @@
               <input type="text" id="detail_area_data" value="{{notice.content}}"
               size=20/>
               -->
-                <textarea name="detail_area_data" rows="30" cols="90"></textarea>
+                <textarea name="detail_area_data" rows="30" cols="90">{{notice.content}}</textarea>
               </div>
             </div>
           </section>
@@ -79,7 +79,7 @@
         </form>
       </div>
     </div>
-    <button onClick="window.history.back();return false;">메뉴로 가기</button>
+    <button onclick="location.href='{{request.session.current_url}}' ">메뉴로 가기</button>
     <!--테스트용 태그. 접속한 사용자가 아래 h2태그 안에 들어갈때 동작하게 해둠.-->
     <h2 class="hidden" id="target_data">{{user.last_name}}{{user.first_name}}</h2>
   </section>

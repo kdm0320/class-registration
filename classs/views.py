@@ -8,13 +8,14 @@ def class_to_dictionary(data):
     output = {}
     output["pk"] = data.pk
     output["universe"] = data.universe
+    output["department"] = data.department
+    output["grade"] = data.grade
     output["check_major"] = data.check_major
     output["subject_number"] = data.subject_number
     output["subject_name"] = data.subject_name
     output["credit"] = data.credit
     output["professor"] = data.professor
     output["time"] = data.time
-    output["department"] = data.department
 
     return output
 

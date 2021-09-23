@@ -26,6 +26,7 @@
         <table>
           <thead>
             <tr>
+              <td>    </td>
               <td>대학</td>
               <td>개설학과</td>
               <td>학년</td>
@@ -35,10 +36,18 @@
               <td>학점</td>
               <td>담당교수</td>
               <td>강의시간</td>
-              <td></td>
+              <td>수강인원</td>
             </tr>
           </thead>
-          <tbody>
+          <tbody id = "target_tbody">
+          <form method="POST">
+          {% csrf_token %}
+          <button>asdf</button>
+          </form>
+          <form method="POST">
+          <button>asdf</button>
+          </form>
+          <!--
             <tr>
               <td>공과대학</td>
               <td>전자공학과</td>
@@ -50,14 +59,16 @@
               <td>김동민</td>
               <td>수 456</td>
             </tr>
+            -->
           </tbody>
         </table>
       </div>
-      {% if class_data %}
-        {{ class_data| json_script:'classData'}}
-      {% endif %}
-  
     </main>
+    <div id="class_datas" class="hidden">
+    {% if class_data %}
+      {{class_data}}
+    {% endif %}
+    </div>
   <script src="{% static 'JS/viewSchedule.js' %}"></script>
-  <script src="{% static 'JS/showTableSchedule.js' %}"></script>
+  <script src="{% static 'JS/viewTable.js' %}"></script>
 {% endblock content %}
