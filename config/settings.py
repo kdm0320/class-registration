@@ -47,7 +47,6 @@ PROJECT_APPS = [
     "users.apps.UsersConfig",
     "classs.apps.ClasssConfig",
     "core.apps.CoreConfig",
-    "baskets.apps.BasketsConfig",
     "registrations.apps.RegistrationsConfig",
     "noticeBoards.apps.NoticeboardsConfig",
 ]
