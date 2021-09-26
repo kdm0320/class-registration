@@ -21,5 +21,6 @@ urlpatterns = [
     path("users/", include("users.urls", namespace="users")),
     path("class/", include("classs.urls", namespace="classes")),
     path("noticeBoard/", include("noticeBoards.urls", namespace="notices")),
+    path("basket/", include("noticeBoards.urls", namespace="baskets")),
     path("admin/", admin.site.urls),
 ]

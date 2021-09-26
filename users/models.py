@@ -21,8 +21,8 @@ class User(AbstractUser):
 
     number = models.PositiveIntegerField(
         ("학번"),
-        default=20140000,
-        validators=[MinValueValidator(20140000), MaxValueValidator(99999999)],
+        null=True,
+        validators=[MaxValueValidator(99999999)],
     )
     major = models.CharField(("전공"), null=True, max_length=15)
     grade = models.CharField(("학년"), choices=GRADE_CHOICES, max_length=2, null=True)
