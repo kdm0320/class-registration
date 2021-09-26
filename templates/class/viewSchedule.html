@@ -7,7 +7,6 @@
 {% include "partial/header.html" %}
    <main>
       <!--header 부분 include 해야함.(최상단 학번, 학년, 학과 정보 )-->
-
       <form name="selected" action="{% url 'classes:lookup' %}" method="GET">
         <select id="subject" name="subject">
           <option value="">--선택--</option>
@@ -40,8 +39,19 @@
             </tr>
           </thead>
           <tbody id = "target_tbody">
-        
-        </table>
+          <tr>
+              <td><input type="button" class="btnAjax" value="등록" />
+              <td class="universe">공과대학</td>
+              <td class="department">전자공학과</td>
+              <td class="grade">3</td>
+              <td class="check_major">전공</td>
+              <td class="subject_number">99999</td>
+              <td class="subject_name">리눅스 프로그래밍</td>
+              <td class="credit">3</td>
+              <td class="professor">김동민</td>
+              <td class="time">수 456</td>
+            </tr>
+          </table>
       </div>
     </main>
     <div id="class_datas" class="hidden">
@@ -49,6 +59,48 @@
       {{class_data}}
     {% endif %}
     </div>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script>
+  let btnAjax = document.querySelector('.btnAjax');
+  console.log(btnAjax)
+  btnAjax.addEventListener('click', e => {
+    let universe = document.querySelector('.universe').innerText;
+    let department = document.querySelector('.department').innerText;
+    let grade = document.querySelector('.grade').innerText;
+    let check_major = document.querySelector('.check_major').innerText;
+    let subject_number = document.querySelector('.subject_number').innerText;
+    let subject_name = document.querySelector('.subject_name').innerText;
+    let credit = document.querySelector('.credit').innerText;
+    let professor = document.querySelector('.professor').innerText;
+    let time = document.querySelector('.time').innerText;
+    let param = {
+      'universe' : universe,
+      'department' : department,
+      'grade' : grade,
+      'check_major' : check_major,
+      'subject_number' : subject_number,
+      'subject_name' : subject_name,
+      'credit' : credit,
+      'professor' : professor,
+      'time' : time,
+
+      }
+      $.ajax({
+      url: "{% url 'classes:basket' %}",
+      type: 'POST',
+      headers:{
+          'X-CSRFTOKEN' : '{{csrf_token}}'
+      },
+      data : JSON.stringify(param),
+      success: function(data){
+          console.log(data)
+      },
+      error: function(){
+          console.log("전송실패")
+      }
+    });
+  });
+</script> 
   <script src="{% static 'JS/viewSchedule.js' %}"></script>
   <script src="{% static 'JS/viewTable.js' %}"></script>
 {% endblock content %}
