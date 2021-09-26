@@ -49,6 +49,7 @@ PROJECT_APPS = [
     "baskets.apps.BasketsConfig",
     "registrations.apps.RegistrationsConfig",
     "noticeBoards.apps.NoticeboardsConfig",
+    "basketLists.apps.BasketlistsConfig",
 ]
 
 THRID_PARTY_APPS = [

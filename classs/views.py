@@ -1,7 +1,10 @@
 import json
 from django.core.serializers.json import DjangoJSONEncoder
-from django.shortcuts import render
+from django.http.response import JsonResponse
+from django.shortcuts import redirect, render
 from . import models
+from django.urls import reverse, reverse_lazy
+from basketLists import models as basket_model
 
 
 def class_to_dictionary(data):
@@ -16,6 +19,7 @@ def class_to_dictionary(data):
     output["credit"] = data.credit
     output["professor"] = data.professor
     output["time"] = data.time
+    output["people"] = data.people
 
     return output
 
@@ -50,3 +54,17 @@ def get_data(request):
         temp_data[f"class{i}"] = class_to_dictionary(data[i])
     datas = json.dumps(temp_data, ensure_ascii=False, cls=DjangoJSONEncoder)
     return render(request, template_name, {"class_data": datas})
+
+
+def regi_basket(request):
+    action = jsonObject = json.loads(request.body)
+    print(action)
+    # target_pk = jsonObject.get("pk")
+    # subject = models.Class.objects.get_or_none(pk=target_pk)
+    # if subject is not None:
+    #     new_basket = basket_model.List.objects.get_or_create(
+    #         user = request.user
+    #     )
+    #     new_basket.subjects.add(subject)
+
+    return JsonResponse(jsonObject)

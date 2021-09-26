@@ -6,4 +6,5 @@ app_name = "classes"
 urlpatterns = [
     path("schdules/", class_views.home, name="class"),
     path("data/", class_views.get_data, name="lookup"),
+    path("regi-basket/", class_views.regi_basket, name="basket"),
 ]

@@ -1,4 +1,5 @@
 from django.db import models
+from . import managers
 
 
 class ClassInfoModel(models.Model):
@@ -51,6 +52,7 @@ class ClassInfoModel(models.Model):
     credit = models.CharField(("학점"), max_length=2, blank=True)
     professor = models.CharField(("담당교수"), max_length=5, blank=True)
     time = models.CharField(("강의시간"), max_length=8, blank=True)
+    objects = managers.CustomModelManager()
 
     class Meta:
         abstract = True

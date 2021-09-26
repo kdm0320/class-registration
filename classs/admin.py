@@ -19,19 +19,21 @@ class ClassAdmin(ImportExportMixin, admin.ModelAdmin):
                     "time",
                     "universe",
                     "department",
+                    "people",
                 )
             },
         ),
     )
 
     list_display = (
+        "subject_name",
         "grade",
         "check_major",
         "subject_number",
-        "subject_name",
         "credit",
         "professor",
         "time",
         "universe",
         "department",
+        "people",
     )
