@@ -55,9 +55,15 @@ def get_data(request):
     return render(request, template_name, {"class_data": datas})
 
 
-def regi_basket(request):
-    jsonObject = json.loads(request.body)
-
-    print(jsonObject.get("subject_name"))
+def regi_basket(request, pk):
+    action = jsonObject = json.loads(request.body)
+    print(action)
+    # target_pk = jsonObject.get("pk")
+    # subject = models.Class.objects.get_or_none(pk=target_pk)
+    # if subject is not None:
+    #     new_basket = basket_model.List.objects.get_or_create(
+    #         user = request.user
+    #     )
+    #     new_basket.subjects.add(subject)
 
     return JsonResponse(jsonObject)
