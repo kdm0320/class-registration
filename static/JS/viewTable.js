@@ -25,7 +25,6 @@ for (let clazz in dataObj) {
     let arrayIndex = 0;
 
     button.className = "btnAjax";
-
     
     button.appendChild(buttonName);
     classTr.appendChild(button)
@@ -48,7 +47,7 @@ for (let clazz in dataObj) {
     classTr.appendChild(formTag)
     target.appendChild(classTr);
 
-    button.addEventListener('click', e => {
+  button.addEventListener('click', e => {
         let universe = classTr.querySelector('.universe').innerText;
         let department = classTr.querySelector('.department').innerText;
         let grade = classTr.querySelector('.grade').innerText;
@@ -71,7 +70,21 @@ for (let clazz in dataObj) {
             'time': time,
             'people': people,
           }
-
+        //
+        //const reqUrl = new Request(
+       //     "http://127.0.0.1:8000/class/regi-basket/",
+       //     { headers: { 'X-CSRFToken': csrftoken } }
+// )
+      //  fetch(reqUrl, {
+       //     method: "POST",
+//body: JSON.stringify(param),
+       //     mode: 'same-origin'
+        //}).then(function (res) {
+         //   return res.text()
+        //}, function (error) {
+         //   console.log(error)
+        //}
+        //)
           
           $.ajax({
           url: "http://127.0.0.1:8000/class/regi-basket/",
