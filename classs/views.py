@@ -20,7 +20,6 @@ def class_to_dictionary(data):
     output["professor"] = data.professor
     output["time"] = data.time
     output["people"] = data.people
-
     return output
 
 
@@ -52,19 +51,17 @@ def get_data(request):
     temp_data = {}
     for i in range(len(data)):
         temp_data[f"class{i}"] = class_to_dictionary(data[i])
+
     datas = json.dumps(temp_data, ensure_ascii=False, cls=DjangoJSONEncoder)
     return render(request, template_name, {"class_data": datas})
 
 
 def regi_basket(request):
-    action = jsonObject = json.loads(request.body)
-    print(action)
-    # target_pk = jsonObject.get("pk")
-    # subject = models.Class.objects.get_or_none(pk=target_pk)
-    # if subject is not None:
-    #     new_basket = basket_model.List.objects.get_or_create(
-    #         user = request.user
-    #     )
-    #     new_basket.subjects.add(subject)
+    jsonObject = json.loads(request.body)
+    target_pk = jsonObject.get("subject_number")
+    subject = models.Class.objects.get_or_none(subject_number=target_pk)
+    if subject is not None:
+        new_basket, created = basket_model.List.objects.get_or_create(user=request.user)
+        new_basket.subjects.add(subject)
 
     return JsonResponse(jsonObject)
