@@ -33,3 +33,10 @@ def log_out(request):
 def user_schedule(request):
     template_name = "users/userSchedule.html"
     return render(request, template_name)
+
+
+@login_required(login_url="/login/")
+def enrollment(request):
+    template_name = "users/enrolment.html"
+
+    return render(request, template_name)
