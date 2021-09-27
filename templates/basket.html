@@ -4,7 +4,7 @@
 {% block title %}Basket{% endblock title %}
 
 {% block content %}
-    {% comment %} {{basket_datas}}  장바구니 데이터{% endcomment %}
+    
     <main>
     {% include "partial/header.html" %}
     <div class="content">
@@ -45,26 +45,6 @@
                 <span> ] </span>
               </p>
             </div>
-            <!--
-            <div class="button_bottom_left_content">
-              <div class="button_bottom_left_icon">
-                 아이콘 한개
-              </div>
-              <p class="button_bottom_left_text">
-                <span class="button_bottom_left_text_title"> 예비과목 내역 </span>
-                <span>[ 과목수 : </span>
-                <span class="button_bottom_left_text_classNum">
-                  db 데이터 로드해야함
-                  4
-                </span>
-                <span> 신청학점 : </span>
-                <span class="button_bottom_left_text_credit">
-                  db 데이터 로드해야함
-                  4
-                </span>
-                <span> ] </span>
-              </p>
-            </div>-->
           </div>
           <div class="button_bottom_right">
             <div class="button_bottom_right_content">
@@ -72,7 +52,6 @@
                 <!-- 아이콘 한개 -->
               </div>
               <p class="button_bottom_righttext">
-                Drag & Drop -> 순서 정렬 -> '순서저장' 버튼 클릭 -> 순서설정 완료
               </p>
               <button>순서저장</button>
             </div>
@@ -83,81 +62,31 @@
               <caption>
                 <!--테이블 하단에 표시할 내용-->
                 <div>
-                  <!-- 해당 테이블 컬럼 삭제로 인한 주석처리
-                <p>
-                  ※ 영역 안내 : 자자
-                  <span class="inside_basket_caption_text_notbold">
-                    (자과자학년),
-                  </span>
-                  자타
-                  <span class="inside_basket_caption_text_notbold">
-                    (자과타학년),
-                  </span>
-                  타부
-                  <span class="inside_basket_caption_text_notbold">
-                    (타학과,부전공,학생설계),
-                  </span>
-                  복연
-                  <span class="inside_basket_caption_text_notbold">
-                    (복수,연계,융합전공)
-                  </span>
-                </p>
-                -->
                   <p>
-                    ※ 장바구니 인원 표시 안내 : 숫자 3(10)
-                    <span class="inside_basket_caption_text_notbold">
-                      표시는
-                    </span>
-                    <span class="inside_basket_caption_text_redcolor">
-                      장바구니 신청인원
-                    </span>
-                    <span class="inside_basket_caption_text_bluecolor">
-                      (수강정원)
-                    </span>
-                    <span class="inside_basket_caption_text_notbold">
-                      입니다.
-                    </span>
+                    
                   </p>
                   <p>
-                    ※ 정원이 0인 경우는 수강가능인원이 없는 것입니다.
-                    <span class="inside_basket_caption_text_notbold">
-                      개설대학 교학지원팀으로 문의하시기 바랍니다.
-                    </span>
+                   
                   </p>
                 </div>
                 <p>
-                  <span class="inside_basket_caption_text_bluecolor">
-                    ※ 순서 정렬 후 반드시
-                  </span>
-                  <span class="inside_basket_caption_text_redcolor">
-                    "순서저장" 버튼을 클릭해야만 정렬된 내용이 저장
-                  </span>
-                  <span class="inside_basket_caption_text_bluecolor">
-                    됩니다.
-                  </span>
+                  
                 </p>
               </caption>
               <thead>
                 <tr>
-                  <th>과목번호</th>
-                  <th>과목명</th>
+                  <th>                   </th>
                   <th>학년</th>
                   <th>이수구분</th>
+                  <th>과목번호</th>
+                  <th>과목명</th>
                   <th>학점</th>
                   <th>담당교수</th>
                   <th>강의시간</th>
                   <th>수강인원</th>
                 </tr>
               </thead>
-              <tbody>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
+              <tbody id="target_basket_table">
               </tbody>
             </table>
           </div>
@@ -172,11 +101,13 @@
               <div class="button_bottom_left_icon">
                 <!-- 아이콘 한개 -->
               </div>
-              <p class="button_bottom_left_text">
-                <span>시간표는 소속캠퍼스의 시간(교시)을 기준으로 작성되었습니다. 타 캠퍼스 개설과목 수강시 시간은 해당 캠퍼스 시간(교시)을 고려하시기 바랍니다.</span>
+              <p id="schedule_left_text" class="button_bottom_left_text">
+                <span>시간표는 소속캠퍼스의 시간(교시)을 기준으로 작성되었습니다. </span>
+                <span>타 캠퍼스 개설과목 수강시 시간은 해당 캠퍼스 시간(교시)을 고려하시기 바랍니다.</span>
               </p>
               </div>
           </div>
+
           <div class="button_bottom_right">
             <div class="button_bottom_right_content">
               <button>print</button>
@@ -189,26 +120,6 @@
               <caption>
                 <!--테이블 하단에 표시할 내용-->
                 <div>
-                  <!-- 해당 테이블 컬럼 삭제로 인한 주석처리
-                  <p>
-                    ※ 영역 안내 : 자자
-                    <span class="inside_basket_caption_text_notbold">
-                      (자과자학년),
-                    </span>
-                    자타
-                    <span class="inside_basket_caption_text_notbold">
-                      (자과타학년),
-                    </span>
-                    타부
-                    <span class="inside_basket_caption_text_notbold">
-                      (타학과,부전공,학생설계),
-                    </span>
-                    복연
-                    <span class="inside_basket_caption_text_notbold">
-                      (복수,연계,융합전공)
-                    </span>
-                  </p>
-                  -->
                   <p>
                     ※ 장바구니 인원 표시 안내 : 숫자 3(10)
                     <span class="inside_basket_caption_text_notbold">
@@ -270,6 +181,11 @@
         </div>
       </div>
   </main>
+  <div id="basket_datas" class="hidden">
+  {{basket_datas}}
+  </div>
+  {% csrf_token %}
   <script src="https://kit.fontawesome.com/87360ab54c.js" crossorigin="anonymous"></script>
   <script src="{% static 'JS/basket.js' %}"></script>
+  <script src="{% static 'JS/basketTable.js' %}"></script>
 {% endblock %}
