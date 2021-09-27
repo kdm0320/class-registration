@@ -58,10 +58,12 @@ def get_data(request):
 
 def regi_basket(request):
     jsonObject = json.loads(request.body)
-    target_pk = jsonObject.get("subject_number")
-    subject = models.Class.objects.get_or_none(subject_number=target_pk)
+    target_sub_num = jsonObject.get("subject_number")
+    subject = models.Class.objects.get_or_none(subject_number=target_sub_num)
     if subject is not None:
         new_basket, created = basket_model.List.objects.get_or_create(user=request.user)
         new_basket.subjects.add(subject)
+    else:
+        return JsonResponse(jsonObject)
 
     return JsonResponse(jsonObject)
