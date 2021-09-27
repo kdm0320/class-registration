@@ -25,8 +25,6 @@ for (let clazz in dataObj) {
     let arrayIndex = 0;
 
     button.className = "btnAjax";
-    formTag.action = "#"
-    formTag.method = "POST";
     
     button.appendChild(buttonName);
     classTr.appendChild(button)
@@ -49,7 +47,7 @@ for (let clazz in dataObj) {
     classTr.appendChild(formTag)
     target.appendChild(classTr);
 
-    button.addEventListener('click', e => {
+  button.addEventListener('click', e => {
         let universe = classTr.querySelector('.universe').innerText;
         let department = classTr.querySelector('.department').innerText;
         let grade = classTr.querySelector('.grade').innerText;
