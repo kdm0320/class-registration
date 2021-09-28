@@ -22,11 +22,10 @@ def enrollment(request):
 
 
 def delete(request):
-    pass
     # jsonObject = json.loads(request.body)
     # target_list = models.registration.objects.get(user=request.user).subjects
     # target_pk = jsonObject.get("id")
     # target_name = models.registration.objects.get(pk=target_pk)
     # target_list.remove(target_name)
-    # non_data = {}
-    # return JsonResponse(non_data)
+    non_data = {}
+    return JsonResponse(non_data)
