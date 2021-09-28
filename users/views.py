@@ -19,7 +19,7 @@ class LoginView(FormView):
             user = authenticate(request, username=id, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(reverse("users:enrollment"))
+                return redirect(reverse("regist:enrollment"))
             return render(request, "index.html", {"form": form})
 
 
@@ -32,11 +32,4 @@ def log_out(request):
 @login_required(login_url="/login/")
 def user_schedule(request):
     template_name = "users/userSchedule.html"
-    return render(request, template_name)
-
-
-@login_required(login_url="/login/")
-def enrollment(request):
-    template_name = "users/enrolment.html"
-
     return render(request, template_name)

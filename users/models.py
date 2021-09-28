@@ -26,12 +26,4 @@ class User(AbstractUser):
     )
     major = models.CharField(("전공"), null=True, max_length=15)
     grade = models.CharField(("학년"), choices=GRADE_CHOICES, max_length=2, null=True)
-    basket_subjects = models.ManyToManyField("classs.Class", verbose_name=("장바구니 과목들"))
-    registed_subjects = models.ManyToManyField("users.User", verbose_name=("수강신청 과목들"))
     time_table = models.TextField(("시간표"), null=True, blank=True)
-
-    def get_baskets(self):
-        basket = self.basket_subjects.all()
-        return [basket[i] for i in range(len(basket))]
-
-    get_baskets.short_description = "장바구니 과목"
