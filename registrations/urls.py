@@ -5,5 +5,5 @@ app_name = "regist"
 
 urlpatterns = [
     path("", views.enrollment, name="enrollment"),
-    path("delete", views.enrollment, name="delete"),
+    path("delete", views.delete, name="delete"),
 ]
