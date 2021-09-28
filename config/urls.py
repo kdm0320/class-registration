@@ -22,5 +22,6 @@ urlpatterns = [
     path("class/", include("classs.urls", namespace="classes")),
     path("noticeBoard/", include("noticeBoards.urls", namespace="notices")),
     path("basket/", include("basketLists.urls", namespace="baskets")),
+    path("registration/", include("registrations.urls", namespace="regist")),
     path("admin/", admin.site.urls),
 ]
