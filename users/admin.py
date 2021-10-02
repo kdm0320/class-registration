@@ -15,8 +15,6 @@ class CustomUserAdmin(UserAdmin):
                     "number",
                     "major",
                     "grade",
-                    "basket_subjects",
-                    "registed_subjects",
                     "time_table",
                 )
             },
@@ -28,8 +26,5 @@ class CustomUserAdmin(UserAdmin):
         "major",
         "grade",
         "email",
-        "get_baskets",
     )
     list_filter = ("major", "grade")
-
-    filter_horizontal = ("basket_subjects",)

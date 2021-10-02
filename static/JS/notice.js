@@ -1,4 +1,3 @@
-
 const modalOn = document.querySelector(".modal_open_btn");
 const modalOff = document.querySelector(".modal_close_btn");
 const modals = document.querySelector(".modal");
