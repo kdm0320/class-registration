@@ -1,15 +1,15 @@
-const basketData = document.querySelector("#basket_datas").textContent;
-const basketDataObj = JSON.parse(basketData);
+const regiData = document.querySelector("#regi_data").textContent;
+const regiDataObj = JSON.parse(regiData);
 
-const basketTbody = document.querySelector("#target_basket_table");
+const regiTbody = document.querySelector("#target_enrol_table");
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-const dataArray = ['grade','check_major','subject_number','subject_name','credit','professor','time','people'];
+const dataArray = ['grade', 'check_major', 'subject_number', 'subject_name', 'credit', 'professor', 'time', 'people'];
 
-for (let clazz in basketDataObj) {
+for (let clazz in regiDataObj) {
     let classTr = document.createElement("tr");
     let button = document.createElement("button");
-    let buttonName = document.createTextNode("수강신청");
-    let datas = basketDataObj[clazz];
+    let buttonName = document.createTextNode("수강취소");
+    let datas = regiDataObj[clazz];
     let arrayIndex = 0;
 
     button.className = "btnAjax";
@@ -39,7 +39,7 @@ for (let clazz in basketDataObj) {
 
         }
     }
-    basketTbody.appendChild(classTr);
+    regiTbody.appendChild(classTr);
 
     button.addEventListener('click', e => {
         let id = classTr.querySelector('.hidden').innerText;
@@ -63,7 +63,7 @@ for (let clazz in basketDataObj) {
             'people': people,
         }
         
-        const reqUrl = new Request("/basket/registaration", { headers: { 'X-CSRFToken': csrftoken } })
+        const reqUrl = new Request("/registration/delete", { headers: { 'X-CSRFToken': csrftoken } })
         fetch(reqUrl, {
             method: "POST",
             body: JSON.stringify(param),
@@ -76,6 +76,6 @@ for (let clazz in basketDataObj) {
         }
         )
         
-        basketTbody.removeChild(classTr);
+        regiTbody.removeChild(classTr);
     });
 }
