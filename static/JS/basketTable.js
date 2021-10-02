@@ -16,6 +16,7 @@ for (let clazz in basketDataObj) {
     
     button.appendChild(buttonName);
     classTr.appendChild(button)
+
     for (let data in datas) {
         let targetData = datas[data];
         let classTd = document.createElement("td");
@@ -29,6 +30,16 @@ for (let clazz in basketDataObj) {
             case 'universe':
                 break;
             case 'department':
+                break;
+            case 'subject_name':
+                classTd.className = dataArray[arrayIndex];
+                classTd.appendChild(tdText);
+                classTd.addEventListener('click', e => {
+                    window.open(`../static/pdf/lecture${datas['id']}.pdf`,`${data}`,"width=800, height=700"
+                    );
+                })
+                classTr.appendChild(classTd);
+                arrayIndex += 1;
                 break;
             default:
                 classTd.className = dataArray[arrayIndex];
@@ -79,3 +90,9 @@ for (let clazz in basketDataObj) {
         basketTbody.removeChild(classTr);
     });
 }
+//let options = {
+//    width: "60rem",
+//    height:"60rem"
+//}
+//PDFObject.embed("../static/pdf/noname_1.pdf", "#example1", options);
+//console.log(PDFObject)
