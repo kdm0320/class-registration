@@ -4,8 +4,8 @@
 
 {% block title %}Lecture schedules{% endblock title %} 
 {% block content %}
-{% include "partial/header.html" %}
    <main>
+    {% include "partial/header.html" %}
       <form name="selected" action="{% url 'classes:lookup' %}" method="GET">
         <select id="subject" name="subject">
           <option value="">--선택--</option>
