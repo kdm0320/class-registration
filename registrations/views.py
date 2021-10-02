@@ -7,7 +7,7 @@ from . import models
 from classs import models as class_model
 
 
-@login_required(login_url="users/login/")
+@login_required
 def enrollment(request):
     template_name = "enrolment.html"
 
