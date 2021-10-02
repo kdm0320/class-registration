@@ -37,7 +37,7 @@ def user_schedule(request):
     template_name = "users/userSchedule.html"
     lists = regist_model.registration.objects.get(user=request.user)
     if lists:
-        data = lists.subjects.values()
+        data = lists.subjects.values("subject_name", "time")
         temp_data = {}
         for i in range(len(data)):
             temp_data[f"class{i}"] = data[i]
