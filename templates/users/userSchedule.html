@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Time Table{% endblock title %}
+
+{% block content %}
+    {% include "partial/header.html" %}
+    <div>
+        {{time_datas}}
+    </div>
+{% endblock content %}
