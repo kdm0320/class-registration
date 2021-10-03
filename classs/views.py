@@ -1,10 +1,10 @@
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http.response import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from . import models
-from django.urls import reverse, reverse_lazy
 from basketLists import models as basket_model
+from django.contrib import messages
 
 
 def class_to_dictionary(data):
@@ -65,6 +65,16 @@ def regi_basket(request):
         new_basket, created = basket_model.List.objects.get_or_create(user=request.user)
         new_basket.subjects.add(subject)
     else:
-        basket_list.subjects.add(subject)
+        time_data_list = []
+        time_datas = basket_list.subjects.values("time")
+        for data in time_datas:
+            time_data_list.append(list(data.values()))
+        for data in time_data_list:
+            if subject.time in data:
+                messages.error(request, "같은 시간의 과목이 이미 장바구니에 존재합니다")
+                break
+            else:
+                basket_list.subjects.add(subject)
+                break
 
     return JsonResponse(jsonObject)
