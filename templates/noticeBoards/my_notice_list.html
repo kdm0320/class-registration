@@ -1,0 +1,44 @@
+{% extends 'noticeBoards/notice_list.html' %} 
+{% block list %}
+      {% for notice in notices %}
+        <tbody class="target_table_body">
+          <tr>
+            <td>{{notice.type}}</td>
+            <td>
+            <a href="{% url 'notices:detail' notice.pk %}">{{notice.title}}</a>
+            </td>
+            <td>{{notice.department}}</td>
+            <td>{{notice.writer}}</td>
+            <td>{{notice.created|date:'Y-m-d'}}</td>
+            <td>{{notice.post_hit}}</td>
+          </tr>
+        </tbody>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="content_bottom">
+    <div class="content_bottom_regbutton">
+        <button class="modal_open_btn">등록</button>
+    </div>
+    <div class="contet_bottom_interface">
+      {% if page_obj.has_previous %}
+        <button type="button" onclick="location.href='?page=1';">&lt;&lt;</button>
+        <button type="button" onclick="location.href='?page={{page_obj.previous_page_number}}';">&lt;</button>
+      {% endif %}
+      <p>
+        <span>Page {{page_obj.number}}</span>
+        <span>of </span>
+        <span>{{page_obj.paginator.num_pages}}</span>
+      </p>
+      <p>
+      {% for page in page_obj.paginator.page_range %}
+        <a href="?page={{page}}">{{page}}</a>
+      {% endfor %}
+      </p>
+      {% if page_obj.has_next  %}
+        <button type="button" onclick="location.href='?page={{page_obj.next_page_number}}';">&gt;</button>
+        <button type="button" onclick="location.href='?page={{page_obj.paginator.num_pages}}';">&gt;&gt;</button>
+      {% endif %}
+    </div>
+  </div>
+{% endblock list %}

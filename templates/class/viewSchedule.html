@@ -4,11 +4,9 @@
 
 {% block title %}Lecture schedules{% endblock title %} 
 {% block content %}
-{% include "partial/header.html" %}
    <main>
-      <!--header 부분 include 해야함.(최상단 학번, 학년, 학과 정보 )-->
-
-      <form name="selected" action="#" method="GET">
+    {% include "partial/header.html" %}
+      <form name="selected" action="{% url 'classes:lookup' %}" method="GET">
         <select id="subject" name="subject">
           <option value="">--선택--</option>
           <option value="business">경영경제대학</option>
@@ -16,7 +14,6 @@
           <option value="software">소프트웨어대학</option>
         </select>
         <select id="college" name="college">
-          <!--subject 값에 따라 뭐가 오는지 제어해야함.-->
           <option value="">--선택--</option>
         </select>
         <input id="schedule_button" type="submit" value="조회" />
@@ -26,6 +23,7 @@
         <table>
           <thead>
             <tr>
+              <td>    </td>
               <td>대학</td>
               <td>개설학과</td>
               <td>학년</td>
@@ -35,23 +33,19 @@
               <td>학점</td>
               <td>담당교수</td>
               <td>강의시간</td>
+              <td>수강인원</td>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>공과대학</td>
-              <td>전자공학과</td>
-              <td>3</td>
-              <td>전공</td>
-              <td>99999</td>
-              <td>리눅스 프로그래밍</td>
-              <td>3</td>
-              <td>김동민</td>
-              <td>수 456</td>
-            </tr>
-          </tbody>
-        </table>
+          <tbody id = "target_tbody">
+          </table>
       </div>
     </main>
+    {% csrf_token %}
+    <div id="class_datas" class="hidden">
+    {% if class_data %}
+      {{class_data}}
+    {% endif %}
+    </div>
   <script src="{% static 'JS/viewSchedule.js' %}"></script>
+  <script src="{% static 'JS/viewTable.js' %}"></script>
 {% endblock content %}

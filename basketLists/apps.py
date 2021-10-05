@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class BasketsConfig(AppConfig):
+class BasketlistsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'baskets'
+    name = 'basketLists'

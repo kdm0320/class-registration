@@ -1,4 +1,5 @@
 from django.db import models
+from . import managers
 
 
 class ClassInfoModel(models.Model):
@@ -7,10 +8,12 @@ class ClassInfoModel(models.Model):
     ELECTIVES = "교양"
     CLASS_CHOICES = ((MAJOR, "전공"), (ELECTIVES, "교양"))
 
-    CREDIT1 = "1"
-    CREDIT2 = "2"
-    CREDIT3 = "3"
+    CREDIT0 = 0.5
+    CREDIT1 = 1
+    CREDIT2 = 2
+    CREDIT3 = 3
     CREDIT_CHOICES = (
+        (CREDIT0, "0.5"),
         (CREDIT1, "1"),
         (CREDIT2, "2"),
         (CREDIT3, "3"),
@@ -46,9 +49,10 @@ class ClassInfoModel(models.Model):
     )
     subject_number = models.CharField(("과목번호"), max_length=20, blank=True)
     subject_name = models.CharField(("과목명"), max_length=30, blank=True)
-    credit = models.CharField(("학점"), choices=CREDIT_CHOICES, max_length=2, blank=True)
+    credit = models.CharField(("학점"), max_length=2, blank=True)
     professor = models.CharField(("담당교수"), max_length=5, blank=True)
     time = models.CharField(("강의시간"), max_length=8, blank=True)
+    objects = managers.CustomModelManager()
 
     class Meta:
         abstract = True

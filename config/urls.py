@@ -20,6 +20,8 @@ urlpatterns = [
     path("", include("core.urls", namespace="core")),
     path("users/", include("users.urls", namespace="users")),
     path("class/", include("classs.urls", namespace="classes")),
-    path("notice/", include("noticeBoards.urls", namespace="notices")),
+    path("noticeBoard/", include("noticeBoards.urls", namespace="notices")),
+    path("basket/", include("basketLists.urls", namespace="baskets")),
+    path("registration/", include("registrations.urls", namespace="regist")),
     path("admin/", admin.site.urls),
 ]

@@ -4,4 +4,5 @@ from . import models
 
 @admin.register(models.registration)
 class RegiAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("user",)
+    filter_horizontal = ("subjects",)

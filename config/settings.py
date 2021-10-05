@@ -47,11 +47,15 @@ PROJECT_APPS = [
     "users.apps.UsersConfig",
     "classs.apps.ClasssConfig",
     "core.apps.CoreConfig",
-    "baskets.apps.BasketsConfig",
     "registrations.apps.RegistrationsConfig",
     "noticeBoards.apps.NoticeboardsConfig",
+    "basketLists.apps.BasketlistsConfig",
 ]
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
+
+THRID_PARTY_APPS = [
+    "import_export",
+]
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THRID_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -81,6 +85,8 @@ TEMPLATES = [
     },
 ]
 
+
+TEMPLATE_CONTEXT_PROCESSORS = ["django.template.context_processors.request"]
 WSGI_APPLICATION = "config.wsgi.application"
 
 
@@ -140,6 +146,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
+LOGIN_URL = "/users/login"
 
-SESSION_COOKIE_AGE = 1200
-SESSION_SAVE_EVERY_REQUEST = False
+# SESSION_COOKIE_AGE = 1200
+# SESSION_SAVE_EVERY_REQUEST = False

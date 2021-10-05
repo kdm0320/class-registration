@@ -27,6 +27,7 @@
               <div class="button_bottom_left_icon">
                 <!-- 아이콘 한개 -->
               </div>
+            
               <p class="button_bottom_left_text">
                 <span class="button_bottom_left_text_title">
                   수강신청 내역
@@ -45,61 +46,43 @@
               </p>
             </div>
           </div>
-          <table id="enrol_class">
+          <table>
             <caption>
               <!--테이블 하단에 표시할 내용-->
               <p>
                 <span>
-                  ※ 삭제전 성적우수장학금수혜를 위한 기본학점을 다시한번
-                  확인하시기 바랍니다.
-                </span>
-                <span>[성적우수장학금 수혜를 위한 기본 수강신청 학점]</span>
-                <span>
-                  16학점이상 수강신청(단 졸업직전학기의 경우는 12학점 이상
-                  수강신청.입학성정우수 장학의 경우는 입학년도별/학과별로 다를
-                  수 있으므로 별도장학공지 참조.)
                 </span>
               </p>
               <span>
-                ※ 수강신청 마감을 하면 현재 신청된 과목의 삭제가 불가능합니다.
               </span>
             </caption>
             <thead>
-              <tr>
-                <th>캠퍼스</th>
-                <th>과목번호</th>
-                <th>과목명</th>
-                <th>이수구분</th>
-                <th>교양영역</th>
-                <th>재수강</th>
-                <th>학점</th>
-                <th>담당교수</th>
-                <th>강의시간</th>
-                <th>유연학기</th>
-                <th>기이수</th>
-              </tr>
+               <tr>
+                  <th>                   </th>
+                  <th>학년</th>
+                  <th>이수구분</th>
+                  <th>과목번호</th>
+                  <th>과목명</th>
+                  <th>학점</th>
+                  <th>담당교수</th>
+                  <th>강의시간</th>
+                  <th>수강인원</th>
+                </tr>
             </thead>
-            <tbody>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-              <td>6</td>
-              <td>7</td>
-              <td>8</td>
-              <td>9</td>
-              <td>10</td>
-              <td>11</td>
+            <tbody id="target_enrol_table">
             </tbody>
           </table>
         </div>
       </div>
     </main>
+      <div id="regi_data" class="hidden">
+                {{regi_datas}}
+              </div>
+     {% csrf_token %}
     <script
       src="https://kit.fontawesome.com/87360ab54c.js"
       crossorigin="anonymous"
     ></script>
     <script src="{% static 'JS/enril.js' %}"></script>
+    <script src="{% static 'JS/viewEnrol.js' %}"></script>
   {% endblock content %}
-

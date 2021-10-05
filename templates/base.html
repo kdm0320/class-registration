@@ -7,16 +7,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{% static 'css/style.css' %}" />
         <title>{% block title %}{% endblock title %}</title>
-      
 
     </head>
     <body>
+        {% include "partial/messages.html" %}
              
         {% include "partial/nav.html" %}
-
         {% block content %}
         
-        {% endblock%}
+        {% endblock content%}
 
     </body>
 </html>

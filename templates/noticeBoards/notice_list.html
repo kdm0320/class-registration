@@ -1,0 +1,133 @@
+{% extends 'base.html' %} {% load static %} 
+{% block title %} NoticeBoard
+{%endblock title %} {% block content %}
+<main>
+  {% include "partial/header.html" %}
+  <div class="content">
+    <div class="content_title">
+      <span>▶ 수강신청게시판 (Course Registration Board)</span>
+    </div>
+      <div class="content_interface_left">
+        <form id="content_interface_left_searchmynotice" action="{% url 'notices:find' %}" method="get">
+          <button type="submit" >내글조회</button>
+        </form>
+        <form id="content_interface_left_searchallnotice" action="{% url 'notices:board' %}" method="get">
+          <button type="submit">전체조회</button>
+        </form>
+      </div>
+    {% block search %}
+    <form id="content_interface_right" action="{% url 'notices:search' %}" method="get">
+      <div class="content_interface_right_box">
+        <span>제목</span>
+        <input id="search" name="search" placeholder="검색"/>
+        <button type="submit">조회</button>
+      </div>
+    </form>
+    {% endblock search %}
+    <div class="content_main">
+      <div class="content_center">
+        <table>
+          <thead>
+            <tr>
+              <th class="hidden">번호</th>
+              <th>종류</th>
+              <th>제목</th>
+              <th>소속</th>
+              <th>작성자</th>
+              <th>작성일</th>
+              <th>조회수</th>  
+            </tr>
+          </thead>
+          {% block list %}
+          {% for notice in notices %}
+            <tbody class="target_table_body">
+              <tr>
+                <td>{{notice.type}}</td>
+                <td>
+                <a href="{% url 'notices:detail' notice.pk  %}">{{notice.title}}</a>
+                </td>
+                <td>{{notice.department}}</td>
+                <td>{{notice.writer}}</td>
+                <td>{{notice.created|date:'Y-m-d'}}</td>
+                <td>{{notice.post_hit}}</td>
+              </tr>
+            </tbody>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="content_bottom">
+        <div class="content_bottom_regbutton">
+            <button class="modal_open_btn">등록</button>
+        </div>
+        <div class="contet_bottom_interface">
+          {% if notices.has_previous %}
+            <button type="button" onclick="location.href='{% url 'notices:board' %}';">&lt;&lt;</button>
+            <button type="button" onclick="location.href='?page={{notices.previous_page_number}}';">&lt;</button>
+          {% endif %}
+          <p>
+            <span>Page {{notices.number}}</span>
+            <span>of </span>
+            <span>{{notices.paginator.num_pages}}</span>
+          </p>
+          <p>
+          {% for page in notices.paginator.page_range %}
+            <a href="?page={{page}}">{{page}}</a>
+          {% endfor %}
+          </p>
+          {% if notices.has_next  %}
+            <button type="button" onclick="location.href='?page={{notices.next_page_number}}';">&gt;</button>
+            <button type="button" onclick="location.href='?page={{notices.paginator.num_pages}}';">&gt;&gt;</button>
+          {% endif %}
+        </div>
+      </div>
+      {% endblock list %}
+
+    </div>
+  </div>
+</main>
+<section class="modal">
+  <div class="modal_content">
+    <h2>등록 창 입니다.</h2>
+    <form id="modal_views" action="{% url 'notices:board' %}" method="POST">
+    {% csrf_token %}
+      <div>
+        <h3>제목 :</h3>
+        <input type="text" required name="title" id="modal_title" minlength="3" />
+      </div>
+      <div>
+        <h3>종류 :</h3>
+        <select name="type" required id="modal_type">
+          <option value="공지">공지</option>
+          <option value="문의">문의</option>
+        </select>
+      </div>
+      <div>
+        <h3>내용 :</h3>
+        <textarea required name="content" id="modal_content" rows="5" cols="33"></textarea>
+      </div>
+      <div>
+        <h3>소속 :</h3>
+        {{user.major}}
+        <input type="hidden" required name="department" id="modal_department" minlength="2" readonly/>
+      </div>
+      <div>
+        <h3>작성자 :</h3>
+        {{user.last_name}}
+        {{user.first_name}}
+        <input type="hidden" required name="writer" id="modal_writer" minlength="2" readonly/>
+      </div>
+      <div>
+        <input type="submit" value="등록" />
+      </div>
+    </form>
+    <button class="modal_close_btn">모달 창 닫기</button>
+  </div>
+  <div class="modal_layer"></div>
+</section>
+<script
+  src="https://kit.fontawesome.com/87360ab54c.js"
+  crossorigin="anonymous"
+></script>
+
+<script src="{% static 'JS/notice.js' %}"></script>
+{% endblock content %}

@@ -1,5 +1,5 @@
 from django.db import models
-from users import models as user_models
+from django.urls import reverse
 
 
 class notice(models.Model):
@@ -32,3 +32,6 @@ class notice(models.Model):
     def update_count(self):
         self.post_hit += 1
         self.save()
+
+    def get_absolute_url(self):
+        return reverse("notices:detail", kwargs={"pk": self.pk})

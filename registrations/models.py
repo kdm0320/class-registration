@@ -1,11 +1,14 @@
 from django.db import models
-from core import models as core_models
+from core import managers as core_managers
 
 
-class registration(core_models.ClassInfoModel):
-    """Registration Model Definition"""
+class registration(models.Model):
 
-    regi_list = models.TextField(("수강신청 과목 리스트"))
+    user = models.OneToOneField(
+        "users.User", related_name="resgistration", on_delete=models.CASCADE, null=True
+    )
+    subjects = models.ManyToManyField("classs.Class", blank=True)
+    objects = core_managers.CustomModelManager()
 
-    def __str__(self):
-        return self.subject_name
+    def number(self):
+        return self.user
