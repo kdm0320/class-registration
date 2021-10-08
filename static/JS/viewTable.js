@@ -31,18 +31,30 @@ for (let clazz in dataObj) {
     for (let data in datas) {
         let targetData = datas[data];
         let classTd = document.createElement("td");
-        let tdText = document.createTextNode(targetData);
-        if (data == "pk") {
-            classTd.className = "hidden";
-            classTd.appendChild(tdText);
-            classTr.appendChild(classTd);
-        }
-        else {
-        classTd.className = dataArray[arrayIndex];
-        classTd.appendChild(tdText);
-            classTr.appendChild(classTd);
-            arrayIndex += 1;
-        }
+      let tdText = document.createTextNode(targetData);
+      switch (data) {
+        case 'pk':
+          classTd.className = "hidden";
+          classTd.appendChild(tdText);
+          classTr.appendChild(classTd);
+          break;
+        case 'subject_name':
+          classTd.className = dataArray[arrayIndex];
+          classTd.appendChild(tdText);
+          classTd.addEventListener('click', e => {
+              window.open(`../../static/pdf/lecture${datas['pk']}.pdf`,`${data}`,"width=800, height=700"
+              );
+          })
+          classTr.appendChild(classTd);
+          arrayIndex += 1;
+          break;
+        default:
+          classTd.className = dataArray[arrayIndex];
+          classTd.appendChild(tdText);
+          classTr.appendChild(classTd);
+          arrayIndex += 1;
+          break;
+      }
     }
     classTr.appendChild(formTag)
     target.appendChild(classTr);

@@ -31,7 +31,7 @@ for (let clazz in basketDataObj) {
                 break;
             case 'department':
                 break;
-            case 'subject_name':
+            /*case 'subject_name':
                 classTd.className = dataArray[arrayIndex];
                 classTd.appendChild(tdText);
                 classTd.addEventListener('click', e => {
@@ -40,7 +40,7 @@ for (let clazz in basketDataObj) {
                 })
                 classTr.appendChild(classTd);
                 arrayIndex += 1;
-                break;
+                break;*/
             default:
                 classTd.className = dataArray[arrayIndex];
                 classTd.appendChild(tdText);

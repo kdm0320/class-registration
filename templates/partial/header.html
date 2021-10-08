@@ -15,23 +15,17 @@
     </div>
     <div class="personal-data">
         <span>
-        <!-- 이름 -->
         {{user.last_name}}{{user.first_name}}
         </span>
         <span>
-        <!-- 학번 -->
         {{user.number}}
         </span>
         <span>
-        학년(가진급학년)
-        <!-- 학년 -->
+        학년 : {{user.grade}}
         </span>
-        <span> {{user.grade}}({{user.grade}}) </span>
         <span>
-        <!-- 학점 -->
-        제한학점
+        제한학점 : 23
         </span>
-        <span>23</span>
         <span> (기본:22/이월:1) </span>
         <div>
         <!-- 상세정보 -->
@@ -45,7 +39,9 @@
         </div>
         <span>
         <!-- 시간 정보 -->
-        11:50
+        <div id = "my_Clock">
+        0분0초
+        </div>
         </span>
     </div>
     <div>
@@ -56,4 +52,22 @@
         <button>로그아웃</button>
     </div>
     </form>
+    
+    <script>
+        let time = 1200;
+        let min = "";
+        let sec = "";
+        let temp = setInterval(function () {
+        min = parseInt(time / 60);
+        sec = time % 60;
+
+        document.getElementById("my_Clock").innerHTML = min + "분" + sec + "초";
+        time--;
+
+        if (time < 0) {
+          clearInterval(temp);
+            document.getElementById("my_Clock").innerHTML = "시간초과";
+            }
+        }, 1000);
+    </script>
 </header>
