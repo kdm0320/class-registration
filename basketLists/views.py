@@ -33,6 +33,8 @@ def basket(request):
         datas = json.dumps(temp_data, ensure_ascii=False, cls=DjangoJSONEncoder)
 
         return render(request, template_name, {"basket_datas": datas})
+    else:
+        return render(request, template_name)
 
 
 def send_to_regi(request):
