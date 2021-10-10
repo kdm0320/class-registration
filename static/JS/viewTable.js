@@ -99,14 +99,14 @@ for (let clazz in dataObj) {
         //)
           
           $.ajax({
-          url: "http://127.0.0.1:8000/class/regi-basket/",
+          url: "/class/regi-basket/",
           type: 'POST',
           headers:{
               'X-CSRFTOKEN' : csrftoken
           },
           data : JSON.stringify(param),
           success: function(data){
-              console.log(data)
+
           },
           error: function(){
               console.log("전송실패")
