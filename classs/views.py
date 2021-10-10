@@ -90,6 +90,244 @@ def get_data(request):
     return render(request, template_name, {"class_data": datas})
 
 
+def divded_data(new_data, user_data, subject_time, basket_list, subject):
+    if new_data.isalpha() is False:
+        try:
+            if subject_time[1] == "1" or subject_time[1] == "2":
+                if (
+                    "A" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+            elif subject_time[1] == "3":
+                if (
+                    "B" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+            elif subject_time[1] == "4" or subject_time[1] == "5":
+                if (
+                    "C" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+            elif subject_time[1] == "6":
+                if (
+                    "D" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+            elif subject_time[1] == "7" or subject_time[1] == "8":
+                if (
+                    "E" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+            elif subject_time[1] == "9":
+                if (
+                    "F" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+            elif subject_time[1] == "10" or subject_time[1] == "11":
+                if (
+                    "G" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+            elif subject_time[1] == "12":
+                if (
+                    "H" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+            elif subject_time[1] == "13" or subject_time[1] == "14":
+                if (
+                    "I" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+            elif subject_time[1] == "15":
+                if (
+                    "J" in user_data.time_table[subject_time[0]]
+                    or subject_time[1] in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    for i in subject_time:
+                        if i.isdigit():
+                            user_data.time_table[subject_time[0]].append(i)
+                    user_data.save()
+        except KeyError:
+            basket_list.subjects.add(subject)
+            user_data.time_table[subject_time[0]] = []
+            for i in subject_time:
+                if i.isdigit():
+                    user_data.time_table[subject_time[0]].append(i)
+            user_data.save()
+    else:
+        try:
+            if new_data == "A":
+                if (
+                    "1" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+            elif new_data == "B":
+                if (
+                    "2" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+            elif new_data == "C":
+                if (
+                    "4" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+            elif new_data == "D":
+                if (
+                    "5" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+            elif new_data == "E":
+                if (
+                    "7" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+            elif new_data == "F":
+                if (
+                    "8" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+            elif new_data == "G":
+                if (
+                    "10" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+            elif new_data == "H":
+                if (
+                    "11" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+            elif new_data == "I":
+                if (
+                    "13" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+            elif new_data == "J":
+                if (
+                    "14" in user_data.time_table[subject_time[0]]
+                    or new_data in user_data.time_table[subject_time[0]]
+                ):
+                    pass
+                else:
+                    basket_list.subjects.add(subject)
+                    user_data.time_table[subject_time[0]].append(new_data)
+                    user_data.save()
+        except KeyError:
+            basket_list.subjects.add(subject)
+            user_data.time_table[subject_time[0]] = [new_data]
+            user_data.save()
+
+
 def regi_basket(request):
     jsonObject = json.loads(request.body)
     target_sub_num = jsonObject.get("subject_number")
@@ -133,477 +371,15 @@ def regi_basket(request):
         if len(split_subject_time) == 0:
             if subject_time[1] == "(":
                 new_data = change_time_data(subject_time[2:])
-                try:
-                    if new_data == "A":
-                        if (
-                            "1" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                    elif new_data == "B":
-                        if (
-                            "2" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                    elif new_data == "C":
-                        if (
-                            "4" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                    elif new_data == "D":
-                        if (
-                            "5" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                    elif new_data == "E":
-                        if (
-                            "7" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                    elif new_data == "F":
-                        if (
-                            "8" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                    elif new_data == "G":
-                        if (
-                            "10" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                    elif new_data == "H":
-                        if (
-                            "11" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                    elif new_data == "I":
-                        if (
-                            "13" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                    elif new_data == "J":
-                        if (
-                            "14" in user_data.time_table[subject_time[0]]
-                            or new_data in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            user_data.time_table[subject_time[0]].append(new_data)
-                            user_data.save()
-                except KeyError:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]] = [new_data]
-                    user_data.save()
+                divded_data(new_data, user_data, subject_time, basket_list, subject)
             else:
-                try:
-                    if subject_time[1] == "1" or subject_time[1] == "2":
-                        if (
-                            "A" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                    elif subject_time[1] == "3":
-                        if (
-                            "B" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                    elif subject_time[1] == "4" or subject_time[1] == "5":
-                        if (
-                            "C" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                    elif subject_time[1] == "6":
-                        if (
-                            "D" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                    elif subject_time[1] == "7" or subject_time[1] == "8":
-                        if (
-                            "E" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                    elif subject_time[1] == "9":
-                        if (
-                            "F" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                    elif subject_time[1] == "10" or subject_time[1] == "11":
-                        if (
-                            "G" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                    elif subject_time[1] == "12":
-                        if (
-                            "H" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                    elif subject_time[1] == "13" or subject_time[1] == "14":
-                        if (
-                            "I" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                    elif subject_time[1] == "15":
-                        if (
-                            "J" in user_data.time_table[subject_time[0]]
-                            or subject_time[1] in user_data.time_table[subject_time[0]]
-                        ):
-                            messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                        else:
-                            basket_list.subjects.add(subject)
-                            for i in subject_time:
-                                if i.isdigit():
-                                    user_data.time_table[subject_time[0]].append(i)
-                            user_data.save()
-                except KeyError:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]] = []
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
+                divded_data(subject_time, user_data, subject_time, basket_list, subject)
         else:
             for split_data in split_subject_time:
                 if split_data[1] == "(":
                     new_data = change_time_data(split_data[2:])
-                    try:
-                        if new_data == "A":
-                            if (
-                                "1" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                        elif new_data == "B":
-                            if (
-                                "2" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                        elif new_data == "C":
-                            if (
-                                "4" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                        elif new_data == "D":
-                            if (
-                                "5" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                        elif new_data == "E":
-                            if (
-                                "7" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                        elif new_data == "F":
-                            if (
-                                "8" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                        elif new_data == "G":
-                            if (
-                                "10" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                        elif new_data == "H":
-                            if (
-                                "11" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                        elif new_data == "I":
-                            if (
-                                "13" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                        elif new_data == "J":
-                            if (
-                                "14" in user_data.time_table[split_data[0]]
-                                or new_data in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                user_data.time_table[split_data[0]].append(new_data)
-                                user_data.save()
-                    except KeyError:
-                        basket_list.subjects.add(subject)
-                        user_data.time_table[split_data[0]] = [new_data]
-                        user_data.save()
+                    divded_data(new_data, user_data, split_data, basket_list, subject)
                 else:
-                    try:
-                        if split_data[1] == "1" or split_data[1] == "2":
-                            if (
-                                "A" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                        elif split_data[1] == "3":
-                            if (
-                                "B" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                        elif split_data[1] == "4" or split_data[1] == "5":
-                            if (
-                                "C" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                        elif split_data[1] == "6":
-                            if (
-                                "D" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                        elif split_data[1] == "7" or split_data[1] == "8":
-                            if (
-                                "E" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                        elif split_data[1] == "9":
-                            if (
-                                "F" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                        elif split_data[1] == "10" or split_data[1] == "11":
-                            if (
-                                "G" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                        elif split_data[1] == "12":
-                            if (
-                                "H" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                        elif split_data[1] == "13" or split_data[1] == "14":
-                            if (
-                                "I" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                        elif split_data[1] == "15":
-                            if (
-                                "J" in user_data.time_table[split_data[0]]
-                                or split_data[1] in user_data.time_table[split_data[0]]
-                            ):
-                                messages.error(request, "이미 장바구니에 시간표가 존재합니다")
-                            else:
-                                basket_list.subjects.add(subject)
-                                for i in split_data:
-                                    if i.isdigit():
-                                        user_data.time_table[split_data[0]].append(i)
-                                user_data.save()
-                    except KeyError:
-                        basket_list.subjects.add(subject)
-                        user_data.time_table[split_data[0]] = []
-                        for i in split_data:
-                            if i.isdigit():
-                                user_data.time_table[split_data[0]].append(i)
-                        user_data.save()
+                    divded_data(split_data, user_data, split_data, basket_list, subject)
 
     return JsonResponse(jsonObject)
