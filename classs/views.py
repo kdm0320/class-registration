@@ -4,7 +4,6 @@ from django.http.response import JsonResponse
 from django.shortcuts import render
 from . import models
 from basketLists import models as basket_model
-from django.contrib import messages
 
 
 def class_to_dictionary(data):
@@ -330,9 +329,9 @@ def divded_data(new_data, user_data, subject_time, basket_list, subject):
 
 def regi_basket(request):
     jsonObject = json.loads(request.body)
-    target_sub_num = jsonObject.get("subject_number")
+    target_pk = jsonObject.get("pk")
     basket_list = basket_model.List.objects.get_or_none(user=request.user)
-    subject = models.Class.objects.get(subject_number=target_sub_num)
+    subject = models.Class.objects.get(pk=target_pk)
     subject_time = subject.time.replace(" ", "")
     user_data = basket_model.List.objects.get(user=request.user)
     split_subject_time = []
