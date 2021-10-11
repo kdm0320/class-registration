@@ -6,7 +6,7 @@ const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 const dataArray = ['grade','check_major','subject_number','subject_name','credit','professor','time','people'];
 
 function loadHead() {
-    const tr = document.querySelector("#target_enrol_table").querySelectorAll("tr")
+    const tr = document.querySelector("#target_basket_table").querySelectorAll("tr")
     const creBox = document.querySelector(".button_bottom_left_text_credit");
     const couBox = document.querySelector(".button_bottom_left_text_classNum");
     const countCredit = document.querySelectorAll(".credit");
@@ -24,14 +24,16 @@ for (let clazz in basketDataObj) {
     let classTr = document.createElement("tr");
     let button = document.createElement("button");
     let buttonName = document.createTextNode("수강신청");
+    let deleteButtonText = document.createTextNode("삭제");
+    let deleteButton = document.createElement("button");
     let datas = basketDataObj[clazz];
     let arrayIndex = 0;
 
     button.className = "btnAjax";
-    
+    deleteButton.appendChild(deleteButtonText);
     button.appendChild(buttonName);
-    classTr.appendChild(button)
-
+    classTr.appendChild(button);
+    classTr.appendChild(deleteButton);
     for (let data in datas) {
         let targetData = datas[data];
         let classTd = document.createElement("td");

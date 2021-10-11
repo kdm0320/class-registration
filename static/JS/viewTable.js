@@ -34,7 +34,7 @@ for (let clazz in dataObj) {
       let tdText = document.createTextNode(targetData);
       switch (data) {
         case 'pk':
-          classTd.className = "hidden";
+          classTd.className = "pk hidden";
           classTd.appendChild(tdText);
           classTr.appendChild(classTd);
           break;
@@ -70,7 +70,9 @@ for (let clazz in dataObj) {
         let professor = classTr.querySelector('.professor').innerText;
         let time = classTr.querySelector('.time').innerText;
         let people = classTr.querySelector('.people').innerText;
+        let pk = classTr.querySelector(".pk").innerText
         let param = {
+          'pk': pk,
           'universe' : universe,
           'department' : department,
           'grade' : grade,
@@ -78,26 +80,11 @@ for (let clazz in dataObj) {
           'subject_number' : subject_number,
           'subject_name' : subject_name,
           'credit' : credit,
-            'professor': professor,
-            'time': time,
-            'people': people,
+          'professor': professor,
+          'time': time,
+          'people': people,
           }
-        //
-        //const reqUrl = new Request(
-       //     "http://127.0.0.1:8000/class/regi-basket/",
-       //     { headers: { 'X-CSRFToken': csrftoken } }
-// )
-      //  fetch(reqUrl, {
-       //     method: "POST",
-//body: JSON.stringify(param),
-       //     mode: 'same-origin'
-        //}).then(function (res) {
-         //   return res.text()
-        //}, function (error) {
-         //   console.log(error)
-        //}
-        //)
-          
+
           $.ajax({
           url: "/class/regi-basket/",
           type: 'POST',
