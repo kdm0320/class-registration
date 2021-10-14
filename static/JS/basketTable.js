@@ -6,7 +6,7 @@ const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 const dataArray = ['grade','check_major','subject_number','subject_name','credit','professor','time','people'];
 
 function loadHead() {
-    const tr = document.querySelector("#target_enrol_table").querySelectorAll("tr")
+    const tr = document.querySelector("#target_basket_table").querySelectorAll("tr")
     const creBox = document.querySelector(".button_bottom_left_text_credit");
     const couBox = document.querySelector(".button_bottom_left_text_classNum");
     const countCredit = document.querySelectorAll(".credit");
