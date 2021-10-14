@@ -62,7 +62,7 @@ def send_to_regi(request):
     else:
         for split_data in split_subject_time:
             if split_data[1] == "(":
-                new_data = class_view.change_time_data(split_data[2:])
+                new_data = class_view.change_time_data(split_data)
                 user_data.time_table[split_data[0]].remove(new_data)
                 user_data.save()
             else:
