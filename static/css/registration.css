@@ -118,3 +118,11 @@ caption {
   display: flex;
   flex-direction: column;
 }
+#time_table > thead > tr>th{
+  width: 250px;
+  height: 30px;
+}
+#time_table > tbody > tr>td{
+  width: 80px;
+  height: 20px;
+}
