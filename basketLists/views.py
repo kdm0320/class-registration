@@ -38,39 +38,35 @@ def basket(request):
         return render(request, template_name)
 
 
+def remove_data(target_time, user_data):
+    if target_time[1] == "(":
+        new_data = class_view.change_time_data(target_time)
+        user_data.time_table[target_time[0]].remove(new_data)
+    else:
+        for i in target_time:
+            if i.isdigit():
+                user_data.time_table[target_time[0]].remove(i)
+
+
 def send_to_regi(request):
     jsonObject = json.loads(request.body)
     target_pk = jsonObject.get("id")
     target = class_model.Class.objects.get(pk=target_pk)
     target_time = target.time.replace(" ", "")
     user_data = models.List.objects.get(user=request.user)
-    user_list = models.List.objects.get(user=request.user).subjects
-    user_time_table = models.List.objects.get(user=request.user).time_table
+    user_list = user_data.subjects
     split_subject_time = []
     if "/" in target_time:
         split_subject_time = target_time.split("/")
+
     if len(split_subject_time) == 0:
-        if target_time[1] == "(":
-            new_data = class_view.change_time_data(target_time[2:])
-            user_data.time_table[target_time[0]].remove(new_data)
-            user_data.save()
-        else:
-            for i in target_time:
-                if i.isdigit():
-                    user_data.time_table[target_time[0]].remove(i)
-                    user_data.save()
+        remove_data(target_time, user_data)
     else:
         for split_data in split_subject_time:
-            if split_data[1] == "(":
-                new_data = class_view.change_time_data(split_data)
-                user_data.time_table[split_data[0]].remove(new_data)
-                user_data.save()
-            else:
-                for i in split_data:
-                    if i.isdigit():
-                        user_data.time_table[split_data[0]].remove(i)
-                        user_data.save()
+            remove_data(split_data, user_data)
+
     user_list.remove(target)
+    user_data.save()
 
     regi_list = regist_model.registration.objects.get_or_none(user=request.user)
     if regi_list is None:
@@ -78,5 +74,6 @@ def send_to_regi(request):
         new_list.subjects.add(target)
     else:
         regi_list.subjects.add(target)
+
     non_data = {}
     return JsonResponse(non_data)
