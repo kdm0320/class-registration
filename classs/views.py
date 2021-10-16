@@ -22,40 +22,6 @@ def class_to_dictionary(data):
     return output
 
 
-def change_time_data(time_data):
-
-    if time_data[2:4] == "09":
-        new_data = "A"
-        return new_data
-    elif time_data[2:4] == "10":
-        new_data = "B"
-        return new_data
-    elif time_data[2:4] == "12":
-        new_data = "C"
-        return new_data
-    elif time_data[2:4] == "13":
-        new_data = "D"
-        return new_data
-    elif time_data[2:4] == "15":
-        new_data = "E"
-        return new_data
-    elif time_data[2:4] == "16":
-        new_data = "F"
-        return new_data
-    elif time_data[2:4] == "18":
-        new_data = "G"
-        return new_data
-    elif time_data[2:4] == "19":
-        new_data = "H"
-        return new_data
-    elif time_data[2:4] == "21":
-        new_data = "ND"
-        return new_data
-    elif time_data[2:4] == "22":
-        new_data = "SC"
-        return new_data
-
-
 def home(request):
     template_name = "class/viewSchedule.html"
 
@@ -63,6 +29,66 @@ def home(request):
         request,
         template_name,
     )
+
+
+class HandleData:
+    def change_time_data(self, time_data):
+
+        if time_data[2:4] == "09":
+            new_data = "A"
+            return new_data
+        elif time_data[2:4] == "10":
+            new_data = "B"
+            return new_data
+        elif time_data[2:4] == "12":
+            new_data = "C"
+            return new_data
+        elif time_data[2:4] == "13":
+            new_data = "D"
+            return new_data
+        elif time_data[2:4] == "15":
+            new_data = "E"
+            return new_data
+        elif time_data[2:4] == "16":
+            new_data = "F"
+            return new_data
+        elif time_data[2:4] == "18":
+            new_data = "G"
+            return new_data
+        elif time_data[2:4] == "19":
+            new_data = "H"
+            return new_data
+        elif time_data[2:4] == "21":
+            new_data = "ND"
+            return new_data
+        elif time_data[2:4] == "22":
+            new_data = "SC"
+            return new_data
+
+    def check_data(self, time_data, basket_list, numbers_to_alpha, check_schedule):
+        for time in time_data[1:]:
+            if (
+                time.isdigit()
+                and (numbers_to_alpha[time] in basket_list.time_table[time_data[0]])
+                or (time in basket_list.time_table[time_data[0]])
+            ):
+                check_schedule.append(True)
+                break
+
+    def regi_data(self, time_data, subject, basket_list):
+        basket_list.subjects.add(subject)
+        for time in time_data[1:]:
+            if time.isdigit():
+                basket_list.time_table[time_data[0]].append(time)
+
+    def create_data(self, time_data, new_basket):
+        if time_data[1] == "(":
+            new_data = self.change_time_data(time_data[2:])
+            new_basket.time_table = new_basket.time_table[time_data[0]].append(new_data)
+        else:
+            for i in time_data:
+                if i.isdigit():
+                    new_basket.time_table[time_data[0]].append(i)
 
 
 def change_name(college):
@@ -89,35 +115,8 @@ def get_data(request):
     return render(request, template_name, {"class_data": datas})
 
 
-def check_data(time_data, basket_list, numbers_to_alpha, check_schedule):
-    for time in time_data[1:]:
-        if (
-            time.isdigit()
-            and (numbers_to_alpha[time] in basket_list.time_table[time_data[0]])
-            or (time in basket_list.time_table[time_data[0]])
-        ):
-            check_schedule.append(True)
-            break
-
-
-def regi_data(time_data, subject, basket_list):
-    basket_list.subjects.add(subject)
-    for time in time_data[1:]:
-        if time.isdigit():
-            basket_list.time_table[time_data[0]].append(time)
-
-
-def create_data(time_data, new_basket):
-    if time_data[1] == "(":
-        new_data = change_time_data(time_data[2:])
-        new_basket.time_table = new_basket.time_table[time_data[0]].append(new_data)
-    else:
-        for i in time_data:
-            if i.isdigit():
-                new_basket.time_table[time_data[0]].append(i)
-
-
 def regi_basket(request):
+
     jsonObject = json.loads(request.body)
     target_pk = jsonObject.get("pk")
     basket_list = basket_model.List.objects.get_or_none(user=request.user)
@@ -126,6 +125,8 @@ def regi_basket(request):
     split_subject_time = []
     if "/" in subject_time:
         split_subject_time = subject_time.split("/")
+
+    handle_data = HandleData()
 
     alpha_to_numbers = {
         "A": ["1", "2"],
@@ -156,26 +157,29 @@ def regi_basket(request):
         "14": "ND",
         "15": "SC",
     }
+
     if basket_list is None:
         new_basket, created = basket_model.List.objects.get_or_create(user=request.user)
         new_basket.subjects.add(subject)
         if len(split_subject_time) == 0:
-            create_data(subject_time, new_basket)
+            handle_data.create_data(subject_time, new_basket)
         else:
             for split_data in split_subject_time:
-                create_data(split_data, new_basket)
+                handle_data.create_data(split_data, new_basket)
         new_basket.save()
     else:
         if len(split_subject_time) == 0:
             check_schedule = []
-            check_data(subject_time, basket_list, numbers_to_alpha, check_schedule)
+            handle_data.check_data(
+                subject_time, basket_list, numbers_to_alpha, check_schedule
+            )
             if True not in check_schedule:
-                regi_data(subject_time, subject, basket_list)
+                handle_data.regi_data(subject_time, subject, basket_list)
         else:
             check_schedule = []
             if split_subject_time[0][1] == "(":
                 for split_data in split_subject_time:
-                    new_data = change_time_data(split_data)
+                    new_data = handle_data.change_time_data(split_data)
                     for number in alpha_to_numbers[new_data]:
                         if (number in basket_list.time_table[split_data[0]]) or (
                             new_data in basket_list.time_table[split_data[0]]
@@ -184,16 +188,16 @@ def regi_basket(request):
                 if True not in check_schedule:
                     basket_list.subjects.add(subject)
                     for split_data in split_subject_time:
-                        new_data = change_time_data(split_data)
+                        new_data = handle_data.change_time_data(split_data)
                         basket_list.time_table[split_data[0]].append(new_data)
             else:
                 for split_data in split_subject_time:
-                    check_data(
+                    handle_data.check_data(
                         split_data, basket_list, numbers_to_alpha, check_schedule
                     )
 
                     if True not in check_schedule:
-                        regi_data(split_data, subject, basket_list)
+                        handle_data.regi_data(split_data, subject, basket_list)
             check_schedule = []
         basket_list.save()
     return JsonResponse(jsonObject)
