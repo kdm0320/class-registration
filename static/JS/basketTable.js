@@ -89,7 +89,7 @@ for (let clazz in basketDataObj) {
             'people': people,
         }
         
-        const reqUrl = new Request("/basket/registaration", { headers: { 'X-CSRFToken': csrftoken } })
+        const reqUrl = new Request("/basket/registration", { headers: { 'X-CSRFToken': csrftoken } })
         fetch(reqUrl, {
             method: "POST",
             body: JSON.stringify(param),
@@ -100,9 +100,18 @@ for (let clazz in basketDataObj) {
         }, function (error) {
             console.log(error)
         }
-        )
+        ).then(data => {
+            let message = JSON.parse(data)
+            if (message != "nothing") {
+                alert(message.messages)
+            }
+            else {
+                basketTbody.removeChild(classTr);
+            }
+        }, function (error) {
+            console.log(error)
+        })
         loadHead()
-        basketTbody.removeChild(classTr);
     });
 }
 loadHead()
