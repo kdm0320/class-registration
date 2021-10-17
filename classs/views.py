@@ -4,6 +4,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import render
 from . import models
 from basketLists import models as basket_model
+from django.contrib import messages
 
 
 def class_to_dictionary(data):
@@ -31,7 +32,7 @@ def home(request):
     )
 
 
-class HandleData:
+class HandleTimeData:
     def change_time_data(self, time_data):
 
         if time_data[2:4] == "09":
@@ -66,29 +67,50 @@ class HandleData:
             return new_data
 
     def check_data(self, time_data, basket_list, numbers_to_alpha, check_schedule):
-        for time in time_data[1:]:
-            if (
-                time.isdigit()
-                and (numbers_to_alpha[time] in basket_list.time_table[time_data[0]])
-                or (time in basket_list.time_table[time_data[0]])
-            ):
-                check_schedule.append(True)
-                break
+        check_time = []
+        for index, data in enumerate(time_data[1:]):
+            check_time.append(data)
+            if len(check_time) == 2:
+                if check_time[1].isdigit():
+                    time = "".join(check_time)
+                    if (
+                        numbers_to_alpha[time] in basket_list.time_table[time_data[0]]
+                    ) or (time in basket_list.time_table[time_data[0]]):
+                        check_schedule.append(True)
+                else:
+                    if (
+                        numbers_to_alpha[check_time[0]]
+                        in basket_list.time_table[time_data[0]]
+                    ) or (check_time[0] in basket_list.time_table[time_data[0]]):
+                        check_schedule.append(True)
+                check_time = []
+            elif len(check_time) == 1 and index == len(time_data[1:]) - 1:
+                if (
+                    numbers_to_alpha[check_time[0]]
+                    in basket_list.time_table[time_data[0]]
+                ) or (check_time[0] in basket_list.time_table[time_data[0]]):
+                    check_schedule.append(True)
 
-    def regi_data(self, time_data, subject, basket_list):
-        basket_list.subjects.add(subject)
-        for time in time_data[1:]:
-            if time.isdigit():
-                basket_list.time_table[time_data[0]].append(time)
+    def regi_data(self, time_data, basket_list):
+        check_time = []
+        for index, data in enumerate(time_data[1:]):
+            check_time.append(data)
+            if len(check_time) == 2:
+                if check_time[1].isdigit():
+                    time = "".join(check_time)
+                    basket_list.time_table[time_data[0]].append(time)
+                else:
+                    basket_list.time_table[time_data[0]].append(check_time[0])
+                check_time = []
+            elif len(check_time) == 1 and index == len(time_data[1:]) - 1:
+                basket_list.time_table[time_data[0]].append(check_time[0])
 
     def create_data(self, time_data, new_basket):
         if time_data[1] == "(":
             new_data = self.change_time_data(time_data[2:])
             new_basket.time_table = new_basket.time_table[time_data[0]].append(new_data)
         else:
-            for i in time_data:
-                if i.isdigit():
-                    new_basket.time_table[time_data[0]].append(i)
+            self.regi_data(time_data, new_basket)
 
 
 def change_name(college):
@@ -126,7 +148,7 @@ def regi_basket(request):
     if "/" in subject_time:
         split_subject_time = subject_time.split("/")
 
-    handle_data = HandleData()
+    handle_time_data = HandleTimeData()
 
     alpha_to_numbers = {
         "A": ["1", "2"],
@@ -159,27 +181,30 @@ def regi_basket(request):
     }
 
     if basket_list is None:
-        new_basket, created = basket_model.List.objects.get_or_create(user=request.user)
+        new_basket = basket_model.List.objects.create(user=request.user)
         new_basket.subjects.add(subject)
         if len(split_subject_time) == 0:
-            handle_data.create_data(subject_time, new_basket)
+            handle_time_data.create_data(subject_time, new_basket)
         else:
             for split_data in split_subject_time:
-                handle_data.create_data(split_data, new_basket)
+                handle_time_data.create_data(split_data, new_basket)
         new_basket.save()
     else:
         if len(split_subject_time) == 0:
             check_schedule = []
-            handle_data.check_data(
+            handle_time_data.check_data(
                 subject_time, basket_list, numbers_to_alpha, check_schedule
             )
             if True not in check_schedule:
-                handle_data.regi_data(subject_time, subject, basket_list)
+                basket_list.subjects.add(subject)
+                handle_time_data.regi_data(subject_time, basket_list)
+            else:
+                messages.error(request, "해당 시간에 해당하는 과목이 이미 장바구니에 존재합니다.")
         else:
             check_schedule = []
             if split_subject_time[0][1] == "(":
                 for split_data in split_subject_time:
-                    new_data = handle_data.change_time_data(split_data)
+                    new_data = handle_time_data.change_time_data(split_data)
                     for number in alpha_to_numbers[new_data]:
                         if (number in basket_list.time_table[split_data[0]]) or (
                             new_data in basket_list.time_table[split_data[0]]
@@ -188,16 +213,21 @@ def regi_basket(request):
                 if True not in check_schedule:
                     basket_list.subjects.add(subject)
                     for split_data in split_subject_time:
-                        new_data = handle_data.change_time_data(split_data)
+                        new_data = handle_time_data.change_time_data(split_data)
                         basket_list.time_table[split_data[0]].append(new_data)
+                else:
+                    messages.error(request, "해당 시간에 해당하는 과목이 이미 장바구니에 존재합니다.")
             else:
                 for split_data in split_subject_time:
-                    handle_data.check_data(
+                    handle_time_data.check_data(
                         split_data, basket_list, numbers_to_alpha, check_schedule
                     )
 
                     if True not in check_schedule:
-                        handle_data.regi_data(split_data, subject, basket_list)
+                        basket_list.subjects.add(subject)
+                        handle_time_data.regi_data(split_data, basket_list)
+                    else:
+                        messages.error(request, "해당 시간에 해당하는 과목이 이미 장바구니에 존재합니다.")
             check_schedule = []
         basket_list.save()
     return JsonResponse(jsonObject)
