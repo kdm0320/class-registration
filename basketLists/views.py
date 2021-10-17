@@ -72,6 +72,8 @@ def send_to_regi(request):
         split_subject_time = target_time.split("/")
     handle_time_data = HandleRegiTimeData()
 
+    message_data = {"messages": "nothing"}
+
     alpha_to_numbers = {
         "A": ["1", "2"],
         "B": ["3"],
@@ -127,6 +129,9 @@ def send_to_regi(request):
                 handle_time_data.remove_data(target_time, user_basket_data)
                 regi_list.subjects.add(target)
                 handle_time_data.regi_data(target_time, regi_list)
+            else:
+                message_data["messages"] = "해당 시간에 과목이 이미 시간표애 존재합니다."
+
         else:
             check_schedule = []
             if split_subject_time[0][1] == "(":
@@ -145,7 +150,8 @@ def send_to_regi(request):
                         regi_list.time_table[split_data[0]].append(new_data)
                         handle_time_data.remove_data(split_data, user_basket_data)
                     user_basket_list.remove(target)
-
+                else:
+                    message_data["messages"] = "해당 시간에 과목이 이미 시간표애 존재합니다."
             else:
                 for split_data in split_subject_time:
                     handle_time_data.check_data(
@@ -156,11 +162,12 @@ def send_to_regi(request):
                         handle_time_data.regi_data(split_data, regi_list)
                         handle_time_data.remove_data(split_data, user_basket_data)
                         regi_list.subjects.add(target)
-                user_basket_list.remove(target)
+                        user_basket_list.remove(target)
+                    else:
+                        message_data["messages"] = "해당 시간에 과목이 이미 시간표애 존재합니다."
 
             check_schedule = []
         user_basket_data.save()
         regi_list.save()
-
-    non_data = {}
-    return JsonResponse(non_data)
+    message = json.dumps(message_data)
+    return JsonResponse(message, safe=False)

@@ -4,7 +4,6 @@ from django.http.response import JsonResponse
 from django.shortcuts import render
 from . import models
 from basketLists import models as basket_model
-from django.contrib import messages
 
 
 def class_to_dictionary(data):
@@ -149,7 +148,7 @@ def regi_basket(request):
         split_subject_time = subject_time.split("/")
 
     handle_time_data = HandleTimeData()
-
+    message_data = {"messages": "nothing"}
     alpha_to_numbers = {
         "A": ["1", "2"],
         "B": ["3"],
@@ -199,7 +198,7 @@ def regi_basket(request):
                 basket_list.subjects.add(subject)
                 handle_time_data.regi_data(subject_time, basket_list)
             else:
-                messages.error(request, "해당 시간에 해당하는 과목이 이미 장바구니에 존재합니다.")
+                message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
         else:
             check_schedule = []
             if split_subject_time[0][1] == "(":
@@ -216,7 +215,7 @@ def regi_basket(request):
                         new_data = handle_time_data.change_time_data(split_data)
                         basket_list.time_table[split_data[0]].append(new_data)
                 else:
-                    messages.error(request, "해당 시간에 해당하는 과목이 이미 장바구니에 존재합니다.")
+                    message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
             else:
                 for split_data in split_subject_time:
                     handle_time_data.check_data(
@@ -227,7 +226,8 @@ def regi_basket(request):
                         basket_list.subjects.add(subject)
                         handle_time_data.regi_data(split_data, basket_list)
                     else:
-                        messages.error(request, "해당 시간에 해당하는 과목이 이미 장바구니에 존재합니다.")
+                        message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
             check_schedule = []
         basket_list.save()
-    return JsonResponse(jsonObject)
+    message = json.dumps(message_data)
+    return JsonResponse(message, safe=False)

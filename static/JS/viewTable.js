@@ -80,9 +80,9 @@ for (let clazz in dataObj) {
           'subject_number' : subject_number,
           'subject_name' : subject_name,
           'credit' : credit,
-            'professor': professor,
-            'time': time,
-            'people': people,
+          'professor': professor,
+          'time': time,
+          'people': people,
     }
         //
         //const reqUrl = new Request(
@@ -108,7 +108,11 @@ for (let clazz in dataObj) {
           },
           data : JSON.stringify(param),
           success: function(data){
-
+            let message = JSON.parse(data)
+            if (message.messages != "nothing") {
+              alert(message.messages)
+            }
+      
           },
           error: function(){
               console.log("전송실패")
