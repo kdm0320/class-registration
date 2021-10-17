@@ -1,5 +1,6 @@
 from django.db import models
 from core import managers as core_managers
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 def default_time_table_dict():
@@ -13,6 +14,9 @@ class registration(models.Model):
     )
     subjects = models.ManyToManyField("classs.Class", blank=True)
     time_table = models.JSONField(("시간표"), null=True, default=default_time_table_dict)
+    credits = models.IntegerField(
+        ("신청학점"), default=0, validators=[MinValueValidator(0), MaxValueValidator(23)]
+    )
     objects = core_managers.CustomModelManager()
 
     def number(self):
