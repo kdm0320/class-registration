@@ -1,6 +1,6 @@
 import json
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http.response import JsonResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 from . import models
 from classs import models as class_model
@@ -130,7 +130,7 @@ def send_to_regi(request):
                 regi_list.subjects.add(target)
                 handle_time_data.regi_data(target_time, regi_list)
             else:
-                message_data["messages"] = "해당 시간에 과목이 이미 시간표애 존재합니다."
+                message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
 
         else:
             check_schedule = []
@@ -151,7 +151,7 @@ def send_to_regi(request):
                         handle_time_data.remove_data(split_data, user_basket_data)
                     user_basket_list.remove(target)
                 else:
-                    message_data["messages"] = "해당 시간에 과목이 이미 시간표애 존재합니다."
+                    message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
             else:
                 for split_data in split_subject_time:
                     handle_time_data.check_data(
@@ -164,10 +164,10 @@ def send_to_regi(request):
                         regi_list.subjects.add(target)
                         user_basket_list.remove(target)
                     else:
-                        message_data["messages"] = "해당 시간에 과목이 이미 시간표애 존재합니다."
+                        message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
 
             check_schedule = []
         user_basket_data.save()
         regi_list.save()
-    message = json.dumps(message_data)
-    return JsonResponse(message, safe=False)
+    message = json.dumps(message_data, ensure_ascii=False)
+    return HttpResponse(message, content_type="application/json")
