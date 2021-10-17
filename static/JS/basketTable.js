@@ -102,7 +102,7 @@ for (let clazz in basketDataObj) {
         }
         ).then(data => {
             let message = JSON.parse(data)
-            if (message != "nothing") {
+            if (message.messages != "nothing") {
                 alert(message.messages)
             }
             else {
