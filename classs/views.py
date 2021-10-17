@@ -219,6 +219,7 @@ def regi_basket(request):
                         basket_list.time_table[split_data[0]].append(new_data)
                 else:
                     message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
+
             else:
                 for split_data in split_subject_time:
                     handle_time_data.check_data(
@@ -230,6 +231,8 @@ def regi_basket(request):
                         handle_time_data.regi_data(split_data, basket_list)
                     else:
                         message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
+                        break
+
             check_schedule = []
         basket_list.save()
     message = json.dumps(message_data)

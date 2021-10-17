@@ -117,58 +117,68 @@ def send_to_regi(request):
             for split_data in split_subject_time:
                 handle_time_data.create_data(split_data, new_list)
                 handle_time_data.remove_data(split_data, user_basket_data)
+        new_list += int(target.credit)
         user_basket_list.remove(target)
         user_basket_data.save()
         new_list.save()
     else:
-        if len(split_subject_time) == 0:
-            check_schedule = []
-            handle_time_data.check_data(
-                target_time, regi_list, numbers_to_alpha, check_schedule
-            )
-            if True not in check_schedule:
-                user_basket_list.remove(target)
-                handle_time_data.remove_data(target_time, user_basket_data)
-                regi_list.subjects.add(target)
-                handle_time_data.regi_data(target_time, regi_list)
-            else:
-                message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
-
-        else:
-            check_schedule = []
-            if split_subject_time[0][1] == "(":
-                for split_data in split_subject_time:
-                    new_data = handle_time_data.change_time_data(split_data)
-                    for number in alpha_to_numbers[new_data]:
-                        if (number in regi_list.time_table[split_data[0]]) or (
-                            new_data in regi_list.time_table[split_data[0]]
-                        ):
-                            check_schedule.append(True)
-
+        if regi_list.credits < 23:
+            if len(split_subject_time) == 0:
+                check_schedule = []
+                handle_time_data.check_data(
+                    target_time, regi_list, numbers_to_alpha, check_schedule
+                )
                 if True not in check_schedule:
-                    regi_list.subjects.add(target)
-                    for split_data in split_subject_time:
-                        new_data = handle_time_data.change_time_data(split_data)
-                        regi_list.time_table[split_data[0]].append(new_data)
-                        handle_time_data.remove_data(split_data, user_basket_data)
                     user_basket_list.remove(target)
+                    handle_time_data.remove_data(target_time, user_basket_data)
+                    regi_list.subjects.add(target)
+                    handle_time_data.regi_data(target_time, regi_list)
+                    regi_list.credits += int(target.credit)
                 else:
                     message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
+
             else:
-                for split_data in split_subject_time:
-                    handle_time_data.check_data(
-                        split_data, regi_list, numbers_to_alpha, check_schedule
-                    )
+                check_schedule = []
+                if split_subject_time[0][1] == "(":
+                    for split_data in split_subject_time:
+                        new_data = handle_time_data.change_time_data(split_data)
+                        for number in alpha_to_numbers[new_data]:
+                            if (number in regi_list.time_table[split_data[0]]) or (
+                                new_data in regi_list.time_table[split_data[0]]
+                            ):
+                                check_schedule.append(True)
 
                     if True not in check_schedule:
-                        handle_time_data.regi_data(split_data, regi_list)
-                        handle_time_data.remove_data(split_data, user_basket_data)
                         regi_list.subjects.add(target)
+                        for split_data in split_subject_time:
+                            new_data = handle_time_data.change_time_data(split_data)
+                            regi_list.time_table[split_data[0]].append(new_data)
+                            handle_time_data.remove_data(split_data, user_basket_data)
                         user_basket_list.remove(target)
+                        regi_list.credits += int(target.credit)
                     else:
                         message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
+                else:
+                    for split_data in split_subject_time:
+                        handle_time_data.check_data(
+                            split_data, regi_list, numbers_to_alpha, check_schedule
+                        )
 
-            check_schedule = []
+                        if True not in check_schedule:
+                            handle_time_data.regi_data(split_data, regi_list)
+                            handle_time_data.remove_data(split_data, user_basket_data)
+                            regi_list.subjects.add(target)
+                            regi_list.credits += int(target.credit)
+                            user_basket_list.remove(target)
+                        else:
+                            message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
+                            break
+                    if True not in check_schedule:
+                        regi_list.credits += int(target.credit)
+                check_schedule = []
+        else:
+            message_data["messages"] = "수강가능 학점을 넘었습니다."
+
         user_basket_data.save()
         regi_list.save()
     message = json.dumps(message_data, ensure_ascii=False)
