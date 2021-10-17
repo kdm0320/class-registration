@@ -39,6 +39,18 @@ class NoticeView(ListView):
         return redirect("notices:board")
 
 
+@login_required
+def notice_detail(request, pk):
+    template_name = "noticeBoards/notice_detail.html"
+    try:
+        target_notice = notice.objects.get(pk=pk)
+        target_notice.post_hit += 1
+        target_notice.save()
+        return render(request, template_name, {"notice": target_notice})
+    except notice.DoesNotExist:
+        raise Http404()
+
+
 class MyNoticeView(ListView):
     """MyNoticeView Definition"""
 
@@ -62,17 +74,6 @@ class MyNoticeView(ListView):
             writer=request.POST["writer"],
         )
         return redirect("notices:board")
-
-
-def notice_detail(request, pk):
-    template_name = "noticeBoards/notice_detail.html"
-    try:
-        target_notice = notice.objects.get(pk=pk)
-        target_notice.post_hit += 1
-        target_notice.save()
-        return render(request, template_name, {"notice": target_notice})
-    except notice.DoesNotExist:
-        raise Http404()
 
 
 class SeachView(ListView):
@@ -101,7 +102,6 @@ def save(request, pk):
     target.save()
 
     current_url = request.GET.get("next")
-    print(current_url)
     return redirect(current_url)
 
 
