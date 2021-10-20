@@ -117,7 +117,7 @@ def send_to_regi(request):
             for split_data in split_subject_time:
                 handle_time_data.create_data(split_data, new_list)
                 handle_time_data.remove_data(split_data, user_basket_data)
-        new_list += int(target.credit)
+        new_list.credits += int(target.credit)
         user_basket_list.remove(target)
         user_basket_data.save()
         new_list.save()
