@@ -32,6 +32,10 @@ class SignupForm(forms.Form):
         (GRADE_FOURTH, "4"),
     )
     ID = forms.CharField()
+<<<<<<< HEAD
+=======
+    email = forms.EmailField()
+>>>>>>> c412c648faf1b2e404022615714a0030e52160ba
     password = forms.CharField(widget=forms.PasswordInput, label="비밀번호")
     password1 = forms.CharField(widget=forms.PasswordInput, label="비밀번호 확인")
     last_name = forms.CharField(max_length=20, label="성")
@@ -39,7 +43,10 @@ class SignupForm(forms.Form):
     number = forms.IntegerField(label="학번")
     major = forms.CharField(max_length=30, label="전공")
     grade = forms.ChoiceField(choices=GRADE_CHOICES, label="학년")
+<<<<<<< HEAD
     email = forms.EmailField()
+=======
+>>>>>>> c412c648faf1b2e404022615714a0030e52160ba
 
     def clean_id(self):
         id = self.cleaned_data.get("username")
@@ -75,11 +82,18 @@ class SignupForm(forms.Form):
         ID = self.cleaned_data.get("ID")
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
+<<<<<<< HEAD
+=======
+
+>>>>>>> c412c648faf1b2e404022615714a0030e52160ba
         user = models.User.objects.create_user(ID, email, password)
         user.first_name = first_name
         user.last_name = last_name
         user.number = number
         user.major = major
         user.grade = grade
+<<<<<<< HEAD
         user.time_table = None
+=======
+>>>>>>> c412c648faf1b2e404022615714a0030e52160ba
         user.save()
