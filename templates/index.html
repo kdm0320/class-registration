@@ -5,28 +5,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% if user.is_authenticated %}
-        <meta http-equiv='refresh' content='0; url={% url "regist:enrollment" %}'>
-    {% endif %}
+   
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Login</title>
   </head>
   <body>
     <header></header>
     <main>
-      <!-- form 의 action 속성에 수강신청 홈페이지로 이동시켜야함-->
-      <form
-        name="user-data"
-        id="login-form"
-        action="{% url 'core:index' %}"
-        method="POST"
-      >
-      {% csrf_token %}
-        <div id="login-box">
-          {{form.as_p}}
-        </div>
-        <button>로그인</button>
-      </form>
+     {% if user.is_authenticated %}
+        <meta http-equiv='refresh' content='0; url={% url "regist:enrollment" %}'>
+      {% else %}
+        <form
+            name="user-data"
+            id="login-form"
+            action="{% url 'core:index' %}"
+            method="POST"
+          >
+          {% csrf_token %}
+            <div id="login-box">
+              {{form.as_p}}
+            </div>
+            <button>로그인</button>
+        </form>
+    {% endif %}
+            <button onclick="location.href='{% url "users:signup" %}'">회원가입</button>
     </main>
     <footer></footer>
   </body>
