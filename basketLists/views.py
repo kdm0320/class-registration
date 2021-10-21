@@ -1,7 +1,7 @@
 import json
 from django.contrib.auth.decorators import login_required
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 from . import models
 from classs import models as class_model
@@ -184,3 +184,29 @@ def send_to_regi(request):
         regi_list.save()
     message = json.dumps(message_data, ensure_ascii=False)
     return HttpResponse(message, content_type="application/json")
+
+
+@login_required
+def delete(request):
+    pass
+    # jsonObject = json.loads(request.body)
+    # user_list = models.List.objects.get(user=request.user)
+    # target_pk = jsonObject.get("id")
+    # target = class_model.Class.objects.get(id=target_pk)
+    # target_time = target.time.replace(" ", "")
+    # split_subject_time = []
+    # if "/" in target_time:
+    #     split_subject_time = target_time.split("/")
+
+    # delete_time = HandleRegiTimeData()
+
+    # if len(split_subject_time) == 0:
+    #     user_list.subjects.remove(target)
+    #     delete_time.remove_data(target_time, user_list)
+    # else:
+    #     for split_data in split_subject_time:
+    #         delete_time.remove_data(split_data, user_list)
+    #     user_list.subjects.remove(target)
+    # user_list.save()
+    # non_data = {}
+    # return JsonResponse(non_data)
