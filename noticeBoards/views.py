@@ -55,7 +55,7 @@ def notice_detail(request, pk):
         raise Http404()
 
 
-class MyNoticeView(ListView):
+class MyNoticeView(LoginRequiredMixin, ListView):
     """MyNoticeView Definition"""
 
     login_url = "/users/login"
@@ -83,7 +83,7 @@ class MyNoticeView(ListView):
         return redirect("notices:board")
 
 
-class SeachView(ListView):
+class SeachView(LoginRequiredMixin, ListView):
     """SearchView Definition"""
 
     login_url = "/users/login"
