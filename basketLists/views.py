@@ -134,7 +134,7 @@ def send_to_regi(request):
                     handle_time_data.remove_data(target_time, user_basket_data)
                     regi_list.subjects.add(target)
                     handle_time_data.regi_data(target_time, regi_list)
-                    regi_list.credits += int(target.credit)
+                    regi_list.credits += float(target.credit)
                 else:
                     message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
 
@@ -156,7 +156,7 @@ def send_to_regi(request):
                             regi_list.time_table[split_data[0]].append(new_data)
                             handle_time_data.remove_data(split_data, user_basket_data)
                         user_basket_list.remove(target)
-                        regi_list.credits += int(target.credit)
+                        regi_list.credits += float(target.credit)
                     else:
                         message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
                 else:
@@ -169,13 +169,12 @@ def send_to_regi(request):
                             handle_time_data.regi_data(split_data, regi_list)
                             handle_time_data.remove_data(split_data, user_basket_data)
                             regi_list.subjects.add(target)
-                            regi_list.credits += int(target.credit)
                             user_basket_list.remove(target)
                         else:
                             message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
                             break
                     if True not in check_schedule:
-                        regi_list.credits += int(target.credit)
+                        regi_list.credits += float(target.credit)
                 check_schedule = []
         else:
             message_data["messages"] = "수강가능 학점을 넘었습니다."

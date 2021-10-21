@@ -41,10 +41,13 @@ def delete(request):
     if len(split_subject_time) == 0:
         user_list.subjects.remove(target)
         delete_time.remove_data(target_time, user_list)
+        user_list.credits -= float(target.credit)
     else:
         for split_data in split_subject_time:
             delete_time.remove_data(split_data, user_list)
         user_list.subjects.remove(target)
+        user_list.credits -= float(target.credit)
+
     user_list.save()
     non_data = {}
     return JsonResponse(non_data)
