@@ -3,11 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
 from noticeBoards.models import notice
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, View
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class NoticeView(ListView):
+class NoticeView(LoginRequiredMixin, ListView):
     """NoticeView Definition"""
+
+    login_url = "/users/login"
+    redirect_field_name = "redirect_to"
 
     def get(self, request):
         template_name = "noticeBoards/notice_list.html"
@@ -54,6 +58,9 @@ def notice_detail(request, pk):
 class MyNoticeView(ListView):
     """MyNoticeView Definition"""
 
+    login_url = "/users/login"
+    redirect_field_name = "redirect_to"
+
     template_name = "noticeBoards/my_notice_list.html"
     model = notice
     paginate_by = 3
@@ -77,6 +84,11 @@ class MyNoticeView(ListView):
 
 
 class SeachView(ListView):
+    """SearchView Definition"""
+
+    login_url = "/users/login"
+    redirect_field_name = "redirect_to"
+
     template_name = "noticeBoards/notice_search.html"
     paginate_by = 3
     ordering = "created"
@@ -95,6 +107,7 @@ class SeachView(ListView):
             return target_notices
 
 
+@login_required
 def save(request, pk):
     target = notice.objects.get(pk=pk)
     target.title = request.POST.get("detail_title_data")
@@ -105,6 +118,7 @@ def save(request, pk):
     return redirect(current_url)
 
 
+@login_required
 def delete(request, pk):
     target = notice.objects.get(pk=pk)
     target.delete()

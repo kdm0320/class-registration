@@ -25,6 +25,7 @@ def enrollment(request):
         return render(request, template_name)
 
 
+@login_required
 def delete(request):
     jsonObject = json.loads(request.body)
     user_list = models.registration.objects.get(user=request.user)

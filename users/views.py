@@ -23,7 +23,6 @@ class LoginView(FormView):
         return super().form_valid(form)
 
 
-@login_required
 def log_out(request):
     logout(request)
     return redirect(reverse("core:index"))

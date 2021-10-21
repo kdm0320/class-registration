@@ -1,7 +1,7 @@
 import json
 from django.contrib.auth.decorators import login_required
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http.response import HttpResponse, JsonResponse
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from . import models
 from classs import models as class_model
@@ -62,6 +62,7 @@ class HandleRegiTimeData(class_view.HandleTimeData):
                     user_basket_data.time_table[target_time[0]].remove(check_time[0])
 
 
+@login_required
 def send_to_regi(request):
     jsonObject = json.loads(request.body)
     target_pk = jsonObject.get("id")

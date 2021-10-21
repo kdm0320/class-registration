@@ -139,6 +139,7 @@ def change_name(college):
     return colleage
 
 
+@login_required
 def regi_basket(request):
 
     jsonObject = json.loads(request.body)
