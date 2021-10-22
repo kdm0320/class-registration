@@ -82,29 +82,38 @@ class HandleTimeData:
             return new_data
 
     def check_data(self, time_data, basket_list, numbers_to_alpha, check_schedule):
-        check_time = []
+        check_time_list = []
+
+        def check_time(
+            time_data, basket_list, numbers_to_alpha, check_schedule, check_time_list
+        ):
+            time = "".join(check_time_list)
+            if (numbers_to_alpha[time] in basket_list.time_table[time_data[0]]) or (
+                time in basket_list.time_table[time_data[0]]
+            ):
+                check_schedule.append(True)
+
         for index, data in enumerate(time_data[1:]):
-            check_time.append(data)
-            if len(check_time) == 2:
-                if check_time[1].isdigit():
-                    time = "".join(check_time)
-                    if (
-                        numbers_to_alpha[time] in basket_list.time_table[time_data[0]]
-                    ) or (time in basket_list.time_table[time_data[0]]):
-                        check_schedule.append(True)
-                else:
-                    if (
-                        numbers_to_alpha[check_time[0]]
-                        in basket_list.time_table[time_data[0]]
-                    ) or (check_time[0] in basket_list.time_table[time_data[0]]):
-                        check_schedule.append(True)
-                check_time = []
-            elif len(check_time) == 1 and index == len(time_data[1:]) - 1:
-                if (
-                    numbers_to_alpha[check_time[0]]
-                    in basket_list.time_table[time_data[0]]
-                ) or (check_time[0] in basket_list.time_table[time_data[0]]):
-                    check_schedule.append(True)
+            if not data.isdigit():
+                check_time(
+                    time_data,
+                    basket_list,
+                    numbers_to_alpha,
+                    check_schedule,
+                    check_time_list,
+                )
+                check_time_list = []
+            elif index == len(time_data[1:]) - 1:
+                check_time_list.append(data)
+                check_time(
+                    time_data,
+                    basket_list,
+                    numbers_to_alpha,
+                    check_schedule,
+                    check_time_list,
+                )
+            else:
+                check_time_list.append(data)
 
     def regi_data(self, time_data, basket_list):
         check_time = []
@@ -182,7 +191,6 @@ def regi_basket(request):
         "14": "ND",
         "15": "SC",
     }
-
     if basket_list is None:
         new_basket = basket_model.List.objects.create(user=request.user)
         new_basket.subjects.add(subject)
