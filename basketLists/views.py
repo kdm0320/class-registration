@@ -75,7 +75,7 @@ def send_to_regi(request):
         split_subject_time = target_time.split("/")
     handle_time_data = HandleRegiTimeData()
 
-    message_data = {"messages": "nothing"}
+    message_data = {"messages": "nothing", "credits": "0"}
 
     alpha_to_numbers = {
         "A": ["1", "2"],
@@ -118,7 +118,8 @@ def send_to_regi(request):
             for split_data in split_subject_time:
                 handle_time_data.create_data(split_data, new_list)
                 handle_time_data.remove_data(split_data, user_basket_data)
-        new_list.credits += int(target.credit)
+        new_list.credits += float(target.credit)
+        message_data["credits"] = f"{new_list.credits}"
         user_basket_list.remove(target)
         user_basket_data.save()
         new_list.save()
@@ -135,6 +136,7 @@ def send_to_regi(request):
                     regi_list.subjects.add(target)
                     handle_time_data.regi_data(target_time, regi_list)
                     regi_list.credits += float(target.credit)
+                    message_data["credits"] = f"{regi_list.credits}"
                 else:
                     message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
 
@@ -157,6 +159,7 @@ def send_to_regi(request):
                             handle_time_data.remove_data(split_data, user_basket_data)
                         user_basket_list.remove(target)
                         regi_list.credits += float(target.credit)
+                        message_data["credits"] = f"{regi_list.credits}"
                     else:
                         message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
                 else:
@@ -174,6 +177,7 @@ def send_to_regi(request):
                             message_data["messages"] = "해당 시간에 과목이 이미 시간표에 존재합니다."
                             break
                     if True not in check_schedule:
+                        message_data["credits"] = f"{regi_list.credits}"
                         regi_list.credits += float(target.credit)
                 check_schedule = []
         else:
@@ -187,25 +191,28 @@ def send_to_regi(request):
 
 @login_required
 def delete(request):
-    pass
-    # jsonObject = json.loads(request.body)
-    # user_list = models.List.objects.get(user=request.user)
-    # target_pk = jsonObject.get("id")
-    # target = class_model.Class.objects.get(id=target_pk)
-    # target_time = target.time.replace(" ", "")
-    # split_subject_time = []
-    # if "/" in target_time:
-    #     split_subject_time = target_time.split("/")
+    jsonObject = json.loads(request.body)
+    user_list = models.List.objects.get(user=request.user)
+    target_pk = jsonObject.get("id")
+    target = class_model.Class.objects.get(id=target_pk)
+    target_time = target.time.replace(" ", "")
+    split_subject_time = []
+    if "/" in target_time:
+        split_subject_time = target_time.split("/")
 
-    # delete_time = HandleRegiTimeData()
+    delete_time = HandleRegiTimeData()
 
-    # if len(split_subject_time) == 0:
-    #     user_list.subjects.remove(target)
-    #     delete_time.remove_data(target_time, user_list)
-    # else:
-    #     for split_data in split_subject_time:
-    #         delete_time.remove_data(split_data, user_list)
-    #     user_list.subjects.remove(target)
-    # user_list.save()
-    # non_data = {}
-    # return JsonResponse(non_data)
+    if len(split_subject_time) == 0:
+        user_list.subjects.remove(target)
+        delete_time.remove_data(target_time, user_list)
+        user_list.credits -= float(target.credit)
+
+    else:
+        for split_data in split_subject_time:
+            delete_time.remove_data(split_data, user_list)
+        user_list.subjects.remove(target)
+        user_list.credits -= float(target.credit)
+
+    user_list.save()
+    credit_data = {"credit": f"{user_list.credits}"}
+    return JsonResponse(credit_data)

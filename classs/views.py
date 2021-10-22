@@ -161,7 +161,7 @@ def regi_basket(request):
         split_subject_time = subject_time.split("/")
 
     handle_time_data = HandleTimeData()
-    message_data = {"messages": "nothing"}
+    message_data = {"messages": "nothing", "credits": "0"}
     alpha_to_numbers = {
         "A": ["1", "2"],
         "B": ["3"],
@@ -199,6 +199,8 @@ def regi_basket(request):
         else:
             for split_data in split_subject_time:
                 handle_time_data.create_data(split_data, new_basket)
+        new_basket.credits += float(subject.credit)
+        message_data["credits"] = f"{new_basket.credits}"
         new_basket.save()
     else:
         if len(split_subject_time) == 0:
@@ -209,6 +211,8 @@ def regi_basket(request):
             if True not in check_schedule:
                 basket_list.subjects.add(subject)
                 handle_time_data.regi_data(subject_time, basket_list)
+                basket_list.credits += float(subject.credit)
+                message_data["credits"] = f"{basket_list.credits}"
             else:
                 message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
         else:
@@ -226,6 +230,8 @@ def regi_basket(request):
                     for split_data in split_subject_time:
                         new_data = handle_time_data.change_time_data(split_data)
                         basket_list.time_table[split_data[0]].append(new_data)
+                    basket_list.credits += float(subject.credit)
+                    message_data["credits"] = f"{basket_list.credits}"
                 else:
                     message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
 
@@ -241,6 +247,9 @@ def regi_basket(request):
                     else:
                         message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
                         break
+                if True not in check_schedule:
+                    basket_list.credits += float(subject.credit)
+                    message_data["credits"] = f"{basket_list.credits}"
 
             check_schedule = []
         basket_list.save()

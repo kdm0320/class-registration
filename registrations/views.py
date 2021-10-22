@@ -49,5 +49,6 @@ def delete(request):
         user_list.credits -= float(target.credit)
 
     user_list.save()
-    non_data = {}
-    return JsonResponse(non_data)
+    credit_data = {"credit": f"{user_list.credits}"}
+
+    return JsonResponse(credit_data)
