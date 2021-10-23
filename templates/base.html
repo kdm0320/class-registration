@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,13 +10,15 @@
         <title>{% block title %}{% endblock title %}</title>
 
     </head>
+
     <body>
         {% include "partial/messages.html" %}
-             
+
         {% include "partial/nav.html" %}
         {% block content %}
-        
+
         {% endblock content%}
 
     </body>
+
 </html>

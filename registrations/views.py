@@ -5,6 +5,7 @@ from django.http.response import JsonResponse
 from django.shortcuts import render
 from . import models
 from classs import models as class_model
+from basketLists import views as basket_view
 
 
 @login_required
@@ -24,11 +25,30 @@ def enrollment(request):
         return render(request, template_name)
 
 
+@login_required
 def delete(request):
     jsonObject = json.loads(request.body)
-    target_list = models.registration.objects.get(user=request.user).subjects
+    user_list = models.registration.objects.get(user=request.user)
     target_pk = jsonObject.get("id")
-    target_name = class_model.Class.objects.get(id=target_pk)
-    target_list.remove(target_name)
-    non_data = {}
-    return JsonResponse(non_data)
+    target = class_model.Class.objects.get(id=target_pk)
+    target_time = target.time.replace(" ", "")
+    split_subject_time = []
+    if "/" in target_time:
+        split_subject_time = target_time.split("/")
+
+    delete_time = basket_view.HandleRegiTimeData()
+
+    if len(split_subject_time) == 0:
+        user_list.subjects.remove(target)
+        delete_time.remove_data(target_time, user_list)
+        user_list.credits -= float(target.credit)
+    else:
+        for split_data in split_subject_time:
+            delete_time.remove_data(split_data, user_list)
+        user_list.subjects.remove(target)
+        user_list.credits -= float(target.credit)
+
+    user_list.save()
+    credit_data = {"credit": f"{user_list.credits}"}
+
+    return JsonResponse(credit_data)

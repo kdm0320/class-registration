@@ -1,9 +1,34 @@
 import json
+from django.contrib.auth.decorators import login_required
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from . import models
 from basketLists import models as basket_model
+
+
+@login_required
+def home(request):
+    template_name = "class/viewSchedule.html"
+
+    return render(
+        request,
+        template_name,
+    )
+
+
+@login_required
+def get_data(request):
+    template_name = "class/viewSchedule.html"
+    colleage = request.GET.get("college")
+    depart = change_name(colleage)
+    data = models.Class.objects.filter(department=depart).order_by("grade")
+    temp_data = {}
+    for i in range(len(data)):
+        temp_data[f"class{i}"] = class_to_dictionary(data[i])
+
+    datas = json.dumps(temp_data, ensure_ascii=False, cls=DjangoJSONEncoder)
+    return render(request, template_name, {"class_data": datas})
 
 
 def class_to_dictionary(data):
@@ -22,47 +47,94 @@ def class_to_dictionary(data):
     return output
 
 
-def change_time_data(time_data):
+class HandleTimeData:
+    def change_time_data(self, time_data):
 
-    if time_data[:2] == "09":
-        new_data = "A"
-        return new_data
-    elif time_data[:2] == "10":
-        new_data = "B"
-        return new_data
-    elif time_data[:2] == "12":
-        new_data = "C"
-        return new_data
-    elif time_data[:2] == "13":
-        new_data = "D"
-        return new_data
-    elif time_data[:2] == "15":
-        new_data = "E"
-        return new_data
-    elif time_data[:2] == "16":
-        new_data = "F"
-        return new_data
-    elif time_data[:2] == "18":
-        new_data = "G"
-        return new_data
-    elif time_data[:2] == "19":
-        new_data = "H"
-        return new_data
-    elif time_data[:2] == "21":
-        new_data = "I"
-        return new_data
-    elif time_data[:2] == "22":
-        new_data = "J"
-        return new_data
+        if time_data[2:4] == "09":
+            new_data = "A"
+            return new_data
+        elif time_data[2:4] == "10":
+            new_data = "B"
+            return new_data
+        elif time_data[2:4] == "12":
+            new_data = "C"
+            return new_data
+        elif time_data[2:4] == "13":
+            new_data = "D"
+            return new_data
+        elif time_data[2:4] == "15":
+            new_data = "E"
+            return new_data
+        elif time_data[2:4] == "16":
+            new_data = "F"
+            return new_data
+        elif time_data[2:4] == "18":
+            new_data = "G"
+            return new_data
+        elif time_data[2:4] == "19":
+            new_data = "H"
+            return new_data
+        elif time_data[2:4] == "21":
+            new_data = "ND"
+            return new_data
+        elif time_data[2:4] == "22":
+            new_data = "SC"
+            return new_data
 
+    def check_data(self, time_data, basket_list, numbers_to_alpha, check_schedule):
+        check_time_list = []
 
-def home(request):
-    template_name = "class/viewSchedule.html"
+        def check_time(
+            time_data, basket_list, numbers_to_alpha, check_schedule, check_time_list
+        ):
+            time = "".join(check_time_list)
+            if (numbers_to_alpha[time] in basket_list.time_table[time_data[0]]) or (
+                time in basket_list.time_table[time_data[0]]
+            ):
+                check_schedule.append(True)
 
-    return render(
-        request,
-        template_name,
-    )
+        for index, data in enumerate(time_data[1:]):
+            if not data.isdigit():
+                check_time(
+                    time_data,
+                    basket_list,
+                    numbers_to_alpha,
+                    check_schedule,
+                    check_time_list,
+                )
+                check_time_list = []
+            elif index == len(time_data[1:]) - 1:
+                check_time_list.append(data)
+                check_time(
+                    time_data,
+                    basket_list,
+                    numbers_to_alpha,
+                    check_schedule,
+                    check_time_list,
+                )
+            else:
+                check_time_list.append(data)
+
+    def regi_data(self, time_data, basket_list):
+        check_time = []
+        for index, data in enumerate(time_data[1:]):
+            check_time.append(data)
+            if len(check_time) == 2:
+                if check_time[1].isdigit():
+                    time = "".join(check_time)
+                    basket_list.time_table[time_data[0]].append(time)
+                else:
+                    basket_list.time_table[time_data[0]].append(check_time[0])
+                check_time = []
+            elif len(check_time) == 1 and index == len(time_data[1:]) - 1:
+                basket_list.time_table[time_data[0]].append(check_time[0])
+
+    def create_data(self, time_data, new_basket):
+        if time_data[1] == "(":
+            new_data = self.change_time_data(time_data[2:])
+            new_basket.time_table = new_basket.time_table[time_data[0]].append(new_data)
+        else:
+            self.regi_data(time_data, new_basket)
 
 
 def change_name(college):
@@ -76,309 +148,110 @@ def change_name(college):
     return colleage
 
 
-def get_data(request):
-    template_name = "class/viewSchedule.html"
-    colleage = request.GET.get("college")
-    depart = change_name(colleage)
-    data = models.Class.objects.filter(department=depart).order_by("grade")
-    temp_data = {}
-    for i in range(len(data)):
-        temp_data[f"class{i}"] = class_to_dictionary(data[i])
-
-    datas = json.dumps(temp_data, ensure_ascii=False, cls=DjangoJSONEncoder)
-    return render(request, template_name, {"class_data": datas})
-
-
-def divded_data(new_data, user_data, subject_time, basket_list, subject):
-    if new_data.isalpha() is False:
-        try:
-            if subject_time[1] == "1" or subject_time[1] == "2":
-                if (
-                    "A" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-            elif subject_time[1] == "3":
-                if (
-                    "B" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-            elif subject_time[1] == "4" or subject_time[1] == "5":
-                if (
-                    "C" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-            elif subject_time[1] == "6":
-                if (
-                    "D" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-            elif subject_time[1] == "7" or subject_time[1] == "8":
-                if (
-                    "E" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-            elif subject_time[1] == "9":
-                if (
-                    "F" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-            elif subject_time[1] == "10" or subject_time[1] == "11":
-                if (
-                    "G" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-            elif subject_time[1] == "12":
-                if (
-                    "H" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-            elif subject_time[1] == "13" or subject_time[1] == "14":
-                if (
-                    "I" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-            elif subject_time[1] == "15":
-                if (
-                    "J" in user_data.time_table[subject_time[0]]
-                    or subject_time[1] in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[subject_time[0]].append(i)
-                    user_data.save()
-        except KeyError:
-            basket_list.subjects.add(subject)
-            user_data.time_table[subject_time[0]] = []
-            for i in subject_time:
-                if i.isdigit():
-                    user_data.time_table[subject_time[0]].append(i)
-            user_data.save()
-    else:
-        try:
-            if new_data == "A":
-                if (
-                    "1" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-            elif new_data == "B":
-                if (
-                    "2" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-            elif new_data == "C":
-                if (
-                    "4" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-            elif new_data == "D":
-                if (
-                    "5" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-            elif new_data == "E":
-                if (
-                    "7" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-            elif new_data == "F":
-                if (
-                    "8" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-            elif new_data == "G":
-                if (
-                    "10" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-            elif new_data == "H":
-                if (
-                    "11" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-            elif new_data == "I":
-                if (
-                    "13" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-            elif new_data == "J":
-                if (
-                    "14" in user_data.time_table[subject_time[0]]
-                    or new_data in user_data.time_table[subject_time[0]]
-                ):
-                    pass
-                else:
-                    basket_list.subjects.add(subject)
-                    user_data.time_table[subject_time[0]].append(new_data)
-                    user_data.save()
-        except KeyError:
-            basket_list.subjects.add(subject)
-            user_data.time_table[subject_time[0]] = [new_data]
-            user_data.save()
-
-
+@login_required
 def regi_basket(request):
+
     jsonObject = json.loads(request.body)
     target_pk = jsonObject.get("pk")
     basket_list = basket_model.List.objects.get_or_none(user=request.user)
     subject = models.Class.objects.get(pk=target_pk)
     subject_time = subject.time.replace(" ", "")
-    user_data = basket_model.List.objects.get(user=request.user)
     split_subject_time = []
     if "/" in subject_time:
         split_subject_time = subject_time.split("/")
 
+    handle_time_data = HandleTimeData()
+    message_data = {"messages": "nothing", "credits": "0"}
+    alpha_to_numbers = {
+        "A": ["1", "2"],
+        "B": ["3"],
+        "C": ["4", "5"],
+        "D": ["6"],
+        "E": ["7", "8"],
+        "F": ["9"],
+        "G": ["10", "11"],
+        "H": ["12"],
+        "ND": ["13", "14"],
+        "SC": ["15"],
+    }
+    numbers_to_alpha = {
+        "1": "A",
+        "2": "A",
+        "3": "B",
+        "4": "C",
+        "5": "C",
+        "6": "D",
+        "7": "E",
+        "8": "E",
+        "9": "F",
+        "10": "G",
+        "11": "G",
+        "12": "H",
+        "13": "ND",
+        "14": "ND",
+        "15": "SC",
+    }
     if basket_list is None:
-        new_basket, created = basket_model.List.objects.get_or_create(user=request.user)
+        new_basket = basket_model.List.objects.create(user=request.user)
         new_basket.subjects.add(subject)
         if len(split_subject_time) == 0:
-            if subject_time[1] == "(":
-                new_data = change_time_data(subject_time[2:])
-                user_data.time_table = {subject_time[0]: [new_data]}
-                user_data.save()
-            else:
-                user_data.time_table = {subject_time[0]: []}
-                user_data.save()
-                for i in subject_time:
-                    if i.isdigit():
-                        user_data.time_table[subject_time[0]].append(i)
-                        user_data.save()
+            handle_time_data.create_data(subject_time, new_basket)
         else:
             for split_data in split_subject_time:
-                if split_data[1] == "(":
-                    new_data = change_time_data(split_data[2:])
-                    user_data.time_table = {split_data[0]: [new_data]}
-                    user_data.save()
-                else:
-                    user_data.time_table = {split_data[0]: []}
-                    user_data.save()
-                    for i in subject_time:
-                        if i.isdigit():
-                            user_data.time_table[split_data[0]].append(i)
-                            user_data.save()
+                handle_time_data.create_data(split_data, new_basket)
+        new_basket.credits += float(subject.credit)
+        message_data["credits"] = f"{new_basket.credits}"
+        new_basket.save()
     else:
         if len(split_subject_time) == 0:
-            if subject_time[1] == "(":
-                new_data = change_time_data(subject_time[2:])
-                divded_data(new_data, user_data, subject_time, basket_list, subject)
+            check_schedule = []
+            handle_time_data.check_data(
+                subject_time, basket_list, numbers_to_alpha, check_schedule
+            )
+            if True not in check_schedule:
+                basket_list.subjects.add(subject)
+                handle_time_data.regi_data(subject_time, basket_list)
+                basket_list.credits += float(subject.credit)
+                message_data["credits"] = f"{basket_list.credits}"
             else:
-                divded_data(subject_time, user_data, subject_time, basket_list, subject)
+                message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
         else:
-            for split_data in split_subject_time:
-                if split_data[1] == "(":
-                    new_data = change_time_data(split_data[2:])
-                    divded_data(new_data, user_data, split_data, basket_list, subject)
+            check_schedule = []
+            if split_subject_time[0][1] == "(":
+                for split_data in split_subject_time:
+                    new_data = handle_time_data.change_time_data(split_data)
+                    for number in alpha_to_numbers[new_data]:
+                        if (number in basket_list.time_table[split_data[0]]) or (
+                            new_data in basket_list.time_table[split_data[0]]
+                        ):
+                            check_schedule.append(True)
+                if True not in check_schedule:
+                    basket_list.subjects.add(subject)
+                    for split_data in split_subject_time:
+                        new_data = handle_time_data.change_time_data(split_data)
+                        basket_list.time_table[split_data[0]].append(new_data)
+                    basket_list.credits += float(subject.credit)
+                    message_data["credits"] = f"{basket_list.credits}"
                 else:
-                    divded_data(split_data, user_data, split_data, basket_list, subject)
+                    message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
 
-    return JsonResponse(jsonObject)
+            else:
+                for split_data in split_subject_time:
+                    handle_time_data.check_data(
+                        split_data, basket_list, numbers_to_alpha, check_schedule
+                    )
+
+                    if True not in check_schedule:
+                        basket_list.subjects.add(subject)
+                        handle_time_data.regi_data(split_data, basket_list)
+                    else:
+                        message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
+                        break
+                if True not in check_schedule:
+                    basket_list.credits += float(subject.credit)
+                    message_data["credits"] = f"{basket_list.credits}"
+
+            check_schedule = []
+        basket_list.save()
+    message = json.dumps(message_data)
+    return JsonResponse(message, safe=False)

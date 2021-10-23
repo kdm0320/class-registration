@@ -15,54 +15,54 @@
     </div>
     <div class="personal-data">
         <span>
-        {{user.last_name}}{{user.first_name}}
+            {{user.last_name}}{{user.first_name}}
         </span>
         <span>
-        {{user.number}}
+            {{user.number}}
         </span>
         <span>
-        학년 : {{user.grade}}
+            학년 : {{user.grade}}
         </span>
         <span>
-        제한학점 : 23 
+            제한학점 : 23
         </span>
         <div>
-        <!-- 상세정보 -->
-        <i class="fas fa-sort-down"></i>
+            <!-- 상세정보 -->
+            <i class="fas fa-sort-down"></i>
         </div>
     </div>
     <div class="time-data">
         <div>
-        <!--시계 이미지 -->
-        <i class="far fa-clock"></i>
+            <!--시계 이미지 -->
+            <i class="far fa-clock"></i>
         </div>
-        <div id = "my_Clock">
-         20분0초
+        <div id="my_Clock">
+            20분0초
         </div>
     </div>
     <div>
         <button>연장하기</button>
     </div>
     <form action="{% url 'users:logout' %}">
-    <div>
-        <button>로그아웃</button>
-    </div>
+        <div>
+            <button>로그아웃</button>
+        </div>
     </form>
-    
+
     <script>
         let time = 1199;
         let min = "";
         let sec = "";
         let temp = setInterval(function () {
-        min = parseInt(time / 60);
-        sec = time % 60;
+            min = parseInt(time / 60);
+            sec = time % 60;
 
-        document.getElementById("my_Clock").innerHTML = min + "분" + sec + "초";
-        time--;
+            document.getElementById("my_Clock").innerHTML = min + "분" + sec + "초";
+            time--;
 
-        if (time < 0) {
-          clearInterval(temp);
-            document.getElementById("my_Clock").innerHTML = "시간초과";
+            if (time < 0) {
+                clearInterval(temp);
+                document.getElementById("my_Clock").innerHTML = "시간초과";
             }
         }, 1000);
     </script>

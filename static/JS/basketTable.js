@@ -24,16 +24,14 @@ for (let clazz in basketDataObj) {
     let classTr = document.createElement("tr");
     let button = document.createElement("button");
     let buttonName = document.createTextNode("수강신청");
-    let deleteButtonText = document.createTextNode("삭제");
-    let deleteButton = document.createElement("button");
     let datas = basketDataObj[clazz];
     let arrayIndex = 0;
 
     button.className = "btnAjax";
-    deleteButton.appendChild(deleteButtonText);
+    
     button.appendChild(buttonName);
-    classTr.appendChild(button);
-    classTr.appendChild(deleteButton);
+    classTr.appendChild(button)
+
     for (let data in datas) {
         let targetData = datas[data];
         let classTd = document.createElement("td");
@@ -91,7 +89,7 @@ for (let clazz in basketDataObj) {
             'people': people,
         }
         
-        const reqUrl = new Request("/basket/registaration", { headers: { 'X-CSRFToken': csrftoken } })
+        const reqUrl = new Request("/basket/registration", { headers: { 'X-CSRFToken': csrftoken } })
         fetch(reqUrl, {
             method: "POST",
             body: JSON.stringify(param),
@@ -102,16 +100,18 @@ for (let clazz in basketDataObj) {
         }, function (error) {
             console.log(error)
         }
-        )
+        ).then(data => {
+            let message = JSON.parse(data)
+            if (message.messages != "nothing") {
+                alert(message.messages)
+            }
+            else {
+                basketTbody.removeChild(classTr);
+            }
+        }, function (error) {
+            console.log(error)
+        })
         loadHead()
-        basketTbody.removeChild(classTr);
     });
 }
 loadHead()
-
-//let options = {
-//    width: "60rem",
-//    height:"60rem"
-//}
-//PDFObject.embed("../static/pdf/noname_1.pdf", "#example1", options);
-//console.log(PDFObject)

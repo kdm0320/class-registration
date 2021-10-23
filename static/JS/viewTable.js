@@ -83,8 +83,23 @@ for (let clazz in dataObj) {
           'professor': professor,
           'time': time,
           'people': people,
-          }
-
+    }
+        //
+        //const reqUrl = new Request(
+       //     "http://127.0.0.1:8000/class/regi-basket/",
+       //     { headers: { 'X-CSRFToken': csrftoken } }
+// )
+      //  fetch(reqUrl, {
+       //     method: "POST",
+//body: JSON.stringify(param),
+       //     mode: 'same-origin'
+        //}).then(function (res) {
+         //   return res.text()
+        //}, function (error) {
+         //   console.log(error)
+        //}
+        //)
+          
           $.ajax({
           url: "/class/regi-basket/",
           type: 'POST',
@@ -93,7 +108,11 @@ for (let clazz in dataObj) {
           },
           data : JSON.stringify(param),
           success: function(data){
-
+            let message = JSON.parse(data)
+            if (message.messages != "nothing") {
+              alert(message.messages)
+            }
+      
           },
           error: function(){
               console.log("전송실패")
