@@ -23,12 +23,14 @@ const dataArray = ['grade','check_major','subject_number','subject_name','credit
 function loadCredits(updatedCredit) {
     const creBox = document.querySelector(".button_bottom_left_text_credit");
     let credit = creBox.innerText.replace(/\s/g, "");
+    console.log(updatedCredit)
+    console.log(credit)
     let parseCredit;
     if (updatedCredit != undefined)
-        parseCredit = parseFloat(credit) - parseFloat(updatedCredit);
+        parseCredit = parseFloat(updatedCredit);
     else
         parseCredit = parseFloat(credit);
-
+    console.log(parseCredit.toString())
     creBox.innerText = parseCredit.toString();
 
 }
@@ -86,16 +88,40 @@ for (let clazz in basketDataObj) {
 
     deleteButton.addEventListener('click', e => {
         const reqUrl = new Request("/basket/delete", { headers: { 'X-CSRFToken': csrftoken } })
+        let id = classTr.querySelector('.hidden').innerText;
+        let grade = classTr.querySelector('.grade').innerText;
+        let check_major = classTr.querySelector('.check_major').innerText;
+        let subject_number = classTr.querySelector('.subject_number').innerText;
+        let subject_name = classTr.querySelector('.subject_name').innerText;
+        let credit = classTr.querySelector('.credit').innerText;
+        let time = classTr.querySelector('.time').innerText
+        let professor = classTr.querySelector('.professor').innerText;
+        let people = classTr.querySelector('.people').innerText;
+        let param = {
+            'id': id,
+            'grade': grade,
+            'check_major': check_major,
+            'subject_number': subject_number,
+            'subject_name': subject_name,
+            'credit': credit,
+            'professor': professor,
+            'time': time,
+            'people': people,
+        }
         
         fetch(reqUrl, {
+            body: JSON.stringify(param),
             method: "POST",
+            mode: 'same-origin'
         }
         ).then(function (res) {
             return res.text();
         }, function (error) {
             console.log(error);
         });
+        basketTbody.removeChild(classTr);
     }
+  
     );
 
     button.addEventListener('click', e => {
