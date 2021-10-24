@@ -5,7 +5,7 @@ const basketTbody = document.querySelector("#target_basket_table");
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 const dataArray = ['grade','check_major','subject_number','subject_name','credit','professor','time','people'];
 
-function loadHead() {
+/*function loadHead() {
     const tr = document.querySelector("#target_basket_table").querySelectorAll("tr")
     const creBox = document.querySelector(".button_bottom_left_text_credit");
     const couBox = document.querySelector(".button_bottom_left_text_classNum");
@@ -18,20 +18,37 @@ function loadHead() {
     let count = tr.length;
     couBox.innerText = count;
     creBox.innerText = cre;
+}*/
+
+function loadCredits(updatedCredit) {
+    const creBox = document.querySelector(".button_bottom_left_text_credit");
+    let credit = creBox.innerText.replace(/\s/g, "");
+    let parseCredit;
+    if (updatedCredit != undefined)
+        parseCredit = parseFloat(credit) - parseFloat(updatedCredit);
+    else
+        parseCredit = parseFloat(credit);
+
+    creBox.innerText = parseCredit.toString();
+
 }
+
+
 
 for (let clazz in basketDataObj) {
     let classTr = document.createElement("tr");
     let button = document.createElement("button");
     let buttonName = document.createTextNode("수강신청");
+    let deleteButtonText = document.createTextNode("삭제");
+    let deleteButton = document.createElement("button");
     let datas = basketDataObj[clazz];
     let arrayIndex = 0;
 
     button.className = "btnAjax";
-    
+    deleteButton.appendChild(deleteButtonText);
     button.appendChild(buttonName);
     classTr.appendChild(button)
-
+    classTr.appendChild(deleteButton);
     for (let data in datas) {
         let targetData = datas[data];
         let classTd = document.createElement("td");
@@ -67,6 +84,20 @@ for (let clazz in basketDataObj) {
     }
     basketTbody.appendChild(classTr);
 
+    deleteButton.addEventListener('click', e => {
+        const reqUrl = new Request("/basket/delete", { headers: { 'X-CSRFToken': csrftoken } })
+        
+        fetch(reqUrl, {
+            method: "POST",
+        }
+        ).then(function (res) {
+            return res.text();
+        }, function (error) {
+            console.log(error);
+        });
+    }
+    );
+
     button.addEventListener('click', e => {
         let id = classTr.querySelector('.hidden').innerText;
         let grade = classTr.querySelector('.grade').innerText;
@@ -88,6 +119,7 @@ for (let clazz in basketDataObj) {
             'time': time,
             'people': people,
         }
+
         
         const reqUrl = new Request("/basket/registration", { headers: { 'X-CSRFToken': csrftoken } })
         fetch(reqUrl, {
@@ -106,12 +138,11 @@ for (let clazz in basketDataObj) {
                 alert(message.messages)
             }
             else {
+                loadCredits(message.credits)
                 basketTbody.removeChild(classTr);
             }
         }, function (error) {
             console.log(error)
         })
-        loadHead()
     });
 }
-loadHead()

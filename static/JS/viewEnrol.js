@@ -5,12 +5,12 @@ const regiTbody = document.querySelector("#target_enrol_table");
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 const dataArray = ['grade', 'check_major', 'subject_number', 'subject_name', 'credit', 'professor', 'time', 'people'];
 
-const creditBox = document.querySelector(".button_bottom_left_text_credit");
+//const creditBox = document.querySelector(".button_bottom_left_text_credit");
 const countBox = document.querySelector(".button_bottom_left_text_classNum");
 let count =0
-let credit =0
+//let credit =0
 
-function loadHead() {
+/*function loadHead() {
     const tr = document.querySelector("#target_enrol_table").querySelectorAll("tr")
     const creBox = document.querySelector(".button_bottom_left_text_credit");
     const couBox = document.querySelector(".button_bottom_left_text_classNum");
@@ -23,6 +23,19 @@ function loadHead() {
     let count = tr.length;
     couBox.innerText = count;
     creBox.innerText = cre;
+}*/
+
+function loadCredits(updatedCredit) {
+    const creBox = document.querySelector(".button_bottom_left_text_credit");
+    let credit = creBox.innerText.replace(/\s/g, "");
+    let parseCredit;
+    if (updatedCredit != undefined)
+        parseCredit = parseFloat(credit) - parseFloat(updatedCredit);
+    else
+        parseCredit = parseFloat(credit);
+
+    creBox.innerText = parseCredit.toString();
+
 }
 
 for (let clazz in regiDataObj) {
@@ -103,14 +116,18 @@ for (let clazz in regiDataObj) {
         }, function (error) {
             console.log(error)
         }
-        )
+        ).then(data => {
+            let message = JSON.parse(data);
+            console.log(message);
+            //loadCredits(message.credits);
+        })
         
         regiTbody.removeChild(classTr);
         
-        loadHead()
+        //loadHead()
 
     });
     
 }
-creditBox.innerText = credit;
+//creditBox.innerText = credit;
 countBox.innerText = count;
