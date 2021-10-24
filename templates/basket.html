@@ -4,177 +4,178 @@
 {% block title %}Basket{% endblock title %}
 
 {% block content %}
-    
-    <main>
-    {% include "partial/header.html" %}
-    <div class="content">
-      <div class="content_index">
-        <button class="content_index_info">수강신청 안내</button>
-        <button class="content_index_list">장바구니 목록</button>
-        <button class="content_index_schedule">장바구니 시간표</button>
-      </div>
-      <div class="content_basket_info">
-        <h2>장바구니 페이지 입니다.</h2>
-        <p>
-          <span>
-          </span>
-        </p>
-      </div>
-      <div class="content_basket_list">
-        <div>
-          <div class="button_bottom_left">
-            <div class="button_bottom_left_content">
-              <div class="button_bottom_left_icon">
-                <!-- 아이콘 한개 -->
-              </div>
-              <p class="button_bottom_left_text">
-                <span class="button_bottom_left_text_title"> 장바구니 내역 </span>
-                <span>[ 과목수 : </span>
-                <span class="button_bottom_left_text_classNum">
-                  
-                </span>
-                <span> 신청학점 : </span>
-                <span class="button_bottom_left_text_credit">
-                  
-                </span>
-                <span> ] </span>
-              </p>
+
+<main>
+  {% include "partial/header.html" %}
+  <div class="content">
+    <div class="content_index">
+      <button class="content_index_info">수강신청 안내</button>
+      <button class="content_index_list">장바구니 목록</button>
+      <button class="content_index_schedule">장바구니 시간표</button>
+    </div>
+    <div class="content_basket_info">
+      <h2>장바구니 페이지 입니다.</h2>
+      <p>
+        <span>
+        </span>
+      </p>
+    </div>
+    <div class="content_basket_list">
+      <div>
+        <div class="button_bottom_left">
+          <div class="button_bottom_left_content">
+            <div class="button_bottom_left_icon">
+              <!-- 아이콘 한개 -->
             </div>
-          </div>
-          <div class="button_bottom_right">
-            <div class="button_bottom_right_content">
-              <div class="button_bottom_right_icon">
-              </div>
-              <p class="button_bottom_righttext">
-              </p>
-            </div>
-          </div>
-          <div class="target">
-            <table id="inside_basket">
-              <caption>
-                <div>
-                  <p>
-                    
-                  </p>
-                  <p>
-                   
-                  </p>
-                </div>
-                <p>
-        
-                </p>
-              </caption>
-              <thead>
-                <tr>
-                  <th>                   </th>
-                  <th>학년</th>
-                  <th>이수구분</th>
-                  <th>과목번호</th>
-                  <th>과목명</th>
-                  <th>학점</th>
-                  <th>담당교수</th>
-                  <th>강의시간</th>
-                  <th>수강인원</th>
-                </tr>
-              </thead>
-              <tbody id="target_basket_table">
-              </tbody>
-            </table>
+            <p class="button_bottom_left_text">
+              <span class="button_bottom_left_text_title"> 장바구니 내역 </span>
+              <span>[ 과목수 : </span>
+              <span class="button_bottom_left_text_classNum">
+
+              </span>
+              <span> 신청학점 : </span>
+              <span class="button_bottom_left_text_credit">
+
+              </span>
+              <span> ] </span>
+            </p>
           </div>
         </div>
-      </div>
-      <div class="content_basket_schedule">
-        <!-- 이곳에 각 탭에 해당하는 기능이 구현되어야 함-->
-        <!--페이지에 따라 버튼이 있을수도 있음.-->
-        <div>
-          <div class="button_bottom_left">
-            <div class="button_bottom_left_content">
-              <div class="button_bottom_left_icon">
-                <!-- 아이콘 한개 -->
-              </div>
-              <p id="schedule_left_text" class="button_bottom_left_text">
-                <span>시간표는 소속캠퍼스의 시간(교시)을 기준으로 작성되었습니다. </span>
-                <span>타 캠퍼스 개설과목 수강시 시간은 해당 캠퍼스 시간(교시)을 고려하시기 바랍니다.</span>
-              </p>
-              </div>
-          </div>
-
-          <div class="button_bottom_right">
-            <div class="button_bottom_right_content">
+        <div class="button_bottom_right">
+          <div class="button_bottom_right_content">
+            <div class="button_bottom_right_icon">
             </div>
+            <p class="button_bottom_righttext">
+            </p>
           </div>
-
-          <div class="target">
-            <!-- 수강신청 테이블을 버튼 이벤트로 인해 로드할 수 있어야 함-->
-            <table id="inside_basket">
-              <caption>
-                <div>
-                  <p>
-                    ※ 장바구니 인원 표시 안내 : 숫자 3(10)
-                    <span class="inside_basket_caption_text_notbold">
-                      표시는
-                    </span>
-                    <span class="inside_basket_caption_text_redcolor">
-                      장바구니 신청인원
-                    </span>
-                    <span class="inside_basket_caption_text_bluecolor">
-                      (수강정원)
-                    </span>
-                    <span class="inside_basket_caption_text_notbold">
-                      입니다.
-                    </span>
-                  </p>
-                  <p>
-                    ※ 정원이 0인 경우는 수강가능인원이 없는 것입니다.
-                    <span class="inside_basket_caption_text_notbold">
-                      개설대학 교학지원팀으로 문의하시기 바랍니다.
-                    </span>
-                  </p>
-                </div>
+        </div>
+        <div class="target">
+          <table id="inside_basket">
+            <caption>
+              <div>
                 <p>
-                  <span class="inside_basket_caption_text_bluecolor">
-                    ※ 순서 정렬 후 반드시
+
+                </p>
+                <p>
+
+                </p>
+              </div>
+              <p>
+
+              </p>
+            </caption>
+            <thead>
+              <tr>
+                <th> </th>
+                <th>학년</th>
+                <th>이수구분</th>
+                <th>과목번호</th>
+                <th>과목명</th>
+                <th>학점</th>
+                <th>담당교수</th>
+                <th>강의시간</th>
+                <th>수강인원</th>
+              </tr>
+            </thead>
+            <tbody id="target_basket_table">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="content_basket_schedule">
+      <!-- 이곳에 각 탭에 해당하는 기능이 구현되어야 함-->
+      <!--페이지에 따라 버튼이 있을수도 있음.-->
+      <div>
+        <div class="button_bottom_left">
+          <div class="button_bottom_left_content">
+            <div class="button_bottom_left_icon">
+              <!-- 아이콘 한개 -->
+            </div>
+            <p id="schedule_left_text" class="button_bottom_left_text">
+              <span>시간표는 소속캠퍼스의 시간(교시)을 기준으로 작성되었습니다. </span>
+              <span>타 캠퍼스 개설과목 수강시 시간은 해당 캠퍼스 시간(교시)을 고려하시기 바랍니다.</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="button_bottom_right">
+          <div class="button_bottom_right_content">
+          </div>
+        </div>
+
+        <div class="target">
+          <!-- 수강신청 테이블을 버튼 이벤트로 인해 로드할 수 있어야 함-->
+          <table id="inside_basket">
+            <caption>
+              <div>
+                <p>
+                  ※ 장바구니 인원 표시 안내 : 숫자 3(10)
+                  <span class="inside_basket_caption_text_notbold">
+                    표시는
                   </span>
                   <span class="inside_basket_caption_text_redcolor">
-                    "순서저장" 버튼을 클릭해야만 정렬된 내용이 저장
+                    장바구니 신청인원
                   </span>
                   <span class="inside_basket_caption_text_bluecolor">
-                    됩니다.
+                    (수강정원)
+                  </span>
+                  <span class="inside_basket_caption_text_notbold">
+                    입니다.
                   </span>
                 </p>
-              </caption>
-              <thead>
-                <tr>
-                  <th>과목번호</th>
-                  <th>과목명</th>
-                  <th>학년</th>
-                  <th>이수구분</th>
-                  <th>학점</th>
-                  <th>담당교수</th>
-                  <th>강의시간</th>
-                  <th>수강인원</th>
-                </tr>
-              </thead>
-              <tbody>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-              </tbody>
-            </table>
-          </div>
+                <p>
+                  ※ 정원이 0인 경우는 수강가능인원이 없는 것입니다.
+                  <span class="inside_basket_caption_text_notbold">
+                    개설대학 교학지원팀으로 문의하시기 바랍니다.
+                  </span>
+                </p>
+              </div>
+              <p>
+                <span class="inside_basket_caption_text_bluecolor">
+                  ※ 순서 정렬 후 반드시
+                </span>
+                <span class="inside_basket_caption_text_redcolor">
+                  "순서저장" 버튼을 클릭해야만 정렬된 내용이 저장
+                </span>
+                <span class="inside_basket_caption_text_bluecolor">
+                  됩니다.
+                </span>
+              </p>
+            </caption>
+            <thead>
+              <tr>
+                <th>과목번호</th>
+                <th>과목명</th>
+                <th>학년</th>
+                <th>이수구분</th>
+                <th>학점</th>
+                <th>담당교수</th>
+                <th>강의시간</th>
+                <th>수강인원</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+              <td>6</td>
+              <td>7</td>
+              <td>8</td>
+            </tbody>
+          </table>
         </div>
       </div>
-  </main>
-  <div id="basket_datas" class="hidden">
+    </div>
+</main>
+<div id="basket_datas" class="hidden">
   {{basket_datas}}
-  </div>
-  {% csrf_token %}
-  <script src="https://kit.fontawesome.com/87360ab54c.js" crossorigin="anonymous"></script>
-  <script src="{% static 'JS/basket.js' %}"></script>
-  <script src="{% static 'JS/basketTable.js' %}"></script>
+</div>
+{{credit}}
+{% csrf_token %}
+<script src="https://kit.fontawesome.com/87360ab54c.js" crossorigin="anonymous"></script>
+<script src="{% static 'JS/basket.js' %}"></script>
+<script src="{% static 'JS/basketTable.js' %}"></script>
 {% endblock %}

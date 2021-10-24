@@ -15,12 +15,15 @@ def basket(request):
     lists = models.List.objects.get_or_none(user=request.user)
     if lists:
         data = lists.subjects.values()
+        credit = lists.credits
         temp_data = {}
         for i in range(len(data)):
             temp_data[f"class{i}"] = data[i]
         datas = json.dumps(temp_data, ensure_ascii=False, cls=DjangoJSONEncoder)
 
-        return render(request, template_name, {"basket_datas": datas})
+        return render(
+            request, template_name, {"basket_datas": datas, "credit": f"{credit}"}
+        )
     else:
         return render(request, template_name)
 
