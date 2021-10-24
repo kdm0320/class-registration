@@ -136,6 +136,7 @@ def send_to_regi(request):
                 if True not in check_schedule:
                     user_basket_list.remove(target)
                     handle_time_data.remove_data(target_time, user_basket_data)
+                    user_basket_data.credits -= float(target.credit)
                     regi_list.subjects.add(target)
                     handle_time_data.regi_data(target_time, regi_list)
                     regi_list.credits += float(target.credit)
@@ -161,6 +162,7 @@ def send_to_regi(request):
                             regi_list.time_table[split_data[0]].append(new_data)
                             handle_time_data.remove_data(split_data, user_basket_data)
                         user_basket_list.remove(target)
+                        user_basket_data.credits -= float(target.credit)
                         regi_list.credits += float(target.credit)
                         message_data["credits"] = f"{regi_list.credits}"
                     else:
@@ -182,6 +184,7 @@ def send_to_regi(request):
                     if True not in check_schedule:
                         message_data["credits"] = f"{regi_list.credits}"
                         regi_list.credits += float(target.credit)
+                        user_basket_data.credits -= float(target.credit)
                 check_schedule = []
         else:
             message_data["messages"] = "수강가능 학점을 넘었습니다."
