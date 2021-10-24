@@ -109,6 +109,7 @@ for (let clazz in dataObj) {
           data : JSON.stringify(param),
           success: function(data){
             let message = JSON.parse(data)
+            console.log(message)
             if (message.messages != "nothing") {
               alert(message.messages)
             }
@@ -121,6 +122,3 @@ for (let clazz in dataObj) {
       });
 
 }
-
-
-  

@@ -24,14 +24,16 @@ for (let clazz in basketDataObj) {
     let classTr = document.createElement("tr");
     let button = document.createElement("button");
     let buttonName = document.createTextNode("수강신청");
-    let datas = basketDataObj[clazz];
+    let deleteButtonText = document.createTextNode("삭제");
+    let deleteButton = document.createElement("button");let datas = basketDataObj[clazz];
     let arrayIndex = 0;
 
     button.className = "btnAjax";
     
+    deleteButton.appendChild(deleteButtonText);
     button.appendChild(buttonName);
-    classTr.appendChild(button)
-
+    classTr.appendChild(button);
+    classTr.appendChild(deleteButton);
     for (let data in datas) {
         let targetData = datas[data];
         let classTd = document.createElement("td");
@@ -102,6 +104,8 @@ for (let clazz in basketDataObj) {
         }
         ).then(data => {
             let message = JSON.parse(data)
+            console.log(message)
+
             if (message.messages != "nothing") {
                 alert(message.messages)
             }
