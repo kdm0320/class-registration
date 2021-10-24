@@ -7,9 +7,9 @@ const dataArray = ['grade', 'check_major', 'subject_number', 'subject_name', 'cr
 
 //const creditBox = document.querySelector(".button_bottom_left_text_credit");
 const countBox = document.querySelector(".button_bottom_left_text_classNum");
-let count =0
 let credit =0
-
+const tr = document.querySelector("#target_enrol_table").querySelectorAll("tr")
+let count = 0;
 /*function loadHead() {
     const tr = document.querySelector("#target_enrol_table").querySelectorAll("tr")
     const creBox = document.querySelector(".button_bottom_left_text_credit");
@@ -25,11 +25,13 @@ let credit =0
     creBox.innerText = cre;
 }*/
 
-function loadCredits(updatedCredit) {
+function loadCreditz(updatedCredit) {
     const creBox = document.querySelector(".button_bottom_left_text_credit");
     let parseCredit = parseFloat(updatedCredit);
     console.log(parseCredit.toString())
     creBox.innerText = parseCredit.toString();
+    count = tr.length;
+    couBox.innerText = count;
 }
 
 
@@ -114,7 +116,7 @@ for (let clazz in regiDataObj) {
         ).then(data => {
             let message = JSON.parse(data);
             console.log(message);
-            loadCredits(message.credits);
+            loadCreditz(message.credit);
         })
         
         regiTbody.removeChild(classTr);

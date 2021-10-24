@@ -27,6 +27,7 @@ function loadCredits(updatedCredit) {
     let parseCredit = parseFloat(updatedCredit);
     console.log(parseCredit.toString())
     creBox.innerText = parseCredit.toString();
+    console.log(tr)
     count = tr.length;
     couBox.innerText = count;
 }
@@ -165,8 +166,8 @@ for (let clazz in basketDataObj) {
                 alert(message.messages)
             }
             else {
-                loadCredits(message.credits)
                 basketTbody.removeChild(classTr);
+                loadCredits(message.credits)
             }
         }, function (error) {
             console.log(error)
