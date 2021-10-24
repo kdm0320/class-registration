@@ -5,12 +5,15 @@ const regiTbody = document.querySelector("#target_enrol_table");
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 const dataArray = ['grade', 'check_major', 'subject_number', 'subject_name', 'credit', 'professor', 'time', 'people'];
 
-const creditBox = document.querySelector(".button_bottom_left_text_credit");
+//const creditBox = document.querySelector(".button_bottom_left_text_credit");
 const countBox = document.querySelector(".button_bottom_left_text_classNum");
-let count =0
-let credit =0
+const tr = regiTbody.getElementsByTagName("tr")
 
-function loadHead() {
+
+let credit =0
+let count = 0;
+
+/*function loadHead() {
     const tr = document.querySelector("#target_enrol_table").querySelectorAll("tr")
     const creBox = document.querySelector(".button_bottom_left_text_credit");
     const couBox = document.querySelector(".button_bottom_left_text_classNum");
@@ -23,7 +26,16 @@ function loadHead() {
     let count = tr.length;
     couBox.innerText = count;
     creBox.innerText = cre;
+}*/
+
+function loadCreditz(updatedCredit) {
+    const creBox = document.querySelector(".button_bottom_left_text_credit");
+    let parseCredit = parseFloat(updatedCredit);
+    creBox.innerText = parseCredit.toString();
+    countz = tr.length;
+    countBox.innerText = countz;
 }
+
 
 for (let clazz in regiDataObj) {
     let classTr = document.createElement("tr");
@@ -103,14 +115,20 @@ for (let clazz in regiDataObj) {
         }, function (error) {
             console.log(error)
         }
-        )
+        ).then(data => {
+            let message = JSON.parse(data);
+            regiTbody.removeChild(classTr);
+            loadCreditz(message.credit);
+        })
         
-        regiTbody.removeChild(classTr);
         
-        loadHead()
+        
+        //loadHead()
 
     });
     
 }
-creditBox.innerText = credit;
-countBox.innerText = count;
+//creditBox.innerText = credit;
+
+let countz = tr.length;
+countBox.innerText = countz;

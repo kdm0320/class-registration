@@ -4,177 +4,778 @@
 {% block title %}Basket{% endblock title %}
 
 {% block content %}
-    
-    <main>
-    {% include "partial/header.html" %}
-    <div class="content">
-      <div class="content_index">
-        <button class="content_index_info">수강신청 안내</button>
-        <button class="content_index_list">장바구니 목록</button>
-        <button class="content_index_schedule">장바구니 시간표</button>
-      </div>
-      <div class="content_basket_info">
-        <h2>장바구니 페이지 입니다.</h2>
-        <p>
-          <span>
-          </span>
-        </p>
-      </div>
-      <div class="content_basket_list">
-        <div>
-          <div class="button_bottom_left">
-            <div class="button_bottom_left_content">
-              <div class="button_bottom_left_icon">
-                <!-- 아이콘 한개 -->
-              </div>
-              <p class="button_bottom_left_text">
-                <span class="button_bottom_left_text_title"> 장바구니 내역 </span>
-                <span>[ 과목수 : </span>
-                <span class="button_bottom_left_text_classNum">
-                  
-                </span>
-                <span> 신청학점 : </span>
-                <span class="button_bottom_left_text_credit">
-                  
-                </span>
-                <span> ] </span>
-              </p>
+
+<main>
+  {% include "partial/header.html" %}
+  <div class="content">
+    <div class="content_index">
+      <button class="content_index_info">수강신청 안내</button>
+      <button class="content_index_list">장바구니 목록</button>
+      <button class="content_index_schedule">장바구니 시간표</button>
+    </div>
+    <div class="content_basket_info">
+      <h2>장바구니 페이지 입니다.</h2>
+      <p>
+        <span>
+        </span>
+      </p>
+    </div>
+    <div class="content_basket_list">
+      <div>
+        <div class="button_bottom_left">
+          <div class="button_bottom_left_content">
+            <div class="button_bottom_left_icon">
+              <!-- 아이콘 한개 -->
             </div>
-          </div>
-          <div class="button_bottom_right">
-            <div class="button_bottom_right_content">
-              <div class="button_bottom_right_icon">
-              </div>
-              <p class="button_bottom_righttext">
-              </p>
-            </div>
-          </div>
-          <div class="target">
-            <table id="inside_basket">
-              <caption>
-                <div>
-                  <p>
-                    
-                  </p>
-                  <p>
-                   
-                  </p>
-                </div>
-                <p>
-        
-                </p>
-              </caption>
-              <thead>
-                <tr>
-                  <th>                   </th>
-                  <th>학년</th>
-                  <th>이수구분</th>
-                  <th>과목번호</th>
-                  <th>과목명</th>
-                  <th>학점</th>
-                  <th>담당교수</th>
-                  <th>강의시간</th>
-                  <th>수강인원</th>
-                </tr>
-              </thead>
-              <tbody id="target_basket_table">
-              </tbody>
-            </table>
+            <p class="button_bottom_left_text">
+              <span class="button_bottom_left_text_title"> 장바구니 내역 </span>
+              <span>[ 과목수 : </span>
+              <span class="button_bottom_left_text_classNum">
+                0
+              </span>
+              <span> 신청학점 : </span>
+              <span class="button_bottom_left_text_credit">
+                {{credit}}
+              </span>
+              <span> ] </span>
+            </p>
           </div>
         </div>
-      </div>
-      <div class="content_basket_schedule">
-        <!-- 이곳에 각 탭에 해당하는 기능이 구현되어야 함-->
-        <!--페이지에 따라 버튼이 있을수도 있음.-->
-        <div>
-          <div class="button_bottom_left">
-            <div class="button_bottom_left_content">
-              <div class="button_bottom_left_icon">
-                <!-- 아이콘 한개 -->
-              </div>
-              <p id="schedule_left_text" class="button_bottom_left_text">
-                <span>시간표는 소속캠퍼스의 시간(교시)을 기준으로 작성되었습니다. </span>
-                <span>타 캠퍼스 개설과목 수강시 시간은 해당 캠퍼스 시간(교시)을 고려하시기 바랍니다.</span>
-              </p>
-              </div>
-          </div>
-
-          <div class="button_bottom_right">
-            <div class="button_bottom_right_content">
+        <div class="button_bottom_right">
+          <div class="button_bottom_right_content">
+            <div class="button_bottom_right_icon">
             </div>
-          </div>
-
-          <div class="target">
-            <!-- 수강신청 테이블을 버튼 이벤트로 인해 로드할 수 있어야 함-->
-            <table id="inside_basket">
-              <caption>
-                <div>
-                  <p>
-                    ※ 장바구니 인원 표시 안내 : 숫자 3(10)
-                    <span class="inside_basket_caption_text_notbold">
-                      표시는
-                    </span>
-                    <span class="inside_basket_caption_text_redcolor">
-                      장바구니 신청인원
-                    </span>
-                    <span class="inside_basket_caption_text_bluecolor">
-                      (수강정원)
-                    </span>
-                    <span class="inside_basket_caption_text_notbold">
-                      입니다.
-                    </span>
-                  </p>
-                  <p>
-                    ※ 정원이 0인 경우는 수강가능인원이 없는 것입니다.
-                    <span class="inside_basket_caption_text_notbold">
-                      개설대학 교학지원팀으로 문의하시기 바랍니다.
-                    </span>
-                  </p>
-                </div>
-                <p>
-                  <span class="inside_basket_caption_text_bluecolor">
-                    ※ 순서 정렬 후 반드시
-                  </span>
-                  <span class="inside_basket_caption_text_redcolor">
-                    "순서저장" 버튼을 클릭해야만 정렬된 내용이 저장
-                  </span>
-                  <span class="inside_basket_caption_text_bluecolor">
-                    됩니다.
-                  </span>
-                </p>
-              </caption>
-              <thead>
-                <tr>
-                  <th>과목번호</th>
-                  <th>과목명</th>
-                  <th>학년</th>
-                  <th>이수구분</th>
-                  <th>학점</th>
-                  <th>담당교수</th>
-                  <th>강의시간</th>
-                  <th>수강인원</th>
-                </tr>
-              </thead>
-              <tbody>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-              </tbody>
-            </table>
+            <p class="button_bottom_righttext">
+            </p>
           </div>
         </div>
+        <div class="target">
+          <table id="inside_basket">
+            <caption>
+              <div>
+                <p>
+
+                </p>
+                <p>
+
+                </p>
+              </div>
+              <p>
+
+              </p>
+            </caption>
+            <thead>
+              <tr>
+                <th> </th>
+
+                <th>학년</th>
+                <th>이수구분</th>
+                <th>과목번호</th>
+                <th>과목명</th>
+                <th>학점</th>
+                <th>담당교수</th>
+                <th>강의시간</th>
+                <th>수강인원</th>
+              </tr>
+            </thead>
+            <tbody id="target_basket_table">
+            </tbody>
+          </table>
+        </div>
       </div>
-  </main>
-  <div id="basket_datas" class="hidden">
+    </div>
+    <div class="content_basket_schedule">
+      <!-- 이곳에 각 탭에 해당하는 기능이 구현되어야 함-->
+      <!--페이지에 따라 버튼이 있을수도 있음.-->
+      <div>
+        <div class="button_bottom_left">
+          <div class="button_bottom_left_content">
+            <div class="button_bottom_left_icon">
+              <!-- 아이콘 한개 -->
+            </div>
+            <p id="schedule_left_text" class="button_bottom_left_text">
+            </p>
+          </div>
+        </div>
+
+        <div class="button_bottom_right">
+          <div class="button_bottom_right_content">
+          </div>
+        </div>
+
+        <div class="target">
+          <!-- 수강신청 테이블을 버튼 이벤트로 인해 로드할 수 있어야 함-->
+          <table id="time_table" border="1">
+            <thead>
+              <tr>
+                <th colspan="3">
+                  시간/요일
+                </th>
+                <th colspan="3">
+                  월요일
+                </th>
+                <th colspan="3">
+                  화요일
+                </th>
+                <th colspan="3">
+                  수요일
+                </th>
+                <th colspan="3">
+                  목요일
+                </th>
+                <th colspan="3">
+                  금요일
+                </th>
+                <th colspan="3">
+                  토요일
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  0
+                </td>
+                <td class="string_time">
+                </td>
+                <td class="classic_time">
+                  08:00
+                </td>
+                <td colspan="3" class="mon">
+                </td>
+                <td colspan="3" class="tue">
+                </td>
+                <td colspan="3" class="wed">
+                </td>
+                <td colspan="3" class="thi">
+                </td>
+                <td colspan="3" class="fri">
+                </td>
+                <td colspan="3" class="sat">
+                </td>
+              </tr>
+              <tr>
+                <td class="string_time">
+                </td>
+                <td class="classic_time">
+                  08:30
+                </td>
+                <td colspan="3" class="mon">
+                </td>
+                <td colspan="3" class="tue">
+                </td>
+                <td colspan="3" class="wed">
+                </td>
+                <td colspan="3" class="thi">
+                </td>
+                <td colspan="3" class="fri">
+                </td>
+                <td colspan="3" class="sat">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  1
+                </td>
+                <td class="string_time" rowspan="3">
+                  A
+                </td>
+                <td class="classic_time">
+                  09:00
+                </td>
+                <td colspan="3" class="mon first_periods Aline">
+                </td>
+                <td colspan="3" class="tue first_periods Aline">
+                </td>
+                <td colspan="3" class="wed first_periods Aline">
+                </td>
+                <td colspan="3" class="thi first_periods Aline">
+                </td>
+                <td colspan="3" class="fri first_periods Aline">
+                </td>
+                <td colspan="3" class="sat first_periods Aline">
+                </td>
+              </tr>
+              <tr>
+                <td class="classic_time">
+                  09:30
+                </td>
+                <td colspan="3" class="mon first_periods Aline">
+                </td>
+                <td colspan="3" class="tue first_periods Aline">
+                </td>
+                <td colspan="3" class="wed first_periods Aline">
+                </td>
+                <td colspan="3" class="thi first_periods Aline">
+                </td>
+                <td colspan="3" class="fri first_periods Aline">
+                </td>
+                <td colspan="3" class="sat first_periods Aline">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  2
+                </td>
+                <td class="classic_time">
+                  10:00
+                </td>
+                <td colspan="3" class="mon second_periods Aline">
+                </td>
+                <td colspan="3" class="tue second_periods Aline">
+                </td>
+                <td colspan="3" class="wed second_periods Aline">
+                </td>
+                <td colspan="3" class="thi second_periods Aline">
+                </td>
+                <td colspan="3" class="fri second_periods Aline">
+                </td>
+                <td colspan="3" class="sat second_periods Aline">
+                </td>
+              </tr>
+              <tr>
+                <td class="string_time" rowspan="3">
+                  B
+                </td>
+                <td class="classic_time">
+                  10:30
+                </td>
+                <td colspan="3" class="mon second_periods Bline">
+                </td>
+                <td colspan="3" class="tue second_periods Bline">
+                </td>
+                <td colspan="3" class="wed second_periods Bline">
+                </td>
+                <td colspan="3" class="thi second_periods Bline">
+                </td>
+                <td colspan="3" class="fri second_periods Bline">
+                </td>
+                <td colspan="3" class="sat second_periods Bline">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  3
+                </td>
+                <td class="classic_time">
+                  11:00
+                </td>
+                <td colspan="3" class="mon third_periods Bline">
+                </td>
+                <td colspan="3" class="tue third_periods Bline">
+                </td>
+                <td colspan="3" class="wed third_periods Bline">
+                </td>
+                <td colspan="3" class="thi third_periods Bline">
+                </td>
+                <td colspan="3" class="fri third_periods Bline">
+                </td>
+                <td colspan="3" class="sat third_periods Bline">
+                </td>
+              </tr>
+              <tr>
+                <td class="classic_time">
+                  11:30
+                </td>
+                <td colspan="3" class="mon third_periods Bline">
+                </td>
+                <td colspan="3" class="tue third_periods Bline">
+                </td>
+                <td colspan="3" class="wed third_periods Bline">
+                </td>
+                <td colspan="3" class="thi third_periods Bline">
+                </td>
+                <td colspan="3" class="fri third_periods Bline">
+                </td>
+                <td colspan="3" class="sat third_periods Bline">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  4
+                </td>
+                <td class="string_time" rowspan="3">
+                  C
+                </td>
+                <td class="classic_time">
+                  12:00
+                </td>
+                <td colspan="3" class="mon fourth_periods Cline">
+                </td>
+                <td colspan="3" class="tue fourth_periods Cline">
+                </td>
+                <td colspan="3" class="wed fourth_periods Cline">
+                </td>
+                <td colspan="3" class="thi fourth_periods Cline">
+                </td>
+                <td colspan="3" class="fri fourth_periods Cline">
+                </td>
+                <td colspan="3" class="sat fourth_periods Cline">
+                </td>
+              </tr>
+              <tr>
+                <td class="classic_time">
+                  12:30
+                </td>
+                <td colspan="3" class="mon fourth_periods Cline">
+                </td>
+                <td colspan="3" class="tue fourth_periods Cline">
+                </td>
+                <td colspan="3" class="wed fourth_periods Cline">
+                </td>
+                <td colspan="3" class="thi fourth_periods Cline">
+                </td>
+                <td colspan="3" class="fri fourth_periods Cline">
+                </td>
+                <td colspan="3" class="sat fourth_periods Cline">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  5
+                </td>
+                <td class="classic_time">
+                  13:00
+                </td>
+                <td colspan="3" class="mon fifth_periods Cline">
+                </td>
+                <td colspan="3" class="tue fifth_periods Cline">
+                </td>
+                <td colspan="3" class="wed fifth_periods Cline">
+                </td>
+                <td colspan="3" class="thi fifth_periods Cline">
+                </td>
+                <td colspan="3" class="fri fifth_periods Cline">
+                </td>
+                <td colspan="3" class="sat fifth_periods Cline">
+                </td>
+              </tr>
+              <tr>
+                <td class="string_time" rowspan="3">
+                  D
+                </td>
+                <td class="classic_time">
+                  13:30
+                </td>
+                <td colspan="3" class="mon fifth_periods Dline">
+                </td>
+                <td colspan="3" class="tue fifth_periods Dline">
+                </td>
+                <td colspan="3" class="wed fifth_periods Dline">
+                </td>
+                <td colspan="3" class="thi fifth_periods Dline">
+                </td>
+                <td colspan="3" class="fri fifth_periods Dline">
+                </td>
+                <td colspan="3" class="sat fifth_periods Dline">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  6
+                </td>
+                <td class="classic_time">
+                  14:00
+                </td>
+                <td colspan="3" class="mon sixth_periods Dline">
+                </td>
+                <td colspan="3" class="tue sixth_periods Dline">
+                </td>
+                <td colspan="3" class="wed sixth_periods Dline">
+                </td>
+                <td colspan="3" class="thi sixth_periods Dline">
+                </td>
+                <td colspan="3" class="fri sixth_periods Dline">
+                </td>
+                <td colspan="3" class="sat sixth_periods Dline">
+                </td>
+              </tr>
+              <tr>
+                <td class="classic_time">
+                  14:30
+                </td>
+                <td colspan="3" class="mon sixth_periods Dline">
+                </td>
+                <td colspan="3" class="tue sixth_periods Dline">
+                </td>
+                <td colspan="3" class="wed sixth_periods Dline">
+                </td>
+                <td colspan="3" class="thi sixth_periods Dline">
+                </td>
+                <td colspan="3" class="fri sixth_periods Dline">
+                </td>
+                <td colspan="3" class="sat sixth_periods Dline">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  7
+                </td>
+                <td class="string_time" rowspan="3">
+                  E
+                </td>
+                <td class="classic_time">
+                  15:00
+                </td>
+                <td colspan="3" class="mon seventh_periods Eline">
+                </td>
+                <td colspan="3" class="tue seventh_periods Eline">
+                </td>
+                <td colspan="3" class="wed seventh_periods Eline">
+                </td>
+                <td colspan="3" class="thi seventh_periods Eline">
+                </td>
+                <td colspan="3" class="fri seventh_periods Eline">
+                </td>
+                <td colspan="3" class="sat seventh_periods Eline">
+                </td>
+              </tr>
+              <tr>
+                <td class="classic_time">
+                  15:30
+                </td>
+                <td colspan="3" class="mon seventh_periods Eline">
+                </td>
+                <td colspan="3" class="tue seventh_periods Eline">
+                </td>
+                <td colspan="3" class="wed seventh_periods Eline">
+                </td>
+                <td colspan="3" class="thi seventh_periods Eline">
+                </td>
+                <td colspan="3" class="fri seventh_periods Eline">
+                </td>
+                <td colspan="3" class="sat seventh_periods Eline">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  8
+                </td>
+                <td class="classic_time">
+                  16:00
+                </td>
+                <td colspan="3" class="mon eight_periods Eline">
+                </td>
+                <td colspan="3" class="tue eight_periods Eline">
+                </td>
+                <td colspan="3" class="wed eight_periods Eline">
+                </td>
+                <td colspan="3" class="thi eight_periods Eline">
+                </td>
+                <td colspan="3" class="fri eight_periods Eline">
+                </td>
+                <td colspan="3" class="sat eight_periods Eline">
+                </td>
+              </tr>
+              <tr>
+                <td class="string_time" rowspan="3">
+                  F
+                </td>
+                <td class="classic_time">
+                  16:30
+                </td>
+                <td colspan="3" class="mon eight_periods Fline">
+                </td>
+                <td colspan="3" class="tue eight_periods Fline">
+                </td>
+                <td colspan="3" class="wed eight_periods Fline">
+                </td>
+                <td colspan="3" class="thi eight_periods Fline">
+                </td>
+                <td colspan="3" class="fri eight_periods Fline">
+                </td>
+                <td colspan="3" class="sat eight_periods Fline">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  9
+                </td>
+                <td class="classic_time">
+                  17:00
+                </td>
+                <td colspan="3" class="mon ninth_periods Fline">
+                </td>
+                <td colspan="3" class="tue ninth_periods Fline">
+                </td>
+                <td colspan="3" class="wed ninth_periods Fline">
+                </td>
+                <td colspan="3" class="thi ninth_periods Fline">
+                </td>
+                <td colspan="3" class="fri ninth_periods Fline">
+                </td>
+                <td colspan="3" class="sat ninth_periods Fline">
+                </td>
+              </tr>
+              <tr>
+                <td class="classic_time">
+                  17:30
+                </td>
+                <td colspan="3" class="mon ninth_periods Fline">
+                </td>
+                <td colspan="3" class="tue ninth_periods Fline">
+                </td>
+                <td colspan="3" class="wed ninth_periods Fline">
+                </td>
+                <td colspan="3" class="thi ninth_periods Fline">
+                </td>
+                <td colspan="3" class="fri ninth_periods Fline">
+                </td>
+                <td colspan="3" class="sat ninth_periods Fline">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  10
+                </td>
+                <td class="string_time" rowspan="3">
+                  G
+                </td>
+                <td class="classic_time">
+                  18:00
+                </td>
+                <td colspan="3" class="mon tenth_periods">
+                </td>
+                <td colspan="3" class="tue tenth_periods">
+                </td>
+                <td colspan="3" class="wed tenth_periods">
+                </td>
+                <td colspan="3" class="thi tenth_periods">
+                </td>
+                <td colspan="3" class="fri tenth_periods">
+                </td>
+                <td colspan="3" class="sat tenth_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="classic_time">
+                  18:30
+                </td>
+                <td colspan="3" class="mon tenth_periods">
+                </td>
+                <td colspan="3" class="tue tenth_periods">
+                </td>
+                <td colspan="3" class="wed tenth_periods">
+                </td>
+                <td colspan="3" class="thi tenth_periods">
+                </td>
+                <td colspan="3" class="fri tenth_periods">
+                </td>
+                <td colspan="3" class="sat tenth_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  11
+                </td>
+                <td class="classic_time">
+                  19:00
+                </td>
+                <td colspan="3" class="mon eleventh_periods">
+                </td>
+                <td colspan="3" class="tue eleventh_periods">
+                </td>
+                <td colspan="3" class="wed eleventh_periods">
+                </td>
+                <td colspan="3" class="thi eleventh_periods">
+                </td>
+                <td colspan="3" class="fri eleventh_periods">
+                </td>
+                <td colspan="3" class="sat eleventh_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="string_time" rowspan="3">
+                  H
+                </td>
+                <td class="classic_time">
+                  19:30
+                </td>
+                <td colspan="3" class="mon eleventh_periods">
+                </td>
+                <td colspan="3" class="tue eleventh_periods">
+                </td>
+                <td colspan="3" class="wed eleventh_periods">
+                </td>
+                <td colspan="3" class="thi eleventh_periods">
+                </td>
+                <td colspan="3" class="fri eleventh_periods">
+                </td>
+                <td colspan="3" class="sat eleventh_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  12
+                </td>
+                <td class="classic_time">
+                  20:00
+                </td>
+                <td colspan="3" class="mon twelfth_periods">
+                </td>
+                <td colspan="3" class="tue twelfth_periods">
+                </td>
+                <td colspan="3" class="wed twelfth_periods">
+                </td>
+                <td colspan="3" class="thi twelfth_periods">
+                </td>
+                <td colspan="3" class="fri twelfth_periods">
+                </td>
+                <td colspan="3" class="sat twelfth_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="classic_time">
+                  20:30
+                </td>
+                <td colspan="3" class="mon twelfth_periods">
+                </td>
+                <td colspan="3" class="tue twelfth_periods">
+                </td>
+                <td colspan="3" class="wed twelfth_periods">
+                </td>
+                <td colspan="3" class="thi twelfth_periods">
+                </td>
+                <td colspan="3" class="fri twelfth_periods">
+                </td>
+                <td colspan="3" class="sat twelfth_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  13
+                </td>
+                <td class="string_time" rowspan="3">
+                  ND
+                </td>
+                <td class="classic_time">
+                  21:00
+                </td>
+                <td colspan="3" class="mon thirteenth_periods">
+                </td>
+                <td colspan="3" class="tue thirteenth_periods">
+                </td>
+                <td colspan="3" class="wed thirteenth_periods">
+                </td>
+                <td colspan="3" class="thi thirteenth_periods">
+                </td>
+                <td colspan="3" class="fri thirteenth_periods">
+                </td>
+                <td colspan="3" class="sat thirteenth_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="classic_time">
+                  21:30
+                </td>
+                <td colspan="3" class="mon thirteenth_periods">
+                </td>
+                <td colspan="3" class="tue thirteenth_periods">
+                </td>
+                <td colspan="3" class="wed thirteenth_periods">
+                </td>
+                <td colspan="3" class="thi thirteenth_periods">
+                </td>
+                <td colspan="3" class="fri thirteenth_periods">
+                </td>
+                <td colspan="3" class="sat thirteenth_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  14
+                </td>
+                <td class="classic_time">
+                  22:00
+                </td>
+                <td colspan="3" class="mon fourteenth_periods">
+                </td>
+                <td colspan="3" class="tue fourteenth_periods">
+                </td>
+                <td colspan="3" class="wed fourteenth_periods">
+                </td>
+                <td colspan="3" class="thi fourteenth_periods">
+                </td>
+                <td colspan="3" class="fri fourteenth_periods">
+                </td>
+                <td colspan="3" class="sat fourteenth_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="string_time">
+                  SC
+                </td>
+                <td class="classic_time">
+                  22:30
+                </td>
+                <td colspan="3" class="mon fourteenth_periods">
+                </td>
+                <td colspan="3" class="tue fourteenth_periods">
+                </td>
+                <td colspan="3" class="wed fourteenth_periods">
+                </td>
+                <td colspan="3" class="thi fourteenth_periods">
+                </td>
+                <td colspan="3" class="fri fourteenth_periods">
+                </td>
+                <td colspan="3" class="sat fourteenth_periods">
+                </td>
+              </tr>
+              <tr>
+                <td class="num_time" rowspan="2">
+                  15
+                </td>
+                <td>
+                </td>
+                <td class="classic_time">
+                  23:00
+                </td>
+                <td colspan="3" class="mon fifteenth_periods">
+                </td>
+                <td colspan="3" class="tue fifteenth_periods">
+                </td>
+                <td colspan="3" class="wed fifteenth_periods">
+                </td>
+                <td colspan="3" class="thi fifteenth_periods">
+                </td>
+                <td colspan="3" class="fri fifteenth_periods">
+                </td>
+                <td colspan="3" class="sat fifteenth_periods">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                </td>
+                <td class="classic_time">
+                  23:30
+                </td>
+                <td colspan="3" class="mon fifteenth_periods">
+                </td>
+                <td colspan="3" class="tue fifteenth_periods">
+                </td>
+                <td colspan="3" class="wed fifteenth_periods">
+                </td>
+                <td colspan="3" class="thi fifteenth_periods">
+                </td>
+                <td colspan="3" class="fri fifteenth_periods">
+                </td>
+                <td colspan="3" class="sat fifteenth_periods">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+</main>
+<div id="basket_datas" class="hidden">
   {{basket_datas}}
-  </div>
-  {% csrf_token %}
-  <script src="https://kit.fontawesome.com/87360ab54c.js" crossorigin="anonymous"></script>
-  <script src="{% static 'JS/basket.js' %}"></script>
-  <script src="{% static 'JS/basketTable.js' %}"></script>
+</div>
+
+{% csrf_token %}
+<script src="https://kit.fontawesome.com/87360ab54c.js" crossorigin="anonymous"></script>
+<script src="{% static 'JS/basket.js' %}"></script>
+<script src="{% static 'JS/basketTable.js' %}"></script>
+<script src="{% static 'JS/basketTime.js' %}"></script>
 {% endblock %}

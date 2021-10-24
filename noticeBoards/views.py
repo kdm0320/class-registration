@@ -3,11 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import Http404
 from noticeBoards.models import notice
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, View
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class NoticeView(ListView):
+class NoticeView(LoginRequiredMixin, ListView):
     """NoticeView Definition"""
+
+    login_url = "/users/login"
+    redirect_field_name = "redirect_to"
 
     def get(self, request):
         template_name = "noticeBoards/notice_list.html"
@@ -39,8 +43,23 @@ class NoticeView(ListView):
         return redirect("notices:board")
 
 
-class MyNoticeView(ListView):
+@login_required
+def notice_detail(request, pk):
+    template_name = "noticeBoards/notice_detail.html"
+    try:
+        target_notice = notice.objects.get(pk=pk)
+        target_notice.post_hit += 1
+        target_notice.save()
+        return render(request, template_name, {"notice": target_notice})
+    except notice.DoesNotExist:
+        raise Http404()
+
+
+class MyNoticeView(LoginRequiredMixin, ListView):
     """MyNoticeView Definition"""
+
+    login_url = "/users/login"
+    redirect_field_name = "redirect_to"
 
     template_name = "noticeBoards/my_notice_list.html"
     model = notice
@@ -64,18 +83,12 @@ class MyNoticeView(ListView):
         return redirect("notices:board")
 
 
-def notice_detail(request, pk):
-    template_name = "noticeBoards/notice_detail.html"
-    try:
-        target_notice = notice.objects.get(pk=pk)
-        target_notice.post_hit += 1
-        target_notice.save()
-        return render(request, template_name, {"notice": target_notice})
-    except notice.DoesNotExist:
-        raise Http404()
+class SeachView(LoginRequiredMixin, ListView):
+    """SearchView Definition"""
 
+    login_url = "/users/login"
+    redirect_field_name = "redirect_to"
 
-class SeachView(ListView):
     template_name = "noticeBoards/notice_search.html"
     paginate_by = 3
     ordering = "created"
@@ -94,6 +107,7 @@ class SeachView(ListView):
             return target_notices
 
 
+@login_required
 def save(request, pk):
     target = notice.objects.get(pk=pk)
     target.title = request.POST.get("detail_title_data")
@@ -101,10 +115,10 @@ def save(request, pk):
     target.save()
 
     current_url = request.GET.get("next")
-    print(current_url)
     return redirect(current_url)
 
 
+@login_required
 def delete(request, pk):
     target = notice.objects.get(pk=pk)
     target.delete()

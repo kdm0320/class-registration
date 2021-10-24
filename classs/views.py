@@ -1,9 +1,34 @@
 import json
+from django.contrib.auth.decorators import login_required
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from . import models
 from basketLists import models as basket_model
+
+
+@login_required
+def home(request):
+    template_name = "class/viewSchedule.html"
+
+    return render(
+        request,
+        template_name,
+    )
+
+
+@login_required
+def get_data(request):
+    template_name = "class/viewSchedule.html"
+    colleage = request.GET.get("college")
+    depart = change_name(colleage)
+    data = models.Class.objects.filter(department=depart).order_by("grade")
+    temp_data = {}
+    for i in range(len(data)):
+        temp_data[f"class{i}"] = class_to_dictionary(data[i])
+
+    datas = json.dumps(temp_data, ensure_ascii=False, cls=DjangoJSONEncoder)
+    return render(request, template_name, {"class_data": datas})
 
 
 def class_to_dictionary(data):
@@ -20,15 +45,6 @@ def class_to_dictionary(data):
     output["time"] = data.time
     output["people"] = data.people
     return output
-
-
-def home(request):
-    template_name = "class/viewSchedule.html"
-
-    return render(
-        request,
-        template_name,
-    )
 
 
 class HandleTimeData:
@@ -66,43 +82,52 @@ class HandleTimeData:
             return new_data
 
     def check_data(self, time_data, basket_list, numbers_to_alpha, check_schedule):
-        check_time = []
-        for index, data in enumerate(time_data[1:]):
-            check_time.append(data)
-            if len(check_time) == 2:
-                if check_time[1].isdigit():
-                    time = "".join(check_time)
-                    if (
-                        numbers_to_alpha[time] in basket_list.time_table[time_data[0]]
-                    ) or (time in basket_list.time_table[time_data[0]]):
-                        check_schedule.append(True)
-                else:
-                    if (
-                        numbers_to_alpha[check_time[0]]
-                        in basket_list.time_table[time_data[0]]
-                    ) or (check_time[0] in basket_list.time_table[time_data[0]]):
-                        check_schedule.append(True)
-                check_time = []
-            elif len(check_time) == 1 and index == len(time_data[1:]) - 1:
-                if (
-                    numbers_to_alpha[check_time[0]]
-                    in basket_list.time_table[time_data[0]]
-                ) or (check_time[0] in basket_list.time_table[time_data[0]]):
-                    check_schedule.append(True)
+        check_time_list = []
 
-    def regi_data(self, time_data, basket_list):
+        def check_time(
+            time_data, basket_list, numbers_to_alpha, check_schedule, check_time_list
+        ):
+            time = "".join(check_time_list)
+            if (numbers_to_alpha[time] in basket_list.time_table[time_data[0]]) or (
+                time in basket_list.time_table[time_data[0]]
+            ):
+                check_schedule.append(True)
+
+        for index, data in enumerate(time_data[1:]):
+            if not data.isdigit():
+                check_time(
+                    time_data,
+                    basket_list,
+                    numbers_to_alpha,
+                    check_schedule,
+                    check_time_list,
+                )
+                check_time_list = []
+            elif index == len(time_data[1:]) - 1:
+                check_time_list.append(data)
+                check_time(
+                    time_data,
+                    basket_list,
+                    numbers_to_alpha,
+                    check_schedule,
+                    check_time_list,
+                )
+            else:
+                check_time_list.append(data)
+
+    def regi_data(self, time_data, list):
         check_time = []
         for index, data in enumerate(time_data[1:]):
             check_time.append(data)
             if len(check_time) == 2:
                 if check_time[1].isdigit():
                     time = "".join(check_time)
-                    basket_list.time_table[time_data[0]].append(time)
+                    list.time_table[time_data[0]].append(time)
                 else:
-                    basket_list.time_table[time_data[0]].append(check_time[0])
+                    list.time_table[time_data[0]].append(check_time[0])
                 check_time = []
             elif len(check_time) == 1 and index == len(time_data[1:]) - 1:
-                basket_list.time_table[time_data[0]].append(check_time[0])
+                list.time_table[time_data[0]].append(check_time[0])
 
     def create_data(self, time_data, new_basket):
         if time_data[1] == "(":
@@ -123,19 +148,7 @@ def change_name(college):
     return colleage
 
 
-def get_data(request):
-    template_name = "class/viewSchedule.html"
-    colleage = request.GET.get("college")
-    depart = change_name(colleage)
-    data = models.Class.objects.filter(department=depart).order_by("grade")
-    temp_data = {}
-    for i in range(len(data)):
-        temp_data[f"class{i}"] = class_to_dictionary(data[i])
-
-    datas = json.dumps(temp_data, ensure_ascii=False, cls=DjangoJSONEncoder)
-    return render(request, template_name, {"class_data": datas})
-
-
+@login_required
 def regi_basket(request):
 
     jsonObject = json.loads(request.body)
@@ -148,7 +161,7 @@ def regi_basket(request):
         split_subject_time = subject_time.split("/")
 
     handle_time_data = HandleTimeData()
-    message_data = {"messages": "nothing"}
+    message_data = {"messages": "nothing", "credits": "0"}
     alpha_to_numbers = {
         "A": ["1", "2"],
         "B": ["3"],
@@ -178,7 +191,6 @@ def regi_basket(request):
         "14": "ND",
         "15": "SC",
     }
-
     if basket_list is None:
         new_basket = basket_model.List.objects.create(user=request.user)
         new_basket.subjects.add(subject)
@@ -187,6 +199,8 @@ def regi_basket(request):
         else:
             for split_data in split_subject_time:
                 handle_time_data.create_data(split_data, new_basket)
+        new_basket.credits += float(subject.credit)
+        message_data["credits"] = f"{new_basket.credits}"
         new_basket.save()
     else:
         if len(split_subject_time) == 0:
@@ -197,6 +211,8 @@ def regi_basket(request):
             if True not in check_schedule:
                 basket_list.subjects.add(subject)
                 handle_time_data.regi_data(subject_time, basket_list)
+                basket_list.credits += float(subject.credit)
+                message_data["credits"] = f"{basket_list.credits}"
             else:
                 message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
         else:
@@ -214,8 +230,11 @@ def regi_basket(request):
                     for split_data in split_subject_time:
                         new_data = handle_time_data.change_time_data(split_data)
                         basket_list.time_table[split_data[0]].append(new_data)
+                    basket_list.credits += float(subject.credit)
+                    message_data["credits"] = f"{basket_list.credits}"
                 else:
                     message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
+
             else:
                 for split_data in split_subject_time:
                     handle_time_data.check_data(
@@ -227,6 +246,11 @@ def regi_basket(request):
                         handle_time_data.regi_data(split_data, basket_list)
                     else:
                         message_data["messages"] = "해당 시간에 과목이 이미 장바구니에 존재합니다."
+                        break
+                if True not in check_schedule:
+                    basket_list.credits += float(subject.credit)
+                    message_data["credits"] = f"{basket_list.credits}"
+
             check_schedule = []
         basket_list.save()
     message = json.dumps(message_data)
