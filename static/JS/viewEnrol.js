@@ -7,9 +7,13 @@ const dataArray = ['grade', 'check_major', 'subject_number', 'subject_name', 'cr
 
 //const creditBox = document.querySelector(".button_bottom_left_text_credit");
 const countBox = document.querySelector(".button_bottom_left_text_classNum");
+const tr = regiTbody.getElementsByTagName("tr")
+
+console.log(tr)
+
 let credit =0
-const tr = document.querySelector("#target_enrol_table").querySelectorAll("tr")
 let count = 0;
+
 /*function loadHead() {
     const tr = document.querySelector("#target_enrol_table").querySelectorAll("tr")
     const creBox = document.querySelector(".button_bottom_left_text_credit");
@@ -28,10 +32,9 @@ let count = 0;
 function loadCreditz(updatedCredit) {
     const creBox = document.querySelector(".button_bottom_left_text_credit");
     let parseCredit = parseFloat(updatedCredit);
-    console.log(parseCredit.toString())
     creBox.innerText = parseCredit.toString();
-    count = tr.length;
-    couBox.innerText = count;
+    countz = tr.length;
+    countBox.innerText = countz;
 }
 
 
@@ -115,11 +118,11 @@ for (let clazz in regiDataObj) {
         }
         ).then(data => {
             let message = JSON.parse(data);
-            console.log(message);
+            regiTbody.removeChild(classTr);
             loadCreditz(message.credit);
         })
         
-        regiTbody.removeChild(classTr);
+        
         
         //loadHead()
 
@@ -127,4 +130,6 @@ for (let clazz in regiDataObj) {
     
 }
 //creditBox.innerText = credit;
-countBox.innerText = count;
+
+let countz = tr.length;
+countBox.innerText = countz;
