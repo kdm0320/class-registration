@@ -115,19 +115,19 @@ class HandleTimeData:
             else:
                 check_time_list.append(data)
 
-    def regi_data(self, time_data, basket_list):
+    def regi_data(self, time_data, list):
         check_time = []
         for index, data in enumerate(time_data[1:]):
             check_time.append(data)
             if len(check_time) == 2:
                 if check_time[1].isdigit():
                     time = "".join(check_time)
-                    basket_list.time_table[time_data[0]].append(time)
+                    list.time_table[time_data[0]].append(time)
                 else:
-                    basket_list.time_table[time_data[0]].append(check_time[0])
+                    list.time_table[time_data[0]].append(check_time[0])
                 check_time = []
             elif len(check_time) == 1 and index == len(time_data[1:]) - 1:
-                basket_list.time_table[time_data[0]].append(check_time[0])
+                list.time_table[time_data[0]].append(check_time[0])
 
     def create_data(self, time_data, new_basket):
         if time_data[1] == "(":

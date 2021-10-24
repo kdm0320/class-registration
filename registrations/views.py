@@ -19,8 +19,11 @@ def enrollment(request):
         for i in range(len(data)):
             temp_data[f"class{i}"] = data[i]
         datas = json.dumps(temp_data, ensure_ascii=False, cls=DjangoJSONEncoder)
-
-        return render(request, template_name, {"regi_datas": datas})
+        return render(
+            request,
+            template_name,
+            {"regi_datas": datas, "regi_credit": f"{lists.credits}"},
+        )
     else:
         return render(request, template_name)
 
@@ -47,7 +50,6 @@ def delete(request):
             delete_time.remove_data(split_data, user_list)
         user_list.subjects.remove(target)
         user_list.credits -= float(target.credit)
-
     user_list.save()
     credit_data = {"credit": f"{user_list.credits}"}
 
