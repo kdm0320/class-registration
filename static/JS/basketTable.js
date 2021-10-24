@@ -4,6 +4,8 @@ const basketDataObj = JSON.parse(basketData);
 const basketTbody = document.querySelector("#target_basket_table");
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 const dataArray = ['grade','check_major','subject_number','subject_name','credit','professor','time','people'];
+const tr = basketTbody.getElementsByTagName("tr")
+
 
 /*function loadHead() {
     const tr = document.querySelector("#target_basket_table").querySelectorAll("tr")
@@ -22,17 +24,11 @@ const dataArray = ['grade','check_major','subject_number','subject_name','credit
 
 function loadCredits(updatedCredit) {
     const creBox = document.querySelector(".button_bottom_left_text_credit");
-    let credit = creBox.innerText.replace(/\s/g, "");
-    console.log(updatedCredit)
-    console.log(credit)
-    let parseCredit;
-    if (updatedCredit != undefined)
-        parseCredit = parseFloat(updatedCredit);
-    else
-        parseCredit = parseFloat(credit);
+    let parseCredit = parseFloat(updatedCredit);
     console.log(parseCredit.toString())
     creBox.innerText = parseCredit.toString();
-
+    count = tr.length;
+    couBox.innerText = count;
 }
 
 
@@ -118,6 +114,11 @@ for (let clazz in basketDataObj) {
             return res.text();
         }, function (error) {
             console.log(error);
+        }).then(function (data) {
+            let message = JSON.parse(data)  
+            loadCredits(message.credit)
+            //basketTbody.removeChild(classTr);
+            
         });
         basketTbody.removeChild(classTr);
     }
@@ -172,3 +173,6 @@ for (let clazz in basketDataObj) {
         })
     });
 }
+const couBox = document.querySelector(".button_bottom_left_text_classNum");
+let count = tr.length;
+couBox.innerText = count;
